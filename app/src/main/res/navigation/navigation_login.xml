@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/loginEmailFragment">
+
+    <fragment
+        android:id="@+id/loginEmailFragment"
+        android:name="com.skoumal.teanity.ui.login.LoginEmailFragment"
+        android:label="LoginEmailFragment">
+        <action
+            android:id="@+id/mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.skoumal.teanity.ui.MainActivity"
+        android:label="MainActivity" />
+</navigation>

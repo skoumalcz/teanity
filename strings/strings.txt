@@ -1,0 +1,11 @@
+[[General]]
+
+[[Login]]
+    [login_button]
+        en = Log in
+    [login_email_hint]
+        en = Email
+    [login_email_error]
+	en = Enter valid email
+    [login_failed]
+	en = Login failed

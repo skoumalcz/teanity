@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.skoumal.teanity.util.Transformations" />
+
+        <variable
+            name="item"
+            type="com.skoumal.teanity.model.entity.PhotoRvItem" />
+
+        <variable
+            name="viewModel"
+            type="com.skoumal.teanity.ui.home.HomeViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:foreground="?selectableItemBackground"
+            android:onClick="@{() -> viewModel.photoClicked(item.photo)}"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintDimensionRatio="w,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:transformation="@{Transformations.CENTER_CROP}"
+            app:url="@{item.photo.urls.small}"
+            tools:ignore="ContentDescription"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="4dp"
+            android:text="@{item.photo.user.name}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:text="Post title" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

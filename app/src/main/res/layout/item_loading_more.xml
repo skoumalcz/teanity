@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.skoumal.teanity.model.entity.LoadingRvItem" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:invisible="@{item.failed}" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:invisible="@{!item.failed}">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="@{item.failText}"
+                tools:text="Loading failed" />
+
+            <Button
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:onClick="@{() -> item.failActionClicked()}"
+                android:text="@{item.failActionText}"
+                android:textColor="@color/colorAccent"
+                tools:text="retry" />
+
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

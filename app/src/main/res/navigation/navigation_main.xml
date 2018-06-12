@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.skoumal.teanity.ui.home.HomeFragment"
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/photoDetailFragment"
+            app:destination="@id/photoDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.skoumal.teanity.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/loginActivity"
+            app:destination="@id/loginActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.skoumal.teanity.ui.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="com.skoumal.teanity.ui.photodetail.PhotoDetailFragment"
+        android:label="PhotoDetailFragment">
+        <argument
+            android:name="photo_id"
+            app:type="string" />
+    </fragment>
+</navigation>
