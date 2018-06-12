@@ -1,0 +1,37 @@
+ext {
+    getVersionTag = { variant ->
+        def stdout = new ByteArrayOutputStream()
+        try {
+            exec {
+                commandLine "git", "describe", "--match", "${variant}/*", "--long"
+                standardOutput = stdout
+            }
+            def longTag = stdout.toString().trim()
+
+            return longTag.substring(longTag.indexOf('/') + 1, longTag.indexOf('-'))
+        }
+        catch (exception) {
+            println stdout
+            println "Failed to read version tag: " + exception
+            return "0.0.1";
+        }
+    }
+
+    getVersionCode = { tag ->
+        def parts = tag.tokenize('.')
+        if (parts.size() != 3 || parts[1].length() > 2 || parts[2].length() > 2) {
+            throw new RuntimeException("Invalid version tag \"${tag}\", format \"x.y.z\" expected.")
+        }
+        if (parts[1].length() == 1) {
+            parts[1] = "0" + parts[1]
+        }
+        if (parts[2].length() == 1) {
+            parts[2] = "0" + parts[2]
+        }
+        return Integer.parseInt(parts[0] + parts[1] + parts[2])
+    }
+
+    getVersionName = { tag ->
+        return tag
+    }
+}

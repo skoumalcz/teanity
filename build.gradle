@@ -1,0 +1,43 @@
+buildscript {
+    ext.versions = [
+            'kotlin'           : '1.2.41',
+            'supportlib'       : '27.1.1',
+            'playServices'     : '15.0.1',
+            'constraintLayout' : '1.1.2',
+            'room'             : '1.1.0',
+            'lifecycle'        : '1.1.1',
+            'navigation'       : '1.0.0-alpha02',
+            'gradlePlugin'     : '3.2.0-alpha18',
+            'koin'             : '0.9.3',
+            'retrofit'         : '2.4.0',
+            'okhttp'           : '3.10.0',
+            'moshi'            : '1.6.0',
+            'bca'              : '2.3.0-beta1',
+            'glide'            : '4.7.1'
+    ]
+
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:${versions.gradlePlugin}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
+        classpath "io.fabric.tools:gradle:1.+"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
