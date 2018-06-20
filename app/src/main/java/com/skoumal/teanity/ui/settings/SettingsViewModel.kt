@@ -17,6 +17,7 @@ class SettingsViewModel(
             }, {
                 logoutFailed(it)
             })
+            .add()
     }
 
     private fun logoutSuccess() {

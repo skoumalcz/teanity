@@ -61,6 +61,7 @@ class HomeViewModel(
                         last?.failed?.set(true)
                     }
                 })
+                .add()
     }
 
     fun loadMoreItems() {

@@ -34,6 +34,7 @@ class LoginEmailViewModel(
                             loginInProgress.set(false)
                             loginFailed()
                         })
+                        .add()
             }
         }
     }
