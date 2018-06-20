@@ -1,6 +1,5 @@
 package com.skoumal.teanity.ui
 
-import android.arch.lifecycle.ViewModel
+import com.skoumal.teanity.ui.base.BaseViewModel
 
-class MainViewModel : ViewModel() {
-}
+class MainViewModel : BaseViewModel()

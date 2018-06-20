@@ -7,7 +7,7 @@ import android.databinding.PropertyChangeRegistry
 /**
  * Copy of [android.databinding.BaseObservable] which extends [ViewModel]
  */
-abstract class ObservableViewModel : ViewModel(), Observable {
+abstract class ObservableViewModel : BaseViewModel(), Observable {
 
     @Transient
     private var callbacks: PropertyChangeRegistry? = null
