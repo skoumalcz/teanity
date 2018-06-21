@@ -8,6 +8,7 @@ import com.skoumal.teanity.BR
 import com.skoumal.teanity.ui.events.ViewEvent
 import com.skoumal.teanity.ui.events.ViewEventObserver
 import com.skoumal.teanity.util.setBindingContentView
+import timber.log.Timber
 
 abstract class BaseActivity<ViewModel : BaseViewModel, Binding : ViewDataBinding> :
     AppCompatActivity() {
@@ -18,6 +19,7 @@ abstract class BaseActivity<ViewModel : BaseViewModel, Binding : ViewDataBinding
     protected abstract val navController: NavController
     private val viewEventObserver = ViewEventObserver {
         onEventDispatched(it)
+        if (!it.handled) Timber.e("ViewEvent ${it.javaClass.simpleName} not handled! Override onEventDispatched(ViewEvent) to handle incoming events")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
