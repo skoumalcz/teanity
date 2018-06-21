@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class ModelImpl(
-        private val context: Context
+    private val context: Context
 ) : Model {
 
     override fun verifyEmail(email: String): Boolean {
@@ -28,13 +28,13 @@ class ModelImpl(
         } else {
             Completable.error(IllegalStateException())
         }
-                .delay(1000, TimeUnit.MILLISECONDS, Schedulers.computation(), true)
-                .doOnComplete { Config.token = "token" }
+            .delay(1000, TimeUnit.MILLISECONDS, Schedulers.computation(), true)
+            .doOnComplete { Config.token = "token" }
     }
 
     override fun logout(): Completable {
         return Completable.complete()
-                .delay(1000, TimeUnit.MILLISECONDS)
-                .doOnComplete { Config.token = "" }
+            .delay(1000, TimeUnit.MILLISECONDS)
+            .doOnComplete { Config.token = "" }
     }
 }

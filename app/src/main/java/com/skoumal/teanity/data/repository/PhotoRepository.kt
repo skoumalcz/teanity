@@ -6,7 +6,7 @@ import io.reactivex.Single
 
 
 class PhotoRepository(
-        private val api: ApiServices
+    private val api: ApiServices
 ) {
 
     fun getPhotos(page: Int = 1, perPage: Int = 10): Single<List<Photo>> = api.getPhotos(page, perPage)

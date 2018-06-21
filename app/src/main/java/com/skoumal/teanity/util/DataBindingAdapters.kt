@@ -33,9 +33,9 @@ fun setImageFromUrl(view: ImageView, url: String?, transformation: Int) {
     val options = RequestOptions().applyTransformation(transformation)
 
     GlideApp.with(view.context)
-            .load(url)
-            .apply(options)
-            .into(view)
+        .load(url)
+        .apply(options)
+        .into(view)
 }
 
 fun RequestOptions.applyTransformation(transformation: Int): RequestOptions = when (transformation) {

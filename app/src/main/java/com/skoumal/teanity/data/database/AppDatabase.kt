@@ -5,8 +5,8 @@ import android.arch.persistence.room.RoomDatabase
 import com.skoumal.teanity.model.entity.DbEntity
 
 @Database(
-        version = 1,
-        entities = [DbEntity::class]
+    version = 1,
+    entities = [DbEntity::class]
 )
 abstract class AppDatabase : RoomDatabase() {
 

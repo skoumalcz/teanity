@@ -33,9 +33,9 @@ fun createOkHttpClient(tokenInterceptor: TokenInterceptor): OkHttpClient {
     }
 
     return OkHttpClient.Builder()
-            .addInterceptor(tokenInterceptor)
-            .addInterceptor(httpLoggingInterceptor)
-            .build()
+        .addInterceptor(tokenInterceptor)
+        .addInterceptor(httpLoggingInterceptor)
+        .build()
 }
 
 fun createConverterFactory(): Converter.Factory {
@@ -48,19 +48,19 @@ fun createCallAdapterFactory(): CallAdapter.Factory {
 }
 
 fun createRetrofit(
-        okHttpClient: OkHttpClient,
-        converterFactory: Converter.Factory,
-        callAdapterFactory: CallAdapter.Factory
+    okHttpClient: OkHttpClient,
+    converterFactory: Converter.Factory,
+    callAdapterFactory: CallAdapter.Factory
 ): Retrofit.Builder {
     return Retrofit.Builder()
-            .addConverterFactory(converterFactory)
-            .addCallAdapterFactory(callAdapterFactory)
-            .client(okHttpClient)
+        .addConverterFactory(converterFactory)
+        .addCallAdapterFactory(callAdapterFactory)
+        .client(okHttpClient)
 }
 
 inline fun <reified T> createApiService(retrofitBuilder: Retrofit.Builder, baseUrl: String): T {
     return retrofitBuilder
-            .baseUrl(baseUrl)
-            .build()
-            .create(T::class.java)
+        .baseUrl(baseUrl)
+        .build()
+        .create(T::class.java)
 }

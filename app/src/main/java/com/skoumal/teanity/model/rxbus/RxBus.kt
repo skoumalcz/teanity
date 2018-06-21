@@ -19,15 +19,15 @@ class RxBus {
 
     inline fun <reified T : Event> register(noinline predicate: (T) -> Boolean = { true }): Observable<T> {
         return bus
-                .ofType(T::class.java)
-                .filter(predicate)
+            .ofType(T::class.java)
+            .filter(predicate)
     }
 
     fun register(eventId: Int): Observable<Int> {
         return bus
-                .ofType(SimpleEvent::class.java)
-                .map { it.eventId }
-                .filter { it == eventId }
+            .ofType(SimpleEvent::class.java)
+            .map { it.eventId }
+            .filter { it == eventId }
     }
 
     interface Event
