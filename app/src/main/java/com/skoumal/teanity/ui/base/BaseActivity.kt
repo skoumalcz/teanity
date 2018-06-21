@@ -4,10 +4,10 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import androidx.navigation.NavController
+import com.skoumal.teanity.BR
 import com.skoumal.teanity.ui.events.ViewEvent
 import com.skoumal.teanity.ui.events.ViewEventObserver
 import com.skoumal.teanity.util.setBindingContentView
-import me.tatarka.bindingcollectionadapter2.BR
 
 abstract class BaseActivity<ViewModel : BaseViewModel, Binding : ViewDataBinding> :
     AppCompatActivity() {
