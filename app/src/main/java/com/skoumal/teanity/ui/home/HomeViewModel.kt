@@ -1,26 +1,20 @@
 package com.skoumal.teanity.ui.home
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import com.skoumal.teanity.BR
 import com.skoumal.teanity.data.repository.PhotoRepository
 import com.skoumal.teanity.model.entity.ComparableRvItem
 import com.skoumal.teanity.model.entity.LoadingRvItem
 import com.skoumal.teanity.model.entity.Photo
 import com.skoumal.teanity.model.entity.PhotoRvItem
 import com.skoumal.teanity.ui.base.LoadingViewModel
-import com.skoumal.teanity.ui.events.ViewEvent
 import com.skoumal.teanity.util.DiffObservableList
 import com.skoumal.teanity.util.applySchedulers
-import me.tatarka.bindingcollectionadapter2.BR
 import me.tatarka.bindingcollectionadapter2.OnItemBind
 import java.util.concurrent.TimeUnit
 
 class HomeViewModel(
         private val photoRepository: PhotoRepository
 ) : LoadingViewModel() {
-
-    private val _viewEvents = MutableLiveData<ViewEvent>()
-    val viewEvents: LiveData<ViewEvent> get() = _viewEvents
 
     val items = DiffObservableList(object: DiffObservableList.Callback<ComparableRvItem> {
         override fun areItemsTheSame(oldItem: ComparableRvItem, newItem: ComparableRvItem) =
@@ -67,6 +61,7 @@ class HomeViewModel(
                         last?.failed?.set(true)
                     }
                 })
+                .add()
     }
 
     fun loadMoreItems() {
@@ -85,6 +80,6 @@ class HomeViewModel(
     }
 
     fun photoClicked(photo: Photo) {
-        _viewEvents.value = NavigateToPhotoDetailEvent(photo)
+        NavigateToPhotoDetailEvent(photo).publish()
     }
 }
