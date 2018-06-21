@@ -19,12 +19,12 @@ class TokenInterceptor : Interceptor {
         if (request.header(NO_AUTH_HEADER_NAME) == null) {
             val token = "Client-ID ${Constants.API_ACCESS_KEY}"
             request = request.newBuilder()
-                    .addHeader("Authorization", token)
-                    .build()
+                .addHeader("Authorization", token)
+                .build()
         } else {
             request = request.newBuilder()
-                    .removeHeader(NO_AUTH_HEADER_NAME)
-                    .build()
+                .removeHeader(NO_AUTH_HEADER_NAME)
+                .build()
         }
 
         return chain.proceed(request)

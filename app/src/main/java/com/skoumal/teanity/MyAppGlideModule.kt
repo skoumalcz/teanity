@@ -28,8 +28,8 @@ class MyAppGlideModule : AppGlideModule() {
         }
 
         val client = OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build()
+            .addInterceptor(interceptor)
+            .build()
 
         val factory = OkHttpUrlLoader.Factory(client)
 

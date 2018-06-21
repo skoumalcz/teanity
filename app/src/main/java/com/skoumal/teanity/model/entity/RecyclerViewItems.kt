@@ -36,10 +36,10 @@ class PhotoRvItem(val photo: Photo) : ComparableRvItem() {
 }
 
 class LoadingRvItem(
-        val failText: String,
-        val failActionText: String,
-        private val failAction: () -> Unit,
-        isFailed: Boolean = false
+    val failText: String,
+    val failActionText: String,
+    private val failAction: () -> Unit,
+    isFailed: Boolean = false
 ) : ComparableRvItem() {
 
     override val layoutRes = R.layout.item_loading_more

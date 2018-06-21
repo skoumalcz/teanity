@@ -10,8 +10,8 @@ import com.skoumal.teanity.ui.events.SnackbarEvent
 import com.skoumal.teanity.util.applySchedulers
 
 class LoginEmailViewModel(
-        private val model: Model,
-        private val resources: Resources
+    private val model: Model,
+    private val resources: Resources
 ) : BaseViewModel() {
 
     val email = ObservableField("")
@@ -25,16 +25,16 @@ class LoginEmailViewModel(
             } else {
                 emailError.set("")
                 model.login(email)
-                        .applySchedulers()
-                        .doOnSubscribe { loginInProgress.set(true) }
-                        .subscribe({
-                            loginInProgress.set(false)
-                            loginSucceeded()
-                        }, {
-                            loginInProgress.set(false)
-                            loginFailed()
-                        })
-                        .add()
+                    .applySchedulers()
+                    .doOnSubscribe { loginInProgress.set(true) }
+                    .subscribe({
+                        loginInProgress.set(false)
+                        loginSucceeded()
+                    }, {
+                        loginInProgress.set(false)
+                        loginFailed()
+                    })
+                    .add()
             }
         }
     }

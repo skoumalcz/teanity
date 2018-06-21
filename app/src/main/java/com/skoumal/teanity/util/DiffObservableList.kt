@@ -13,8 +13,8 @@ import kotlin.collections.ArrayList
  * @param detectMoves True if DiffUtil should try to detect moved items, false otherwise.
  */
 open class DiffObservableList<T>(
-        private val callback: Callback<T>,
-        private val detectMoves: Boolean = true
+    private val callback: Callback<T>,
+    private val detectMoves: Boolean = true
 ) : AbstractList<T>(), ObservableList<T> {
 
     private val LIST_LOCK = Object()

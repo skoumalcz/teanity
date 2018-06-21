@@ -11,7 +11,7 @@ val databaseModule = applicationContext {
 }
 
 fun createDatabase(context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.NAME).build()
+    Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.NAME).build()
 
 fun createDbEntityDao(db: AppDatabase) =
-        db.dbEntityDao()
+    db.dbEntityDao()

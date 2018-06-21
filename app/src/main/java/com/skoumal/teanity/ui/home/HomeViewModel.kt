@@ -13,15 +13,15 @@ import me.tatarka.bindingcollectionadapter2.OnItemBind
 import java.util.concurrent.TimeUnit
 
 class HomeViewModel(
-        private val photoRepository: PhotoRepository
+    private val photoRepository: PhotoRepository
 ) : LoadingViewModel() {
 
-    val items = DiffObservableList(object: DiffObservableList.Callback<ComparableRvItem> {
+    val items = DiffObservableList(object : DiffObservableList.Callback<ComparableRvItem> {
         override fun areItemsTheSame(oldItem: ComparableRvItem, newItem: ComparableRvItem) =
-                oldItem.itemSameAs(newItem)
+            oldItem.itemSameAs(newItem)
 
         override fun areContentsTheSame(oldItem: ComparableRvItem, newItem: ComparableRvItem) =
-                oldItem.contentSameAs(newItem)
+            oldItem.contentSameAs(newItem)
     })
     val itemBinding = OnItemBind<ComparableRvItem> { itemBinding, _, item ->
         item.bind(itemBinding)
@@ -39,29 +39,29 @@ class HomeViewModel(
 
     private fun loadItems(page: Int = 1) {
         photoRepository.getPhotos(page = page)
-                .delay(1000, TimeUnit.MILLISECONDS)
-                .applySchedulers()
-                .doOnSubscribe {
-                    if (page == 1) {
-                        setLoading()
-                    } else {
-                        val last = items.lastOrNull() as? LoadingRvItem
-                        last?.failed?.set(false)
-                    }
+            .delay(1000, TimeUnit.MILLISECONDS)
+            .applySchedulers()
+            .doOnSubscribe {
+                if (page == 1) {
+                    setLoading()
+                } else {
+                    val last = items.lastOrNull() as? LoadingRvItem
+                    last?.failed?.set(false)
                 }
-                .subscribe({
-                    setLoaded()
-                    loadedPage = page
-                    itemsLoaded(it)
-                }, {
-                    if (page == 1) {
-                        setLoadingFailed()
-                    } else {
-                        val last = items.lastOrNull() as? LoadingRvItem
-                        last?.failed?.set(true)
-                    }
-                })
-                .add()
+            }
+            .subscribe({
+                setLoaded()
+                loadedPage = page
+                itemsLoaded(it)
+            }, {
+                if (page == 1) {
+                    setLoadingFailed()
+                } else {
+                    val last = items.lastOrNull() as? LoadingRvItem
+                    last?.failed?.set(true)
+                }
+            })
+            .add()
     }
 
     fun loadMoreItems() {
