@@ -1,5 +1,6 @@
 package com.skoumal.teanity.ui.home
 
+import com.skoumal.teanity.BR
 import com.skoumal.teanity.data.repository.PhotoRepository
 import com.skoumal.teanity.model.entity.ComparableRvItem
 import com.skoumal.teanity.model.entity.LoadingRvItem
@@ -8,7 +9,6 @@ import com.skoumal.teanity.model.entity.PhotoRvItem
 import com.skoumal.teanity.ui.base.LoadingViewModel
 import com.skoumal.teanity.util.DiffObservableList
 import com.skoumal.teanity.util.applySchedulers
-import me.tatarka.bindingcollectionadapter2.BR
 import me.tatarka.bindingcollectionadapter2.OnItemBind
 import java.util.concurrent.TimeUnit
 
