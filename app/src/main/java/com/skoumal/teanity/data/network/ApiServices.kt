@@ -20,7 +20,7 @@ interface ApiServices {
 
     @GET("photos/")
     fun getPhotos(
-            @Query("page") page: Int = 1,
-            @Query("per_page") perPage: Int = 10
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 10
     ): Single<List<Photo>>
 }

@@ -6,9 +6,9 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 
 abstract class EndlessRecyclerScrollListener(
-        private val layoutManager: RecyclerView.LayoutManager,
-        private val direction: Direction = Direction.BOTTOM,
-        visibleRowsThreshold: Int = VISIBLE_THRESHOLD
+    private val layoutManager: RecyclerView.LayoutManager,
+    private val direction: Direction = Direction.BOTTOM,
+    visibleRowsThreshold: Int = VISIBLE_THRESHOLD
 ) : RecyclerView.OnScrollListener() {
 
     enum class Direction {
