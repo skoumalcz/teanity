@@ -11,6 +11,7 @@ import com.skoumal.teanity.BR
 import com.skoumal.teanity.ui.events.ViewEvent
 import com.skoumal.teanity.ui.events.ViewEventObserver
 import com.skoumal.teanity.util.inflateBindingView
+import timber.log.Timber
 
 abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding> : Fragment() {
 
@@ -20,6 +21,7 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding
     protected val navController by lazy { binding.root.findNavController() }
     private val viewEventObserver = ViewEventObserver {
         onEventDispatched(it)
+        if (!it.handled) Timber.e("ViewEvent ${it.javaClass.simpleName} not handled! Override onEventDispatched(ViewEvent) to handle incoming events")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
