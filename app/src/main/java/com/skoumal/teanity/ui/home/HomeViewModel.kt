@@ -16,14 +16,23 @@ class HomeViewModel(
     private val photoRepository: PhotoRepository
 ) : LoadingViewModel() {
 
-    val items = DiffObservableList(object : DiffObservableList.Callback<ComparableRvItem> {
-        override fun areItemsTheSame(oldItem: ComparableRvItem, newItem: ComparableRvItem) =
-            oldItem.itemSameAs(newItem)
-
-        override fun areContentsTheSame(oldItem: ComparableRvItem, newItem: ComparableRvItem) =
-            oldItem.contentSameAs(newItem)
-    })
-    val itemBinding = OnItemBind<ComparableRvItem> { itemBinding, _, item ->
+    val items = DiffObservableList(ComparableRvItem.callback(
+        areItemsTheSame = { oldItem, newItem ->
+            when (oldItem) {
+                is PhotoRvItem -> oldItem.itemSameAs(newItem as PhotoRvItem)
+                is LoadingRvItem -> oldItem.itemSameAs(newItem as LoadingRvItem)
+                else -> false
+            }
+        },
+        areContentsTheSame = { oldItem, newItem ->
+            when (oldItem) {
+                is PhotoRvItem -> oldItem.contentSameAs(newItem as PhotoRvItem)
+                is LoadingRvItem -> oldItem.contentSameAs(newItem as LoadingRvItem)
+                else -> false
+            }
+        }
+    ))
+    val itemBinding = OnItemBind<ComparableRvItem<*>> { itemBinding, _, item ->
         item.bind(itemBinding)
         itemBinding.bindExtra(BR.viewModel, this@HomeViewModel)
     }
@@ -69,7 +78,7 @@ class HomeViewModel(
     }
 
     private fun itemsLoaded(newItems: List<Photo>) {
-        val listItems = mutableListOf<ComparableRvItem>()
+        val listItems = mutableListOf<ComparableRvItem<*>>()
 
         listItems += newItems.map { PhotoRvItem(it) }
 
