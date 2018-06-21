@@ -3,6 +3,7 @@ package com.skoumal.teanity.ui.login
 import android.content.res.Resources
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import com.evernote.android.state.State
 import com.skoumal.teanity.R
 import com.skoumal.teanity.model.Model
 import com.skoumal.teanity.ui.base.BaseViewModel
@@ -14,8 +15,10 @@ class LoginEmailViewModel(
     private val resources: Resources
 ) : BaseViewModel() {
 
-    val email = ObservableField("")
-    val emailError = ObservableField("")
+    @State
+    var email = ObservableField("")
+    @State
+    var emailError = ObservableField("")
     val loginInProgress = ObservableBoolean(false)
 
     fun loginButtonClicked() {
