@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.skoumal.teanity.BR
 import com.skoumal.teanity.ui.events.ViewEvent
 import com.skoumal.teanity.ui.events.ViewEventObserver
 import com.skoumal.teanity.util.inflateBindingView
-import me.tatarka.bindingcollectionadapter2.BR
 
 abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding> : Fragment() {
 
