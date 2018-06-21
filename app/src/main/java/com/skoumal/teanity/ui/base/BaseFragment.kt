@@ -49,7 +49,7 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding
         }
     }
 
-    abstract fun onEventDispatched(event: ViewEvent)
+    open fun onEventDispatched(event: ViewEvent) {}
 
     open fun Binding.unbindViews() {}
 }
