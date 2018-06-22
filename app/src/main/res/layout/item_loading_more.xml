@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="com.skoumal.teanity.model.entity.LoadingRvItem" />
+            type="com.skoumal.teanity.example.model.entity.LoadingRvItem" />
     </data>
 
     <FrameLayout

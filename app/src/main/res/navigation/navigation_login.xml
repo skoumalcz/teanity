@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/loginEmailFragment"
-        android:name="com.skoumal.teanity.ui.login.LoginEmailFragment"
+        android:name="com.skoumal.teanity.example.ui.login.LoginEmailFragment"
         android:label="LoginEmailFragment">
         <action
             android:id="@+id/mainActivity"
@@ -13,6 +13,6 @@
     </fragment>
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.skoumal.teanity.ui.MainActivity"
+        android:name="com.skoumal.teanity.example.ui.MainActivity"
         android:label="MainActivity" />
 </navigation>

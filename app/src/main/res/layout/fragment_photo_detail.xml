@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.skoumal.teanity.ui.photodetail.PhotoDetailViewModel" />
+            type="com.skoumal.teanity.example.ui.photodetail.PhotoDetailViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout

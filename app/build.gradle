@@ -20,12 +20,18 @@ kapt {
     }
 }
 
-def app_name = "Teanity"
+afterEvaluate {
+    // https://youtrack.jetbrains.com/issue/KT-24915#focus=streamItem-27-2914947-0-0
+    kaptDebugKotlin.dependsOn dataBindingExportFeaturePackageIdsDebug
+    //kaptReleaseKotlin.dependsOn dataBindingExportFeaturePackageIdsRelease
+}
+
+def app_name = "Teanity Example"
 
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.skoumal.teanity"
+        applicationId "com.skoumal.teanity.example"
         minSdkVersion 16
         targetSdkVersion 28
 
@@ -113,6 +119,8 @@ android {
 }
 
 dependencies {
+    implementation project(':teanity')
+
     // TESTING
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'

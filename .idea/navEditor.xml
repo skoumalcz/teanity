@@ -3,21 +3,6 @@
   <component name="navEditor-manualLayoutAlgorithm2">
     <option name="myPositions">
       <map>
-        <entry key="navigation.xml">
-          <value>
-            <LayoutPositions>
-              <option name="myPositions">
-                <map>
-                  <entry key="listFragment">
-                    <value>
-                      <LayoutPositions />
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </LayoutPositions>
-          </value>
-        </entry>
         <entry key="navigation_login.xml">
           <value>
             <LayoutPositions>
@@ -26,12 +11,6 @@
                   <entry key="loginEmailFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-105" />
-                            <option name="y" value="-9" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="mainActivity">
@@ -46,14 +25,7 @@
                   </entry>
                   <entry key="mainActivity">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="144" />
-                            <option name="y" value="-9" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                 </map>
