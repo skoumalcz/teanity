@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.skoumal.teanity.ui.login.LoginEmailViewModel" />
+            type="com.skoumal.teanity.example.ui.login.LoginEmailViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout

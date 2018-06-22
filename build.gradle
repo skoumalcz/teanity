@@ -4,7 +4,7 @@ buildscript {
             'supportlib'       : '27.1.1',
             'playServices'     : '15.0.1',
             'constraintLayout' : '1.1.2',
-            'room'             : '1.1.0',
+            'room'             : '1.1.1',
             'lifecycle'        : '1.1.1',
             'navigation'       : '1.0.0-alpha02',
             'gradlePlugin'     : '3.2.0-alpha18',

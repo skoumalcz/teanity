@@ -6,15 +6,15 @@
 
     <data>
 
-        <import type="com.skoumal.teanity.util.Transformations" />
+        <import type="com.skoumal.teanity.databinding.Transformations" />
 
         <variable
             name="item"
-            type="com.skoumal.teanity.model.entity.PhotoRvItem" />
+            type="com.skoumal.teanity.example.model.entity.PhotoRvItem" />
 
         <variable
             name="viewModel"
-            type="com.skoumal.teanity.ui.home.HomeViewModel" />
+            type="com.skoumal.teanity.example.ui.home.HomeViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

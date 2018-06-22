@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.skoumal.teanity.ui.home.HomeFragment"
+        android:name="com.skoumal.teanity.example.ui.home.HomeFragment"
         android:label="HomeFragment">
         <action
             android:id="@+id/photoDetailFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.skoumal.teanity.ui.settings.SettingsFragment"
+        android:name="com.skoumal.teanity.example.ui.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -23,12 +23,12 @@
     </fragment>
     <activity
         android:id="@+id/loginActivity"
-        android:name="com.skoumal.teanity.ui.login.LoginActivity"
+        android:name="com.skoumal.teanity.example.ui.login.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
     <fragment
         android:id="@+id/photoDetailFragment"
-        android:name="com.skoumal.teanity.ui.photodetail.PhotoDetailFragment"
+        android:name="com.skoumal.teanity.example.ui.photodetail.PhotoDetailFragment"
         android:label="PhotoDetailFragment">
         <argument
             android:name="photo_id"
