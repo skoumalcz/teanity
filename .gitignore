@@ -9,3 +9,7 @@
 /captures
 .externalNativeBuild
 /.idea/caches/build_file_checksums.ser
+
+# Exclude all dictionaries but project.xml
+/.idea/dictionaries/*
+!/.idea/dictionaries/project.xml
