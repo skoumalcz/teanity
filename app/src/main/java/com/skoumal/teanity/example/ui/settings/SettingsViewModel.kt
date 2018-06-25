@@ -21,7 +21,7 @@ class SettingsViewModel(
     }
 
     private fun logoutSuccess() {
-        NavigateToLoginActivityEvent().publish()
+        SettingsFragment.EVENT_NAVIGATE_TO_LOGIN_ACTIVITY.publish()
     }
 
     private fun logoutFailed(throwable: Throwable) {

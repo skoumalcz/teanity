@@ -12,6 +12,6 @@ class PhotoDetailViewModel : TeanityViewModel() {
     }
 
     fun backButtonClicked() {
-        BackButtonClickedEvent().publish()
+        PhotoDetailFragment.EVENT_BACK_BUTTON_CLICKED.publish()
     }
 }

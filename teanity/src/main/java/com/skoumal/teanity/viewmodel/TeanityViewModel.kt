@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.os.Bundle
 import com.evernote.android.state.StateSaver
+import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -30,6 +31,10 @@ abstract class TeanityViewModel : ViewModel() {
 
     fun <Event : ViewEvent> Event.publish() {
         _viewEvents.value = this
+    }
+
+    fun Int.publish() {
+        _viewEvents.value = SimpleViewEvent(this)
     }
 
     fun Disposable.add() {
