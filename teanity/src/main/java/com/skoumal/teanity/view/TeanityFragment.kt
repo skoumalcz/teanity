@@ -5,7 +5,6 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,12 +23,6 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected val navController by lazy { binding.root.findNavController() }
     private val viewEventObserver = ViewEventObserver {
         onEventDispatched(it)
-        if (!it.handled) {
-            Log.w(
-                "TeanityFragment",
-                "ViewEvent ${it.javaClass.simpleName} not handled! Override onEventDispatched(ViewEvent) to handle incoming events"
-            )
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

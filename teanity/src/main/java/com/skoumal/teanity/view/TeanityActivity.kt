@@ -5,7 +5,6 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import androidx.navigation.NavController
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.BR
@@ -22,12 +21,6 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected abstract val navController: NavController
     private val viewEventObserver = ViewEventObserver {
         onEventDispatched(it)
-        if (!it.handled) {
-            Log.w(
-                "TeanityActivity",
-                "ViewEvent ${it.javaClass.simpleName} not handled! Override onEventDispatched(ViewEvent) to handle incoming events"
-            )
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
