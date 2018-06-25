@@ -3,20 +3,19 @@ package com.skoumal.teanity.view
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.viewevents.SimpleViewEvent
-import com.skoumal.teanity.viewevents.ViewEvent
 import com.skoumal.teanity.viewevents.ViewEventObserver
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
-abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> : Fragment() {
+abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
+    Fragment(),
+    TeanityView<Binding> {
 
     protected lateinit var binding: Binding
     protected abstract val layoutRes: Int
@@ -64,30 +63,13 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
         saveState(outState)
     }
 
-    open fun onEventDispatched(event: ViewEvent) {}
-
-    open fun onSimpleEventDispatched(event: Int) {}
-
-    open fun Binding.unbindViews() {}
-
-    /**
-     * Override this method if you have more viewModels or anything else you want to restore
-     * You should also override [saveState]
-     */
-    @CallSuper
-    open fun restoreState(savedInstanceState: Bundle?) {
-        StateSaver.restoreInstanceState(this, savedInstanceState)
-        viewModel.restoreState(savedInstanceState)
-    }
-
-    /**
-     * Override this method if you have more viewModels or anything else you want to save
-     * You should also override [restoreState]
-     */
-    @CallSuper
-    open fun saveState(outState: Bundle) {
-        StateSaver.saveInstanceState(this, outState);
+    override fun saveState(outState: Bundle) {
+        super.saveState(outState)
         viewModel.saveState(outState)
     }
 
+    override fun restoreState(savedInstanceState: Bundle?) {
+        super.restoreState(savedInstanceState)
+        viewModel.restoreState(savedInstanceState)
+    }
 }
