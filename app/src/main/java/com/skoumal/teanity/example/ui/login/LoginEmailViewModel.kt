@@ -2,12 +2,12 @@ package com.skoumal.teanity.example.ui.login
 
 import android.content.res.Resources
 import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
 import com.evernote.android.state.State
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.model.Model
 import com.skoumal.teanity.example.ui.events.SnackbarEvent
 import com.skoumal.teanity.extensions.applySchedulers
+import com.skoumal.teanity.util.KObservableField
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
 class LoginEmailViewModel(
@@ -16,17 +16,17 @@ class LoginEmailViewModel(
 ) : TeanityViewModel() {
 
     @State
-    var email = ObservableField("")
+    var email = KObservableField("")
     @State
-    var emailError = ObservableField("")
+    var emailError = KObservableField("")
     val loginInProgress = ObservableBoolean(false)
 
     fun loginButtonClicked() {
-        email.get().let { email ->
-            if (email == null || !model.verifyEmail(email)) {
-                emailError.set(resources.getString(R.string.login_email_error))
+        email.value.let { email ->
+            if (!model.verifyEmail(email)) {
+                emailError.value = resources.getString(R.string.login_email_error)
             } else {
-                emailError.set("")
+                emailError.value = ""
                 model.login(email)
                     .applySchedulers()
                     .doOnSubscribe { loginInProgress.set(true) }
