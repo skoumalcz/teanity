@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import androidx.navigation.NavController
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.BR
+import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEvent
 import com.skoumal.teanity.viewevents.ViewEventObserver
 import com.skoumal.teanity.viewmodel.TeanityViewModel
@@ -21,6 +22,9 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected abstract val navController: NavController
     private val viewEventObserver = ViewEventObserver {
         onEventDispatched(it)
+        if (it is SimpleViewEvent) {
+            onSimpleEventDispatched(it.event)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +55,19 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
         }
     }
 
+    /**
+     * Called for all [ViewEvent]s published by associated viewModel.
+     * For [SimpleViewEvent]s, both this and [onSimpleEventDispatched]
+     * methods are called - you can choose the way how you handle them.
+     */
     open fun onEventDispatched(event: ViewEvent) {}
+
+    /**
+     * Called for all [SimpleViewEvent]s published by associated viewModel.
+     * Both this and [onEventDispatched] methods are called - you can choose
+     * the way how you handle them.
+     */
+    open fun onSimpleEventDispatched(event: Int) {}
 
     open fun Binding.unbindViews() {}
 

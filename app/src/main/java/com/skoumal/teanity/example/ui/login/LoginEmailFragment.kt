@@ -16,7 +16,12 @@ class LoginEmailFragment : TeanityFragment<LoginEmailViewModel, FragmentLoginEma
     override fun onEventDispatched(event: ViewEvent) {
         when (event) {
             is SnackbarEvent -> snackbar(binding.root, event.text, event.length)
-            is NavigateToMainActivityEvent -> {
+        }
+    }
+
+    override fun onSimpleEventDispatched(event: Int) {
+        when (event) {
+            EVENT_NAVIGATE_TO_MAIN_ACTIVITY -> {
                 navController.navigate(LoginEmailFragmentDirections.mainActivity())
 
                 // This should be part of navigation action in XML,
@@ -25,6 +30,8 @@ class LoginEmailFragment : TeanityFragment<LoginEmailViewModel, FragmentLoginEma
             }
         }
     }
-}
 
-class NavigateToMainActivityEvent : ViewEvent()
+    companion object {
+        const val EVENT_NAVIGATE_TO_MAIN_ACTIVITY = 1
+    }
+}

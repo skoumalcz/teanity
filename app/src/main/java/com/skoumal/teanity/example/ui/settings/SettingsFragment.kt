@@ -3,7 +3,6 @@ package com.skoumal.teanity.example.ui.settings
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentSettingsBinding
 import com.skoumal.teanity.view.TeanityFragment
-import com.skoumal.teanity.viewevents.ViewEvent
 import org.koin.android.architecture.ext.viewModel
 
 class SettingsFragment : TeanityFragment<SettingsViewModel, FragmentSettingsBinding>() {
@@ -11,9 +10,9 @@ class SettingsFragment : TeanityFragment<SettingsViewModel, FragmentSettingsBind
     override val layoutRes: Int = R.layout.fragment_settings
     override val viewModel: SettingsViewModel by viewModel()
 
-    override fun onEventDispatched(event: ViewEvent) {
+    override fun onSimpleEventDispatched(event: Int) {
         when (event) {
-            is NavigateToLoginActivityEvent -> {
+            EVENT_NAVIGATE_TO_LOGIN_ACTIVITY -> {
                 navController.navigate(SettingsFragmentDirections.loginActivity())
 
                 // This should be part of navigation action in XML,
@@ -22,6 +21,8 @@ class SettingsFragment : TeanityFragment<SettingsViewModel, FragmentSettingsBind
             }
         }
     }
-}
 
-class NavigateToLoginActivityEvent : ViewEvent()
+    companion object {
+        const val EVENT_NAVIGATE_TO_LOGIN_ACTIVITY = 1
+    }
+}

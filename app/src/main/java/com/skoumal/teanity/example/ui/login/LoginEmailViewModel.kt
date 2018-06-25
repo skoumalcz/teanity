@@ -43,7 +43,7 @@ class LoginEmailViewModel(
     }
 
     private fun loginSucceeded() {
-        NavigateToMainActivityEvent().publish()
+        LoginEmailFragment.EVENT_NAVIGATE_TO_MAIN_ACTIVITY.publish()
     }
 
     private fun loginFailed() {

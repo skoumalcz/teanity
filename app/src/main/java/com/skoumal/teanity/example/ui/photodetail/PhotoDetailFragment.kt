@@ -5,7 +5,6 @@ import android.view.View
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentPhotoDetailBinding
 import com.skoumal.teanity.view.TeanityFragment
-import com.skoumal.teanity.viewevents.ViewEvent
 import org.koin.android.architecture.ext.viewModel
 
 class PhotoDetailFragment : TeanityFragment<PhotoDetailViewModel, FragmentPhotoDetailBinding>() {
@@ -21,11 +20,13 @@ class PhotoDetailFragment : TeanityFragment<PhotoDetailViewModel, FragmentPhotoD
         }
     }
 
-    override fun onEventDispatched(event: ViewEvent) {
+    override fun onSimpleEventDispatched(event: Int) {
         when (event) {
-            is BackButtonClickedEvent -> navController.navigateUp()
+            EVENT_BACK_BUTTON_CLICKED -> navController.navigateUp()
         }
     }
-}
 
-class BackButtonClickedEvent : ViewEvent()
+    companion object {
+        const val EVENT_BACK_BUTTON_CLICKED = 1
+    }
+}

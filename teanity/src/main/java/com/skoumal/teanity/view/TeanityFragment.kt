@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.BR
+import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEvent
 import com.skoumal.teanity.viewevents.ViewEventObserver
 import com.skoumal.teanity.viewmodel.TeanityViewModel
@@ -23,6 +24,9 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected val navController by lazy { binding.root.findNavController() }
     private val viewEventObserver = ViewEventObserver {
         onEventDispatched(it)
+        if (it is SimpleViewEvent) {
+            onSimpleEventDispatched(it.event)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +65,8 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     }
 
     open fun onEventDispatched(event: ViewEvent) {}
+
+    open fun onSimpleEventDispatched(event: Int) {}
 
     open fun Binding.unbindViews() {}
 
