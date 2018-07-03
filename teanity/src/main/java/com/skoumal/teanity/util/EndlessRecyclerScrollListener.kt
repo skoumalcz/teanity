@@ -5,11 +5,19 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 
-abstract class EndlessRecyclerScrollListener(
+class EndlessRecyclerScrollListener(
     private val layoutManager: RecyclerView.LayoutManager,
+    private val loadMore: (page: Int, totalItemsCount: Int, view: RecyclerView?) -> Unit,
     private val direction: Direction = Direction.BOTTOM,
     visibleRowsThreshold: Int = VISIBLE_THRESHOLD
 ) : RecyclerView.OnScrollListener() {
+
+    constructor(
+        layoutManager: RecyclerView.LayoutManager,
+        loadMore: () -> Unit,
+        direction: Direction = Direction.BOTTOM,
+        visibleRowsThreshold: Int = VISIBLE_THRESHOLD
+    ) : this(layoutManager, { _, _, _ -> loadMore() }, direction, visibleRowsThreshold)
 
     enum class Direction {
         TOP, BOTTOM
@@ -84,7 +92,7 @@ abstract class EndlessRecyclerScrollListener(
         // threshold should reflect how many total columns there are too
         if (!loading && shouldLoadMoreItems(visibleItemPosition, totalItemCount)) {
             currentPage++
-            onLoadMore(currentPage, totalItemCount, view)
+            loadMore(currentPage, totalItemCount, view)
             loading = true
         }
     }
@@ -100,7 +108,4 @@ abstract class EndlessRecyclerScrollListener(
         previousTotalItemCount = 0
         loading = true
     }
-
-    // Defines the process for actually loading more data based on page
-    abstract fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?)
 }

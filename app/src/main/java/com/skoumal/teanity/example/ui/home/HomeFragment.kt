@@ -1,7 +1,6 @@
 package com.skoumal.teanity.example.ui.home
 
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import com.skoumal.teanity.example.R
@@ -18,16 +17,15 @@ class HomeFragment : TeanityFragment<HomeViewModel, FragmentHomeBinding>() {
     override val layoutRes: Int = R.layout.fragment_home
     override val viewModel: HomeViewModel by sharedViewModel()
 
-    private val recyclerScrollListener by lazy {
-        object : EndlessRecyclerScrollListener(binding.recycler.layoutManager) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                viewModel.loadMoreItems()
-            }
-        }
-    }
+    private var recyclerScrollListener: EndlessRecyclerScrollListener? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        recyclerScrollListener = EndlessRecyclerScrollListener(
+            binding.recycler.layoutManager,
+            viewModel::loadMoreItems
+        )
 
         binding.recycler.apply {
             addItemDecoration(
@@ -39,7 +37,7 @@ class HomeFragment : TeanityFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     override fun FragmentHomeBinding.unbindViews() {
-        recycler.removeOnScrollListener(recyclerScrollListener)
+        binding.recycler.removeOnScrollListener(recyclerScrollListener)
     }
 
     override fun onEventDispatched(event: ViewEvent) {
