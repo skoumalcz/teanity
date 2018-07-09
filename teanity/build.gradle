@@ -34,24 +34,30 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
-    implementation "com.android.support:support-v4:${versions.supportlib}"
-    implementation "com.android.support:appcompat-v7:${versions.supportlib}"
-    implementation "androidx.core:core-ktx:0.3"
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation "android.arch.navigation:navigation-fragment-ktx:${versions.navigation}"
-    implementation "android.arch.navigation:navigation-ui-ktx:${versions.navigation}"
-    implementation "android.arch.persistence.room:runtime:${versions.room}"
+    /* === SUPPORT === */
+    api "com.android.support:support-v4:${versions.supportlib}"
+    api "com.android.support:appcompat-v7:${versions.supportlib}"
 
-    implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:${versions.bca}"
+    /* === CORE === */
+    api "androidx.core:core-ktx:${versions.ktx}"
+    api "android.arch.lifecycle:extensions:${versions.lifecycle}"
+    api "android.arch.navigation:navigation-fragment-ktx:${versions.navigation}"
+    api "android.arch.navigation:navigation-ui-ktx:${versions.navigation}"
 
-    implementation "io.reactivex.rxjava2:rxkotlin:${versions.rxkotlin}"
-    implementation "io.reactivex.rxjava2:rxandroid:${versions.rxandroid}"
+    /* === DB === */
+    api "android.arch.persistence.room:runtime:${versions.room}"
 
-    implementation "com.evernote:android-state:${versions.state}"
+    /* === RX === */
+    api "io.reactivex.rxjava2:rxkotlin:${versions.rxkotlin}"
+    api "io.reactivex.rxjava2:rxandroid:${versions.rxandroid}"
 
-    implementation 'com.karumi:dexter:4.2.0'
+    /* === EASING === */
+    api "com.evernote:android-state:${versions.state}"
+    api "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:${versions.bca}"
+    api "com.karumi:dexter:${versions.dexter}"
 
-    implementation "com.github.bumptech.glide:glide:${versions.glide}"
+    /* === UI === */
+    api "com.github.bumptech.glide:glide:${versions.glide}"
 }
