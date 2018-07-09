@@ -19,27 +19,20 @@ abstract class ComparableRvItem<in T> : RvItem() {
 
     abstract fun itemSameAs(other: T): Boolean
     abstract fun contentSameAs(other: T): Boolean
+    open fun genericItemSameAs(other: Any): Boolean = other::class == this::class && itemSameAs(other as T)
+    open fun genericContentSameAs(other: Any): Boolean = other::class == this::class && contentSameAs(other as T)
 
     companion object {
-        fun callback(
-            areItemsTheSame: (ComparableRvItem<*>, ComparableRvItem<*>) -> Boolean,
-            areContentsTheSame: (ComparableRvItem<*>, ComparableRvItem<*>) -> Boolean
-        ) = object : DiffObservableList.Callback<ComparableRvItem<*>> {
+        val callback = object : DiffObservableList.Callback<ComparableRvItem<*>> {
             override fun areItemsTheSame(
                 oldItem: ComparableRvItem<*>,
                 newItem: ComparableRvItem<*>
-            ) = when {
-                oldItem::class == newItem::class -> areItemsTheSame(oldItem, newItem)
-                else -> false
-            }
+            ) = oldItem.genericItemSameAs(newItem)
 
             override fun areContentsTheSame(
                 oldItem: ComparableRvItem<*>,
                 newItem: ComparableRvItem<*>
-            ) = when {
-                oldItem::class == newItem::class -> areContentsTheSame(oldItem, newItem)
-                else -> false
-            }
+            ) = newItem.genericContentSameAs(newItem)
         }
     }
 }
