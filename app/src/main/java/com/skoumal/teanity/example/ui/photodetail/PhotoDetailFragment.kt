@@ -5,7 +5,7 @@ import android.view.View
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentPhotoDetailBinding
 import com.skoumal.teanity.view.TeanityFragment
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class PhotoDetailFragment : TeanityFragment<PhotoDetailViewModel, FragmentPhotoDetailBinding>() {
 

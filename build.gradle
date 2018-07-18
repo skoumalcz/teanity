@@ -18,7 +18,7 @@ buildscript {
             'playServices'    : '15.0.1',
             'constraintLayout': '1.1.2',
             'gradlePlugin'    : '3.3.0-alpha03',
-            'koin'            : '0.9.3',
+            'koin'            : '1.0.0-beta-3',
             'retrofit'        : '2.4.0',
             'okhttp'          : '3.10.0',
             'moshi'           : '1.6.0',

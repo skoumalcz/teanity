@@ -10,7 +10,7 @@ import com.skoumal.teanity.util.EndlessRecyclerScrollListener
 import com.skoumal.teanity.util.KItemDecoration
 import com.skoumal.teanity.view.TeanityFragment
 import com.skoumal.teanity.viewevents.ViewEvent
-import org.koin.android.architecture.ext.sharedViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : TeanityFragment<HomeViewModel, FragmentHomeBinding>() {
 
