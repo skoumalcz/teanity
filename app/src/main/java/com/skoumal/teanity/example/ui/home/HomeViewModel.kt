@@ -16,23 +16,7 @@ class HomeViewModel(
     private val photoRepository: PhotoRepository
 ) : LoadingViewModel() {
 
-    val items = DiffObservableList(
-        ComparableRvItem.callback(
-            areItemsTheSame = { oldItem, newItem ->
-                when (oldItem) {
-                    is PhotoRvItem -> oldItem.itemSameAs(newItem as PhotoRvItem)
-                    is LoadingRvItem -> oldItem.itemSameAs(newItem as LoadingRvItem)
-                    else -> false
-                }
-            },
-            areContentsTheSame = { oldItem, newItem ->
-                when (oldItem) {
-                    is PhotoRvItem -> oldItem.contentSameAs(newItem as PhotoRvItem)
-                    is LoadingRvItem -> oldItem.contentSameAs(newItem as LoadingRvItem)
-                    else -> false
-                }
-            }
-        ))
+    val items = DiffObservableList(ComparableRvItem.callback)
     val itemBinding = OnItemBind<ComparableRvItem<*>> { itemBinding, _, item ->
         item.bind(itemBinding)
         itemBinding.bindExtra(BR.viewModel, this@HomeViewModel)
