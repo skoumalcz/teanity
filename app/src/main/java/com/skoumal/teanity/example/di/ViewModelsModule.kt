@@ -14,6 +14,6 @@ val viewModelModules = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel(get()) }
     viewModel { SettingsViewModel(get()) }
-    viewModel { PhotoDetailViewModel() }
+    viewModel { (photoId: String) -> PhotoDetailViewModel(photoId) }
     viewModel { LoginViewModel() }
 }
