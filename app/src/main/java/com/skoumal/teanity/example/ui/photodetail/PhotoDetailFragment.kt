@@ -16,7 +16,7 @@ class PhotoDetailFragment : TeanityFragment<PhotoDetailViewModel, FragmentPhotoD
         super.onViewCreated(view, savedInstanceState)
 
         PhotoDetailFragmentArgs.fromBundle(arguments).run {
-            viewModel.setArguments(photo_id)
+            viewModel.setArguments(photoId)
         }
     }
 
