@@ -1,11 +1,11 @@
 buildscript {
     ext.versions = [
             /* === LIB === */
-            'kotlin'          : '1.2.50',
+            'kotlin'          : '1.2.51',
             'supportlib'      : '27.1.1',
             'room'            : '1.1.1',
             'lifecycle'       : '1.1.1',
-            'navigation'      : '1.0.0-alpha02',
+            'navigation'      : '1.0.0-alpha03',
             'bca'             : '2.3.0-beta1',
             'glide'           : '4.7.1',
             'state'           : '1.3.1',
@@ -17,7 +17,7 @@ buildscript {
             /* === APP === */
             'playServices'    : '15.0.1',
             'constraintLayout': '1.1.2',
-            'gradlePlugin'    : '3.2.0-alpha18',
+            'gradlePlugin'    : '3.3.0-alpha03',
             'koin'            : '0.9.3',
             'retrofit'        : '2.4.0',
             'okhttp'          : '3.10.0',
