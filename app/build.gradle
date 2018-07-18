@@ -141,7 +141,7 @@ dependencies {
     // DEPENDENCY INJECTION
     implementation "org.koin:koin-core:${versions.koin}"
     implementation "org.koin:koin-android:${versions.koin}"
-    implementation "org.koin:koin-android-architecture:${versions.koin}"
+    implementation "org.koin:koin-android-viewmodel:${versions.koin}"
 
     // NETWORKING
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"

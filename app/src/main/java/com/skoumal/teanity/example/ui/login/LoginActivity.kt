@@ -4,7 +4,7 @@ import androidx.navigation.findNavController
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.ActivityLoginBinding
 import com.skoumal.teanity.view.TeanityActivity
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginActivity : TeanityActivity<LoginViewModel, ActivityLoginBinding>() {
     override val layoutRes: Int = R.layout.activity_login
