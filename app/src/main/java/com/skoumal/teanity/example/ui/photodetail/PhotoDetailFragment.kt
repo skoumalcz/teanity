@@ -1,24 +1,19 @@
 package com.skoumal.teanity.example.ui.photodetail
 
-import android.os.Bundle
-import android.view.View
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentPhotoDetailBinding
 import com.skoumal.teanity.view.TeanityFragment
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class PhotoDetailFragment : TeanityFragment<PhotoDetailViewModel, FragmentPhotoDetailBinding>() {
 
     override val layoutRes: Int = R.layout.fragment_photo_detail
-    override val viewModel: PhotoDetailViewModel by viewModel()
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        PhotoDetailFragmentArgs.fromBundle(arguments).run {
-            viewModel.setArguments(photoId)
-        }
-    }
+    override val viewModel: PhotoDetailViewModel by viewModel { parametersOf(
+        args.photoId
+    ) }
+    
+    private val args by lazy { PhotoDetailFragmentArgs.fromBundle(arguments) }
 
     override fun onSimpleEventDispatched(event: Int) {
         when (event) {
