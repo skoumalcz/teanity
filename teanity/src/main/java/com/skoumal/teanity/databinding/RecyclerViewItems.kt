@@ -19,7 +19,9 @@ abstract class ComparableRvItem<in T> : RvItem() {
 
     abstract fun itemSameAs(other: T): Boolean
     abstract fun contentSameAs(other: T): Boolean
+    @Suppress("UNCHECKED_CAST")
     open fun genericItemSameAs(other: Any): Boolean = other::class == this::class && itemSameAs(other as T)
+    @Suppress("UNCHECKED_CAST")
     open fun genericContentSameAs(other: Any): Boolean = other::class == this::class && contentSameAs(other as T)
 
     companion object {
