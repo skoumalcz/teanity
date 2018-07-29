@@ -1,6 +1,6 @@
 package com.skoumal.teanity.databinding
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.view.View
 import com.bumptech.glide.request.RequestOptions
 

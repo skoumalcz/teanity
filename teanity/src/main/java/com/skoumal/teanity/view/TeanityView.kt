@@ -1,7 +1,7 @@
 package com.skoumal.teanity.view
 
 import android.os.Bundle
-import android.support.annotation.CallSuper
+import androidx.annotation.CallSuper
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEvent

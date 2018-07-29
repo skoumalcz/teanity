@@ -1,14 +1,13 @@
 package com.skoumal.teanity.extensions
 
-import android.databinding.*
+import androidx.databinding.*
 
 fun <T> ObservableField<T>.addOnPropertyChangedCallback(
     removeAfterChanged: Boolean = false,
     callback: (T?) -> Unit
 ) {
-    addOnPropertyChangedCallback(object :
-        android.databinding.Observable.OnPropertyChangedCallback() {
-        override fun onPropertyChanged(sender: android.databinding.Observable?, propertyId: Int) {
+    addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             callback(get())
             if (removeAfterChanged) removeOnPropertyChangedCallback(this)
         }
@@ -19,8 +18,7 @@ fun ObservableInt.addOnPropertyChangedCallback(
     removeAfterChanged: Boolean = false,
     callback: (Int) -> Unit
 ) {
-    addOnPropertyChangedCallback(object :
-        Observable.OnPropertyChangedCallback() {
+    addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             callback(get())
             if (removeAfterChanged) removeOnPropertyChangedCallback(this)
@@ -32,8 +30,7 @@ fun ObservableBoolean.addOnPropertyChangedCallback(
     removeAfterChanged: Boolean = false,
     callback: (Boolean) -> Unit
 ) {
-    addOnPropertyChangedCallback(object :
-        Observable.OnPropertyChangedCallback() {
+    addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             callback(get())
             if (removeAfterChanged) removeOnPropertyChangedCallback(this)

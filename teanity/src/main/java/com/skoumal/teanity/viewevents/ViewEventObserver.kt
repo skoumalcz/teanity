@@ -1,6 +1,6 @@
 package com.skoumal.teanity.viewevents
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 
 /**
  * Observer for [ViewEvent]s, which automatically checks if event was handled

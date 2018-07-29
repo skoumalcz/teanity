@@ -32,6 +32,6 @@
         android:label="PhotoDetailFragment">
         <argument
             android:name="photo_id"
-            app:type="string" />
+            app:argType="string" />
     </fragment>
 </navigation>

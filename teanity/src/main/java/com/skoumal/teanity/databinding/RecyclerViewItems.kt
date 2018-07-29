@@ -1,6 +1,6 @@
 package com.skoumal.teanity.databinding
 
-import android.support.annotation.CallSuper
+import androidx.annotation.CallSuper
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.util.DiffObservableList
 import me.tatarka.bindingcollectionadapter2.ItemBinding
