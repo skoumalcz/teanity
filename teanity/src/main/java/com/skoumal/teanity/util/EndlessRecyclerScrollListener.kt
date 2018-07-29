@@ -1,9 +1,9 @@
 package com.skoumal.teanity.util
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 class EndlessRecyclerScrollListener(
     private val layoutManager: RecyclerView.LayoutManager,
@@ -47,7 +47,7 @@ class EndlessRecyclerScrollListener(
     // This happens many times a second during a scroll, so be wary of the code you place here.
     // We are given a few useful parameters to help us work out if we need to load some more data,
     // but first we check if we are waiting for the previous load to finish.
-    override fun onScrolled(view: RecyclerView?, dx: Int, dy: Int) {
+    override fun onScrolled(view: RecyclerView, dx: Int, dy: Int) {
         val totalItemCount = layoutManager.itemCount
 
         val visibleItemPosition = if (direction == Direction.BOTTOM) {

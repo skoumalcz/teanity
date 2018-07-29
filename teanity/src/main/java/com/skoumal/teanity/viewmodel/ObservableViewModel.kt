@@ -1,8 +1,8 @@
 package com.skoumal.teanity.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.databinding.Observable
-import android.databinding.PropertyChangeRegistry
+import androidx.lifecycle.ViewModel
+import androidx.databinding.Observable
+import androidx.databinding.PropertyChangeRegistry
 
 /**
  * Copy of [android.databinding.BaseObservable] which extends [ViewModel]

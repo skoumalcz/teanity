@@ -1,7 +1,7 @@
 package com.skoumal.teanity.util
 
-import android.databinding.Observable
-import android.databinding.ObservableField
+import androidx.databinding.Observable
+import androidx.databinding.ObservableField
 import java.io.Serializable
 
 /**

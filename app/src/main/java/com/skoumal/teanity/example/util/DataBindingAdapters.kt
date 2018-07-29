@@ -1,6 +1,6 @@
 package com.skoumal.teanity.example.util
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.widget.ImageView
 import com.bumptech.glide.request.RequestOptions
 import com.skoumal.teanity.databinding.applyTransformation

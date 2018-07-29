@@ -1,7 +1,7 @@
 package com.skoumal.teanity.example.ui.login
 
 import android.content.res.Resources
-import android.databinding.ObservableBoolean
+import androidx.databinding.ObservableBoolean
 import com.evernote.android.state.State
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.model.Model

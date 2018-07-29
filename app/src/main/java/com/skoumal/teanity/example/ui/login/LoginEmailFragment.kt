@@ -6,7 +6,7 @@ import com.skoumal.teanity.example.ui.events.SnackbarEvent
 import com.skoumal.teanity.extensions.snackbar
 import com.skoumal.teanity.view.TeanityFragment
 import com.skoumal.teanity.viewevents.ViewEvent
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginEmailFragment : TeanityFragment<LoginEmailViewModel, FragmentLoginEmailBinding>() {
 

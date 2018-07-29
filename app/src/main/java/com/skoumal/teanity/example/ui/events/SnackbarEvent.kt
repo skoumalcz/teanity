@@ -1,7 +1,7 @@
 package com.skoumal.teanity.example.ui.events
 
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
+import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
 import com.skoumal.teanity.viewevents.ViewEvent
 
 class SnackbarEvent(
