@@ -23,12 +23,6 @@ kapt {
     }
 }
 
-afterEvaluate {
-    // https://youtrack.jetbrains.com/issue/KT-24915#focus=streamItem-27-2914947-0-0
-    kaptDebugKotlin.dependsOn dataBindingExportFeaturePackageIdsDebug
-    //kaptReleaseKotlin.dependsOn dataBindingExportFeaturePackageIdsRelease
-}
-
 def app_name = "Teanity Example"
 
 android {
