@@ -55,9 +55,7 @@ dependencies {
     /* === EASING === */
     api "com.evernote:android-state:${versions.state}"
     api "com.karumi:dexter:${versions.dexter}"
-    // TODO: Move back to bca once it supports androidX or jetifier is fixed
-    //api "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:${versions.bca}"
-    api 'com.github.janbina:binding-collection-adapter:androidx-SNAPSHOT'
+    api "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:${versions.bca}"
 
     /* === UI === */
     api "com.github.bumptech.glide:glide:${versions.glide}"

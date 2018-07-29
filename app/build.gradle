@@ -152,8 +152,7 @@ dependencies {
     implementation "com.github.bumptech.glide:okhttp3-integration:${versions.glide}@aar"
 
     // EASING
-    // TODO: Move back to bca once it supports androidX or jetifier is fixed
-    //implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:${versions.bca}"
+    implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:${versions.bca}"
     implementation "com.chibatching.kotpref:kotpref:2.5.0"
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
