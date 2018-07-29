@@ -23,6 +23,7 @@ buildscript {
             'okhttp'          : '3.10.0',
             'moshi'           : '1.6.0',
             'crashlytics'     : '2.9.3',
+            'fabric'          : '1.25.4'
     ]
 
     repositories {
@@ -35,7 +36,7 @@ buildscript {
         classpath "com.android.tools.build:gradle:${versions.gradlePlugin}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
-        classpath "io.fabric.tools:gradle:1.+"
+        classpath "io.fabric.tools:gradle:${versions.fabric}"
     }
 }
 
