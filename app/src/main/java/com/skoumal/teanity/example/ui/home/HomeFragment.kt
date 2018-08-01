@@ -3,6 +3,7 @@ package com.skoumal.teanity.example.ui.home
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentHomeBinding
 import com.skoumal.teanity.example.model.entity.Photo
@@ -10,7 +11,7 @@ import com.skoumal.teanity.util.EndlessRecyclerScrollListener
 import com.skoumal.teanity.util.KItemDecoration
 import com.skoumal.teanity.view.TeanityFragment
 import com.skoumal.teanity.viewevents.ViewEvent
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : TeanityFragment<HomeViewModel, FragmentHomeBinding>() {
 
@@ -22,22 +23,27 @@ class HomeFragment : TeanityFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val layoutManager = LinearLayoutManager(context)
+
         recyclerScrollListener = EndlessRecyclerScrollListener(
-            binding.recycler.layoutManager,
+            layoutManager,
             viewModel::loadMoreItems
         )
 
         binding.recycler.apply {
+            this.layoutManager = layoutManager
             addItemDecoration(
                 KItemDecoration(context, LinearLayout.VERTICAL)
                     .setDeco(R.drawable.divider_1dp_gray)
             )
-            addOnScrollListener(recyclerScrollListener)
+            recyclerScrollListener?.let { addOnScrollListener(it) }
         }
     }
 
     override fun FragmentHomeBinding.unbindViews() {
-        binding.recycler.removeOnScrollListener(recyclerScrollListener)
+        recyclerScrollListener?.let {
+            recycler.removeOnScrollListener(it)
+        }
     }
 
     override fun onEventDispatched(event: ViewEvent) {

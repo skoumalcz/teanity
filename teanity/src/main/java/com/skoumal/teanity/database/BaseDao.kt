@@ -1,6 +1,6 @@
 package com.skoumal.teanity.database
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 interface BaseDao<T> {
 

@@ -1,7 +1,7 @@
 package com.skoumal.teanity.viewmodel
 
-import android.databinding.Bindable
-import android.databinding.ObservableBoolean
+import androidx.databinding.Bindable
+import androidx.databinding.ObservableBoolean
 import com.skoumal.teanity.BR
 
 abstract class LoadingViewModel : ObservableViewModel() {

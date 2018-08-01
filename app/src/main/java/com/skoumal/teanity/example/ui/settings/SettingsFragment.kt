@@ -3,7 +3,7 @@ package com.skoumal.teanity.example.ui.settings
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentSettingsBinding
 import com.skoumal.teanity.view.TeanityFragment
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : TeanityFragment<SettingsViewModel, FragmentSettingsBinding>() {
 

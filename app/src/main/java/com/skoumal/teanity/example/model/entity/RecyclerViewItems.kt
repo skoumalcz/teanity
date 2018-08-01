@@ -1,6 +1,6 @@
 package com.skoumal.teanity.example.model.entity
 
-import android.databinding.ObservableBoolean
+import androidx.databinding.ObservableBoolean
 import com.skoumal.teanity.databinding.ComparableRvItem
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.util.ComparableCallback

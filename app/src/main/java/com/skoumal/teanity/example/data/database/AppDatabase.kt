@@ -1,7 +1,7 @@
 package com.skoumal.teanity.example.data.database
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.skoumal.teanity.example.model.entity.DbEntity
 
 @Database(

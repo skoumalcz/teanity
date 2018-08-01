@@ -2,8 +2,8 @@ package com.skoumal.teanity.extensions
 
 import android.content.Intent
 import android.provider.Settings
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import androidx.core.net.toUri
 import com.karumi.dexter.Dexter

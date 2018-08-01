@@ -23,12 +23,6 @@ kapt {
     }
 }
 
-afterEvaluate {
-    // https://youtrack.jetbrains.com/issue/KT-24915#focus=streamItem-27-2914947-0-0
-    kaptDebugKotlin.dependsOn dataBindingExportFeaturePackageIdsDebug
-    //kaptReleaseKotlin.dependsOn dataBindingExportFeaturePackageIdsRelease
-}
-
 def app_name = "Teanity Example"
 
 android {
@@ -38,7 +32,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "${app_name}"
     }
@@ -126,8 +120,8 @@ dependencies {
 
     // TESTING
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 
     implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}@aar") {
         transitive = true
@@ -138,13 +132,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
     // SUPPORT LIBS
-    implementation "com.android.support:design:${versions.supportlib}"
-    implementation "com.android.support.constraint:constraint-layout:${versions.constraintLayout}"
+    implementation "com.google.android.material:material:${versions.supportlib}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
 
     // DEPENDENCY INJECTION
     implementation "org.koin:koin-core:${versions.koin}"
     implementation "org.koin:koin-android:${versions.koin}"
-    implementation "org.koin:koin-android-viewmodel:${versions.koin}"
+    implementation "org.koin:koin-androidx-viewmodel:${versions.koin}"
 
     // NETWORKING
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
@@ -160,11 +154,11 @@ dependencies {
     // EASING
     implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:${versions.bca}"
     implementation "com.chibatching.kotpref:kotpref:2.5.0"
-    implementation 'com.jakewharton.timber:timber:4.7.0'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // KAPTs
     kapt "com.squareup.moshi:moshi-kotlin-codegen:${versions.moshi}"
     kapt "com.github.bumptech.glide:compiler:${versions.glide}"
     kapt "com.evernote:android-state-processor:${versions.state}"
-    kapt "android.arch.persistence.room:compiler:${versions.room}"
+    kapt "androidx.room:room-compiler:${versions.room}"
 }
