@@ -2,13 +2,11 @@ package com.skoumal.teanity.example.ui.home
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentHomeBinding
 import com.skoumal.teanity.example.model.entity.Photo
 import com.skoumal.teanity.util.EndlessRecyclerScrollListener
-import com.skoumal.teanity.util.KItemDecoration
 import com.skoumal.teanity.view.TeanityFragment
 import com.skoumal.teanity.viewevents.ViewEvent
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -32,10 +30,6 @@ class HomeFragment : TeanityFragment<HomeViewModel, FragmentHomeBinding>() {
 
         binding.recycler.apply {
             this.layoutManager = layoutManager
-            addItemDecoration(
-                KItemDecoration(context, LinearLayout.VERTICAL)
-                    .setDeco(R.drawable.divider_1dp_gray)
-            )
             recyclerScrollListener?.let { addOnScrollListener(it) }
         }
     }
