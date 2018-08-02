@@ -1,7 +1,6 @@
 package com.skoumal.teanity.databinding
 
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -36,19 +35,28 @@ fun RequestOptions.applyTransformation(transformation: Int): RequestOptions = wh
     else -> throw IllegalArgumentException("Unsupported transformation")
 }
 
-@BindingAdapter("dividerColor", "dividerHorizontal", "dividerSize", requireAll = false)
-fun setDivider(view: RecyclerView, dividerColor: Int, dividerHorizontal: Boolean, _dividerSize: Int?) {
+@BindingAdapter("dividerColor", "dividerHorizontal", "dividerSize", "dividerAfterLast", requireAll = false)
+fun setDivider(
+    view: RecyclerView,
+    color: Int,
+    horizontal: Boolean,
+    _size: Int?,
+    _afterLast: Boolean?
+) {
 
-    val orientation = if (dividerHorizontal) RecyclerView.HORIZONTAL else RecyclerView.VERTICAL
-    val dividerSize = _dividerSize ?: 1.toPx()
-    val (width, height) = if (dividerHorizontal) dividerSize to 1 else 1 to dividerSize
+    val orientation = if (horizontal) RecyclerView.HORIZONTAL else RecyclerView.VERTICAL
+    val size = _size ?: 1.toPx()
+    val (width, height) = if (horizontal) size to 1 else 1 to size
+    val afterLast = _afterLast ?: true
 
     val drawable = GradientDrawable().apply {
         setSize(width, height)
         shape = GradientDrawable.RECTANGLE
-        setColor(dividerColor)
+        setColor(color)
     }
 
-    val decoration = KItemDecoration(view.context, orientation).setDeco(drawable)
+    val decoration = KItemDecoration(view.context, orientation)
+        .setDeco(drawable)
+        .apply { showAfterLast = afterLast }
     view.addItemDecoration(decoration)
 }
