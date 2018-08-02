@@ -42,6 +42,7 @@
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"
                 app:dividerColor="@{@color/dividerGray}"
+                app:dividerAfterLast="@{false}"
                 app:itemBinding="@{viewModel.itemBinding}"
                 app:items="@{viewModel.items}" />
 
