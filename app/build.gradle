@@ -8,8 +8,6 @@ apply plugin: 'io.fabric'
 
 apply plugin: 'androidx.navigation.safeargs'
 
-apply from: '../git-tools.gradle'
-
 kapt {
     correctErrorTypes = true
     useBuildCache = true
@@ -23,91 +21,21 @@ kapt {
     }
 }
 
-def app_name = "Teanity Example"
-
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.skoumal.teanity.example"
         minSdkVersion 16
         targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        resValue "string", "app_name", "${app_name}"
-    }
-    signingConfigs {
-        /* TODO: add your key stores
-        debugSigningConfig {
-            storeFile file("debug_teanity.jks")
-            storePassword "..."
-            keyAlias "teanity"
-            keyPassword "..."
-
-        }
-        alphaSigningConfig {
-            storeFile file("alpha_teanity.jks")
-            storePassword "..."
-            keyAlias "teanity"
-            keyPassword "..."
-        }
-        betaSigningConfig {
-            storeFile file("beta_teanity.jks")
-            storePassword "..."
-            keyAlias "teanity"
-            keyPassword "..."
-        }
-        releaseSigningConfig {
-            storeFile file("teanity.jks")
-            storePassword "..."
-            keyAlias "teanity"
-            keyPassword "..."
-        }*/
     }
     buildTypes {
-        debug {
-            applicationIdSuffix ".debug"
-            //signingConfig signingConfigs.debugSigningConfig
-        }
-        alpha {
-            applicationIdSuffix ".alpha"
-            //signingConfig signingConfigs.alphaSigningConfig
-        }
         release {
-            shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.releaseSigningConfig
-        }
-        beta.initWith(buildTypes.release)
-        beta {
-            applicationIdSuffix ".beta"
-            //signingConfig signingConfigs.betaSigningConfig
-        }
-    }
-    applicationVariants.all { variant ->
-        println(variant.buildType.name)
-        if (variant.buildType.name != 'release') {
-            variant.resValue "string", "app_name",
-                    "[${variant.buildType.name.capitalize()}]${app_name}"
-        }
-    }
-    applicationVariants.all { variant ->
-        def versionTag
-        if (variant.buildType.name == 'debug') {
-            versionTag = getVersionTag('alpha')
-        } else {
-            versionTag = getVersionTag(variant.buildType.name)
-        }
-
-        def myVersionCode = getVersionCode(versionTag)
-        def myVersionName = getVersionName(versionTag)
-
-        println variant.name + "[" + myVersionCode + ", " + myVersionName + "]"
-
-        variant.outputs.all { output ->
-            output.setVersionCodeOverride(myVersionCode)
-            output.setVersionNameOverride(myVersionName)
         }
     }
     dataBinding {
