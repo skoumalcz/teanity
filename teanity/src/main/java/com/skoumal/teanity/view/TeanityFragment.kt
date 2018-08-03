@@ -20,7 +20,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected lateinit var binding: Binding
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
-    protected val navController by lazy { binding.root.findNavController() }
+    protected val navController get() = binding.root.findNavController()
     protected val teanityActivity get() = activity as? TeanityActivity<*, *>
     private val viewEventObserver = ViewEventObserver {
         onEventDispatched(it)

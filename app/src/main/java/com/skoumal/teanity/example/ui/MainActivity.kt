@@ -1,7 +1,6 @@
 package com.skoumal.teanity.example.ui
 
 import android.os.Bundle
-import androidx.navigation.findNavController
 import com.skoumal.teanity.example.Config
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.ActivityMainBinding
@@ -13,7 +12,7 @@ class MainActivity : TeanityActivity<MainViewModel, ActivityMainBinding>() {
 
     override val layoutRes: Int = R.layout.activity_main
     override val viewModel: MainViewModel by viewModel()
-    override val navController by lazy { findNavController(R.id.main_nav_host) }
+    override val navHostId = R.id.main_nav_host
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -5,6 +5,7 @@ import androidx.databinding.ViewDataBinding
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEventObserver
@@ -17,7 +18,13 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected lateinit var binding: Binding
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
-    protected abstract val navController: NavController
+    protected open val navHostId: Int = 0
+    protected val navController: NavController get() {
+        if (navHostId == 0) {
+            throw IllegalStateException("You must override \"navHostId\" if you want to use navController")
+        }
+        return findNavController(navHostId)
+    }
     private val viewEventObserver = ViewEventObserver {
         onEventDispatched(it)
         if (it is SimpleViewEvent) {
