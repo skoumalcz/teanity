@@ -45,6 +45,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
 
         binding = DataBindingUtil.inflate<Binding>(inflater, layoutRes, container, false).apply {
             setVariable(BR.viewModel, this@TeanityFragment.viewModel)
+            setLifecycleOwner(this@TeanityFragment)
         }
 
         return binding.root
