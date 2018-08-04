@@ -39,6 +39,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
 
         binding = DataBindingUtil.setContentView<Binding>(this, layoutRes).apply {
             setVariable(BR.viewModel, this@TeanityActivity.viewModel)
+            setLifecycleOwner(this@TeanityActivity)
         }
 
         viewModel.viewEvents.observe(this, viewEventObserver)
