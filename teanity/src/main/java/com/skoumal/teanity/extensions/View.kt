@@ -8,20 +8,36 @@ import androidx.fragment.app.FragmentTransaction
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
-fun Activity.showKeyboard(focusView: View? = null) {
-    focusView?.requestFocus()
-    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+fun Activity.showKeyboard(view: View) {
+    view.requestFocus()
+    inputMethodManager.showSoftInput(
+        view,
+        InputMethodManager.SHOW_IMPLICIT
+    )
 }
 
-fun Fragment.showKeyboard(focusView: View? = null) {
-    activity?.showKeyboard(focusView)
+fun Fragment.showKeyboard(view: View) {
+    activity?.showKeyboard(view)
+}
+
+fun Activity.toggleKeyboard(focusView: View? = null) {
+    focusView?.requestFocus()
+    inputMethodManager.toggleSoftInput(
+        InputMethodManager.SHOW_IMPLICIT,
+        InputMethodManager.HIDE_IMPLICIT_ONLY
+    )
+}
+
+fun Fragment.toggleKeyboard(focusView: View? = null) {
+    activity?.toggleKeyboard(focusView)
 }
 
 fun Activity.hideKeyboard() {
     currentFocus?.let {
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(
+            it.windowToken,
+            0
+        )
     }
 }
 
@@ -32,3 +48,6 @@ fun Fragment.hideKeyboard() {
 fun FragmentManager.fragmentTransaction(actions: FragmentTransaction.() -> Unit) {
     beginTransaction().apply(actions).commit()
 }
+
+private val Context.inputMethodManager get() =
+    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
