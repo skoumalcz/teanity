@@ -42,7 +42,7 @@ abstract class ComparableRvItem<in T> : RvItem() {
             override fun areContentsTheSame(
                 oldItem: ComparableRvItem<*>,
                 newItem: ComparableRvItem<*>
-            ) = newItem.genericContentSameAs(newItem)
+            ) = oldItem.genericContentSameAs(newItem)
         }
     }
 }
