@@ -1,3 +1,41 @@
+# TEANITY #
+
+Android-Kotlin "framework" designed to reduce boilerplate.
+
+### Installation ###
+
+[![](https://jitpack.io/v/skoumalcz/teanity.svg)](https://jitpack.io/#skoumalcz/teanity)
+
+Project root build.gradle
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+dependency
+```groovy
+dependencies {
+    implementation 'com.github.skoumalcz:teanity:latest.version'
+}
+```
+
+#### Starting a new project? ####
+
+Try our cl tools:
+
+* [MAC](https://gist.githubusercontent.com/diareuse/d4ff8283b8cbc07b498a56af47d75ca7/raw/467c56c4de88dc2261f9d059a0105dfe99d8329a/quickstart.sh)
+
+* [Linux]()
+    * PR are welcomed
+    
+* [Windows]()
+    * PR are welcomed
+
+
 # README #
 
 Android "framework"
