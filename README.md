@@ -10,7 +10,7 @@ Project root build.gradle
 ```groovy
 allprojects {
     repositories {
-        ...
+        //...
         maven { url 'https://jitpack.io' }
     }
 }
@@ -27,7 +27,7 @@ dependencies {
 
 Try our cl tools:
 
-* [MAC](https://gist.githubusercontent.com/diareuse/d4ff8283b8cbc07b498a56af47d75ca7/raw/467c56c4de88dc2261f9d059a0105dfe99d8329a/quickstart.sh)
+* [MAC](https://gist.githubusercontent.com/diareuse/d4ff8283b8cbc07b498a56af47d75ca7/raw/cc4a659efc9da82fea8d5745fb26a62dc62550bd/quickstart.sh)
 
 * [Linux]()
     * PR are welcomed
