@@ -1,7 +1,3 @@
-import com.android.build.gradle.ProguardFiles.getDefaultProguardFile
-import org.gradle.internal.impldep.com.amazonaws.PredefinedClientConfigurations.defaultConfig
-import org.jetbrains.kotlin.contracts.model.structure.UNKNOWN_COMPUTATION.type
-
 plugins {
     id("com.android.library")
 
