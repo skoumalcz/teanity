@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_generic_quadruple">64dp</dimen>
+    <dimen name="margin_generic_triple">48dp</dimen>
+    <dimen name="margin_generic_double">32dp</dimen>
+    <dimen name="margin_generic">16dp</dimen>
+    <dimen name="margin_generic_half">8dp</dimen>
+    <dimen name="margin_generic_quarter">4dp</dimen>
+    <dimen name="margin_generic_eighth">2dp</dimen>
+
+</resources>

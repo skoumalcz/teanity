@@ -5,4 +5,8 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="dividerGray">#888888</color>
+
+    <color name="colorTextInverse">@android:color/white</color>
+    <color name="colorText">#1D1D1D</color>
+    <color name="colorTextInactive">#6a6868</color>
 </resources>
