@@ -11,45 +11,50 @@
             type="com.skoumal.teanity.example.model.entity.LoadingRvItem" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:padding="@dimen/margin_generic"
         android:layout_height="wrap_content">
 
         <ProgressBar
-            style="?android:attr/progressBarStyleSmall"
+            style="@style/Widget.Progress"
+            invisible="@{item.failed}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:invisible="@{item.failed}" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/failed_text"
+            style="@style/Widget.Text.Caption.Inactive"
+            android:gravity="center"
+            android:text="@{item.failText}"
+            app:layout_constraintBottom_toTopOf="@+id/failed_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Loading failed" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/failed_button"
+            style="@style/Widget.Button.Text"
+            android:layout_marginTop="@dimen/margin_generic_half"
+            android:onClick="@{() -> item.failActionClicked()}"
+            android:text="@{item.failActionText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/failed_text"
+            tools:text="retry" />
+
+        <androidx.constraintlayout.widget.Group
+            invisible="@{!item.failed}"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:invisible="@{!item.failed}">
+            app:constraint_referenced_ids="failed_text,failed_button" />
 
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="@{item.failText}"
-                tools:text="Loading failed" />
-
-            <Button
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/text"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="8dp"
-                android:onClick="@{() -> item.failActionClicked()}"
-                android:text="@{item.failActionText}"
-                android:textColor="@color/colorAccent"
-                tools:text="retry" />
-
-        </RelativeLayout>
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
