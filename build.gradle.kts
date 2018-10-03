@@ -32,6 +32,7 @@ buildscript {
         google()
         jcenter()
         maven(url = "https://maven.fabric.io/public")
+        maven(url = "https://jitpack.io")
     }
 
     val versions: Map<String, String> by extra
@@ -51,6 +52,7 @@ allprojects {
         jcenter()
         maven(url = "https://maven.fabric.io/public")
         maven(url = "http://oss.sonatype.org/content/repositories/snapshots") // Glide snapshot
+        maven(url = "https://jitpack.io")
     }
 }
 

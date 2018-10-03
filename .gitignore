@@ -13,3 +13,4 @@
 # Exclude all dictionaries but project.xml
 /.idea/dictionaries/*
 !/.idea/dictionaries/project.xml
+/quickstart/fabric.properties
