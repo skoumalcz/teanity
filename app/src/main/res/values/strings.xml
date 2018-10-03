@@ -6,4 +6,6 @@
 	<string name="login_email_hint">Email</string>
 	<string name="login_email_error">Enter valid email</string>
 	<string name="login_failed">Login failed</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_password_error">Enter valid password</string>
 </resources>

@@ -1,45 +1,51 @@
 package com.skoumal.teanity.example.ui.login
 
-import android.content.res.Resources
-import androidx.databinding.ObservableBoolean
 import com.evernote.android.state.State
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.model.Model
 import com.skoumal.teanity.example.ui.events.SnackbarEvent
+import com.skoumal.teanity.example.util.isEmail
+import com.skoumal.teanity.example.util.isPassword
 import com.skoumal.teanity.extensions.applySchedulers
+import com.skoumal.teanity.extensions.applyViewModel
 import com.skoumal.teanity.util.KObservableField
-import com.skoumal.teanity.viewmodel.TeanityViewModel
+import com.skoumal.teanity.viewmodel.LoadingViewModel
 
 class LoginEmailViewModel(
-    private val model: Model,
-    private val resources: Resources
-) : TeanityViewModel() {
+    private val model: Model
+) : LoadingViewModel() {
 
     @State
     var email = KObservableField("")
     @State
     var emailError = KObservableField("")
-    val loginInProgress = ObservableBoolean(false)
+    @State
+    var password = KObservableField("")
+    @State
+    var passwordError = KObservableField("")
+
+    init {
+        setLoaded()
+    }
 
     fun loginButtonClicked() {
-        email.value.let { email ->
-            if (!model.verifyEmail(email)) {
-                emailError.value = resources.getString(R.string.login_email_error)
-            } else {
-                emailError.value = ""
-                model.login(email)
-                    .applySchedulers()
-                    .doOnSubscribe { loginInProgress.set(true) }
-                    .subscribe({
-                        loginInProgress.set(false)
-                        loginSucceeded()
-                    }, {
-                        loginInProgress.set(false)
-                        loginFailed()
-                    })
-                    .add()
-            }
-        }
+        val email = email.value
+        val password = password.value
+
+        val isClear = email.isEmail(emailError) or
+                password.isPassword(passwordError)
+
+        if (!isClear) return
+
+        model.login(email)
+            .applyViewModel(this)
+            .applySchedulers()
+            .subscribe({
+                loginSucceeded()
+            }, {
+                loginFailed()
+            })
+            .add()
     }
 
     private fun loginSucceeded() {
