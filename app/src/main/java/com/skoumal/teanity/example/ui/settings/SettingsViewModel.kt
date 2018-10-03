@@ -1,22 +1,19 @@
 package com.skoumal.teanity.example.ui.settings
 
-import com.skoumal.teanity.example.model.Model
+import com.skoumal.teanity.example.data.repository.RegistrationRepository
 import com.skoumal.teanity.extensions.applySchedulers
+import com.skoumal.teanity.extensions.subscribeK
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
 class SettingsViewModel(
-    private val model: Model
+    private val registrationRepo: RegistrationRepository
 ) : TeanityViewModel() {
 
     fun logoutButtonClicked() {
         // there should be some progress bar, but I'm too lazy
-        model.logout()
+        registrationRepo.logout()
             .applySchedulers()
-            .subscribe({
-                logoutSuccess()
-            }, {
-                logoutFailed(it)
-            })
+            .subscribeK(onComplete = this::logoutSuccess, onError = this::logoutFailed)
             .add()
     }
 
