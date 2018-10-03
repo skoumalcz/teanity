@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Card">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">@dimen/radius_generic</item>
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="android:minHeight">200dp</item>
+        <item name="strokeColor">#DCDCDC</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Widget.Card.Media" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
+    <style name="Widget.Card.Title" parent="">
+        <item name="android:layout_gravity">bottom|start</item>
+        <item name="android:textAppearance">@style/TextAppearance.Title</item>
+        <item name="android:textColor">@color/colorTextInverse</item>
+        <item name="android:background">@drawable/bg_gradient_up</item>
+    </style>
+
+    <style name="Widget.Card.Content" parent="Widget.Text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/margin_generic</item>
+        <item name="android:maxLines">5</item>
+    </style>
+
+    <style name="Widget.Card.Actions" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">end</item>
+        <item name="android:paddingStart">@dimen/margin_generic</item>
+        <item name="android:paddingLeft">@dimen/margin_generic</item>
+        <item name="android:paddingEnd">@dimen/margin_generic</item>
+        <item name="android:paddingRight">@dimen/margin_generic</item>
+        <item name="android:paddingBottom">@dimen/margin_generic_half</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+</resources>

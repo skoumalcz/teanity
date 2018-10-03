@@ -17,46 +17,53 @@
             type="com.skoumal.teanity.example.ui.home.HomeViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Card"
+        android:layout_marginLeft="@dimen/margin_generic"
+        android:layout_marginRight="@dimen/margin_generic">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:foreground="?selectableItemBackground"
-            android:onClick="@{() -> viewModel.photoClicked(item.photo)}"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
-            app:layout_constraintDimensionRatio="w,16:9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:transformation="@{Transformations.CENTER_CROP}"
-            app:url="@{item.photo.urls.small}"
-            tools:ignore="ContentDescription"
-            tools:src="@tools:sample/backgrounds/scenic" />
-
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="4dp"
-            android:text="@{item.photo.user.name}"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            tools:text="Post title" />
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageView"
+                    style="@style/Widget.Card.Media"
+                    android:layout_height="300dp"
+                    app:transformation="@{Transformations.CENTER_CROP}"
+                    app:url="@{item.photo.urls.small}"
+                    tools:ignore="ContentDescription"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textView"
+                    style="@style/Widget.Card.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.photo.user.name}"
+                    tools:text="Post title" />
+
+            </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Widget.Card.Content"
+                android:text="@string/lorem" />
+
+            <LinearLayout style="@style/Widget.Card.Actions">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Button.Text"
+                    android:onClick="@{() -> viewModel.photoClicked(item.photo)}"
+                    android:text="Read More" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 </layout>

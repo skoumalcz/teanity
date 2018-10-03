@@ -9,4 +9,6 @@
     <dimen name="margin_generic_quarter">4dp</dimen>
     <dimen name="margin_generic_eighth">2dp</dimen>
 
+    <dimen name="radius_generic">8dp</dimen>
+
 </resources>

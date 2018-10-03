@@ -38,11 +38,14 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
+                dividerAfterLast="@{false}"
+                dividerSize="@{@dimen/margin_generic}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"
-                app:dividerColor="@{@color/dividerGray}"
-                app:dividerAfterLast="@{false}"
+                android:paddingTop="@dimen/margin_generic"
+                android:paddingBottom="@dimen/margin_generic"
+                android:clipToPadding="false"
                 app:itemBinding="@{viewModel.itemBinding}"
                 app:items="@{viewModel.items}" />
 
