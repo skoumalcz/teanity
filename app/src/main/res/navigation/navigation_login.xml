@@ -9,7 +9,11 @@
         android:label="LoginEmailFragment">
         <action
             android:id="@+id/mainActivity"
-            app:destination="@id/mainActivity" />
+            app:destination="@id/mainActivity"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/enter_anim_pop"
+            app:popExitAnim="@anim/exit_anim" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"

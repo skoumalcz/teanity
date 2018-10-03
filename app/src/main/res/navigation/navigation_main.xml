@@ -10,7 +10,11 @@
         android:label="HomeFragment">
         <action
             android:id="@+id/photoDetailFragment"
-            app:destination="@id/photoDetailFragment" />
+            app:destination="@id/photoDetailFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/enter_anim_pop"
+            app:popExitAnim="@anim/exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
