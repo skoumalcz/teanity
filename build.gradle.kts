@@ -59,3 +59,11 @@ allprojects {
 tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)
 }
+
+tasks.register("generateChangelog") {
+    try {
+        exec { commandLine("git-chglog", "-o", "CHANGELOG.md") }
+    } catch (e: Exception) {
+        println(">> You don't have git-chglog installed, please visit https://github.com/git-chglog/git-chglog for installation instructions.")
+    }
+}
