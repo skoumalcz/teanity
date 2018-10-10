@@ -1,8 +1,8 @@
 package com.skoumal.teanity.util
 
+import androidx.annotation.MainThread
 import androidx.databinding.ListChangeRegistry
 import androidx.databinding.ObservableList
-import androidx.annotation.MainThread
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import java.util.AbstractList
@@ -140,20 +140,24 @@ open class DiffObservableList<T>(
 
     override fun remove(element: T): Boolean {
         val index = indexOf(element)
-        if (index >= 0) {
+        return if (index >= 0) {
             removeAt(index)
-            return true
+            true
         } else {
-            return false
+            false
         }
+    }
+
+    override fun removeAt(index: Int): T {
+        val element = list.removeAt(index)
+        notifyRemove(index, 1)
+        return element
     }
 
     fun removeLast(): T? {
         if (size > 0) {
             val index = size - 1
-            val element = list.removeAt(index)
-            notifyRemove(index, 1)
-            return element
+            return removeAt(index)
         }
         return null
     }
@@ -213,17 +217,17 @@ open class DiffObservableList<T>(
         }
 
         override fun onMoved(fromPosition: Int, toPosition: Int) {
-            listeners.notifyMoved(this@DiffObservableList, fromPosition, toPosition, 1);
+            listeners.notifyMoved(this@DiffObservableList, fromPosition, toPosition, 1)
         }
 
         override fun onInserted(position: Int, count: Int) {
             modCount += 1
-            listeners.notifyInserted(this@DiffObservableList, position, count);
+            listeners.notifyInserted(this@DiffObservableList, position, count)
         }
 
         override fun onRemoved(position: Int, count: Int) {
             modCount += 1
-            listeners.notifyRemoved(this@DiffObservableList, position, count);
+            listeners.notifyRemoved(this@DiffObservableList, position, count)
         }
 
     }
