@@ -8,7 +8,7 @@ buildscript {
             "lifecycle" to "2.0.0-rc01",
             "navigation" to "1.0.0-alpha06",
             "bca" to "3.0.0-beta3",
-            "glide" to "4.8.0-SNAPSHOT",
+            "glide" to "4.8.0",
             "state" to "1.3.1",
             "rxkotlin" to "2.2.0",
             "rxandroid" to "2.1.0",
@@ -51,7 +51,6 @@ allprojects {
         google()
         jcenter()
         maven(url = "https://maven.fabric.io/public")
-        maven(url = "http://oss.sonatype.org/content/repositories/snapshots") // Glide snapshot
         maven(url = "https://jitpack.io")
     }
 }
