@@ -32,9 +32,7 @@ Try our cl tools:
 * [Linux]()
     * PR are welcomed
     
-* [Windows]()
-    * PR are welcomed
-
+* [Windows](https://gist.githubusercontent.com/diareuse/36b7aa4e544e1a47fdad999e493266dd/raw/5637e7cc2e7ad2041fd0d02301dbc395504fa1b5/quickstart.ps1)
 
 # README #
 
