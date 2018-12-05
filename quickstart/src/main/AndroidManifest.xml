@@ -26,7 +26,7 @@
         <!--FIXME-->
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="71cffe58d4d2adc4973c992eeed73f9eb1371990" />
+            android:value="enteryourkey" />
 
     </application>
 
