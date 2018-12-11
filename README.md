@@ -31,6 +31,10 @@ Try our cl tools:
     
 * [Windows](https://gist.githubusercontent.com/diareuse/36b7aa4e544e1a47fdad999e493266dd/raw/5637e7cc2e7ad2041fd0d02301dbc395504fa1b5/quickstart.ps1)
 
+#### Note
+
+Android Studio will not probably find your project's classes and stuff. This is due to usage of Kotlin DSL in Gradle build files. To overcome this issue you'll need to create a empty `build.gradle` file and then click the "Sync project with Gradle files" button and the project will appear correctly.
+
 # README #
 
 Android "framework"
