@@ -33,7 +33,7 @@ Try our cl tools:
 
 #### Note
 
-Android Studio will not probably find your project's classes and stuff. This is due to usage of Kotlin DSL in Gradle build files. To overcome this issue you'll need to create a empty `build.gradle` file and then click the "Sync project with Gradle files" button and the project will appear correctly.
+Android Studio will not probably find your project's classes and stuff. This is due to usage of Kotlin DSL in Gradle build files. To overcome this issue **you'll need to create an empty `build.gradle` file** and then click the "Sync project with Gradle files" button and the project will appear correctly.
 
 # README #
 
