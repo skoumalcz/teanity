@@ -27,10 +27,7 @@ dependencies {
 
 Try our cl tools:
 
-* [MAC](https://gist.githubusercontent.com/diareuse/d4ff8283b8cbc07b498a56af47d75ca7/raw/cc4a659efc9da82fea8d5745fb26a62dc62550bd/quickstart.sh)
-
-* [Linux]()
-    * PR are welcomed
+* [MAC / Linux](https://gist.githubusercontent.com/diareuse/d4ff8283b8cbc07b498a56af47d75ca7/raw/7763cc393e45e4c8e6033630de6f5329f532aac7/quickstart.sh)
     
 * [Windows](https://gist.githubusercontent.com/diareuse/36b7aa4e544e1a47fdad999e493266dd/raw/5637e7cc2e7ad2041fd0d02301dbc395504fa1b5/quickstart.ps1)
 
