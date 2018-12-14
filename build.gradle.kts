@@ -2,29 +2,28 @@ buildscript {
     extra.set(
         "versions", mapOf(
             /* === LIB === */
-            "kotlin" to "1.2.71",
+            "kotlin" to "1.3.10",
             "supportlib" to "1.0.0",
-            "room" to "2.0.0-rc01",
-            "lifecycle" to "2.0.0-rc01",
-            "navigation" to "1.0.0-alpha06",
+            "room" to "2.0.0",
+            "lifecycle" to "2.0.0",
+            "navigation" to "1.0.0-alpha08",
             "bca" to "3.0.0-beta3",
             "glide" to "4.8.0",
-            "state" to "1.3.1",
-            "rxkotlin" to "2.2.0",
+            "state" to "1.4.1",
+            "rxkotlin" to "2.3.0",
             "rxandroid" to "2.1.0",
             "dexter" to "5.0.0",
-            "ktx" to "1.0.0-alpha1",
+            "ktx" to "1.0.0",
 
             /* === APP === */
-            "playServices" to "15.0.1",
             "constraintLayout" to "2.0.0-alpha2",
             "gradlePlugin" to "3.3.0-alpha03",
-            "koin" to "1.0.1",
-            "retrofit" to "2.4.0",
-            "okhttp" to "3.11.0",
-            "moshi" to "1.7.0",
-            "crashlytics" to "2.9.3",
-            "fabric" to "1.25.4"
+            "koin" to "1.0.2",
+            "retrofit" to "2.5.0",
+            "okhttp" to "3.12.0",
+            "moshi" to "1.8.0",
+            "crashlytics" to "2.9.7",
+            "fabric" to "1.+"
         )
     )
 

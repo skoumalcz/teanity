@@ -14,7 +14,7 @@ fun BottomNavigationView.setupWith(navController: NavController) {
     //reselected listener is set, it automatically redirects the event to onSelectedListener. Such a dumb design...
     setOnNavigationItemReselectedListener {}
 
-    navController.addOnNavigatedListener { _, destination ->
+    navController.addOnDestinationChangedListener { _, destination, _ ->
         menu.children.forEach {
             if (destination.id == it.itemId) {
                 it.isChecked = true
