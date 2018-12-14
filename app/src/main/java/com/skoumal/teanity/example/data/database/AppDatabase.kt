@@ -5,8 +5,11 @@ import androidx.room.RoomDatabase
 import com.skoumal.teanity.example.model.entity.DbEntity
 
 @Database(
-    version = 1,
-    entities = [DbEntity::class]
+    version = 1, //Increment this as you change your entities
+    entities = [
+        DbEntity::class
+        //, AnotherEntity::class ...
+    ]
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -15,4 +18,6 @@ abstract class AppDatabase : RoomDatabase() {
     }
 
     abstract fun dbEntityDao(): DbEntityDao
+    //Define more DAOs
+
 }

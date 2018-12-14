@@ -30,15 +30,14 @@ class LoginEmailViewModel(
     }
 
     fun loginButtonClicked() {
-        val email = email.value
-        val password = password.value
+        registrationRepo
+            .login {
+                email = this@LoginEmailViewModel.email.value
+                password = this@LoginEmailViewModel.password.value
 
-        val isClear = email.isEmail(emailError) or
-                password.isPassword(passwordError)
-
-        if (!isClear) return
-
-        registrationRepo.login(email, password)
+                onEvaluate { email.isEmail(emailError) or password.isPassword(passwordError) }
+                onEvaluateFailed { SnackbarEvent(R.string.login_failed).publish() }
+            }
             .applyViewModel(this)
             .applySchedulers()
             .subscribeK(onComplete = this::loginSucceeded, onError = this::loginFailed)

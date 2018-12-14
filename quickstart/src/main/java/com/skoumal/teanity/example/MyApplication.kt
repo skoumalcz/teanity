@@ -8,6 +8,7 @@ import com.skoumal.teanity.example.di.koinModules
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
+@Suppress("ConstantConditionIf")
 class MyApplication : Application() {
 
     override fun onCreate() {

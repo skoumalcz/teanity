@@ -10,7 +10,7 @@ fun BottomNavigationView.setupWith(navController: NavController) {
         true
     }
 
-    //Prefix for reselection. Since listener is implemented way that nobody can comprehend - by default when no
+    //Prefix for reselection. Since listener is implemented in a way that nobody can comprehend - by default when no
     //reselected listener is set, it automatically redirects the event to onSelectedListener. Such a dumb design...
     setOnNavigationItemReselectedListener {}
 

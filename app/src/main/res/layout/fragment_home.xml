@@ -40,12 +40,14 @@
                 android:id="@+id/recycler"
                 dividerAfterLast="@{false}"
                 dividerSize="@{@dimen/margin_generic}"
+                onLoadMore="@{() -> viewModel.loadMoreItems()}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"
                 android:paddingTop="@dimen/margin_generic"
                 android:paddingBottom="@dimen/margin_generic"
                 android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:itemBinding="@{viewModel.itemBinding}"
                 app:items="@{viewModel.items}" />
 

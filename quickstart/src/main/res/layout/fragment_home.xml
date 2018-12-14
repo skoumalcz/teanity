@@ -40,6 +40,7 @@
                 android:id="@+id/recycler"
                 dividerAfterLast="@{false}"
                 dividerSize="@{@dimen/margin_generic}"
+                onLoadMore="@{() -> viewModel.loadMoreItems()}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"

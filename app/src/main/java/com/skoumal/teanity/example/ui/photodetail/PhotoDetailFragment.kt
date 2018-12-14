@@ -9,9 +9,7 @@ import org.koin.core.parameter.parametersOf
 class PhotoDetailFragment : TeanityFragment<PhotoDetailViewModel, FragmentPhotoDetailBinding>() {
 
     override val layoutRes: Int = R.layout.fragment_photo_detail
-    override val viewModel: PhotoDetailViewModel by viewModel { parametersOf(
-        args.photoId
-    ) }
+    override val viewModel: PhotoDetailViewModel by viewModel { parametersOf(args.photoId) }
     
     private val args by lazy { PhotoDetailFragmentArgs.fromBundle(arguments) }
 

@@ -1,6 +1,7 @@
 package com.skoumal.teanity.example.ui.home
 
 import com.skoumal.teanity.BR
+import com.skoumal.teanity.api.ApiX
 import com.skoumal.teanity.databinding.ComparableRvItem
 import com.skoumal.teanity.example.data.repository.PhotoRepository
 import com.skoumal.teanity.example.model.entity.LoadingRvItem
@@ -21,7 +22,10 @@ class HomeViewModel(
         item.bind(itemBinding)
         itemBinding.bindExtra(BR.viewModel, this@HomeViewModel)
     }
-    private var loadedPage = 0
+
+    private val photoItems get() = items.filterIsInstance<PhotoRvItem>()
+    private val currentLoadingItem get() = items.filterIsInstance<LoadingRvItem>().firstOrNull()
+    private val loadingItem get() = LoadingRvItem("Loading failed", "Try again", ::loadMoreItems)
 
     init {
         loadItems()
@@ -31,49 +35,45 @@ class HomeViewModel(
         loadItems()
     }
 
-    private fun loadItems(page: Int = 1) {
-        photoRepository.getPhotos(page = page)
+    private fun loadItems() {
+        photoRepository.getPhotos { offset = photoItems.size }
+            .flattenAsFlowable { it }
+            .map { PhotoRvItem(it) }
+            .toList()
             .delay(1000, TimeUnit.MILLISECONDS)
             .applySchedulers()
             .doOnSubscribe {
-                if (page == 1) {
+                if (photoItems.isEmpty()) {
                     setLoading()
                 } else {
-                    val last = items.lastOrNull() as? LoadingRvItem
-                    last?.failed?.set(false)
+                    currentLoadingItem?.failed?.set(false)
                 }
             }
             .subscribe({
                 setLoaded()
-                loadedPage = page
                 itemsLoaded(it)
             }, {
-                if (page == 1) {
+                if (photoItems.isEmpty()) {
                     setLoadingFailed()
                 } else {
-                    val last = items.lastOrNull() as? LoadingRvItem
-                    last?.failed?.set(true)
+                    currentLoadingItem?.failed?.set(true)
                 }
             })
             .add()
     }
 
-    fun loadMoreItems() {
-        loadItems(loadedPage + 1)
+    fun loadMoreItems() = loadItems()
+
+    private fun itemsLoaded(newItems: List<PhotoRvItem>) {
+        val updatedList = photoItems + newItems
+
+        items.update(updatedList.plusNotEmpty(loadingItem))
     }
 
-    private fun itemsLoaded(newItems: List<Photo>) {
-        val listItems = mutableListOf<ComparableRvItem<*>>()
+    fun photoClicked(photo: Photo) = NavigateToPhotoDetailEvent(photo).publish()
 
-        listItems += newItems.map { PhotoRvItem(it) }
-
-        listItems += LoadingRvItem("Loading failed", "Try again", ::loadMoreItems)
-
-        items.removeLast()
-        items.addAll(listItems)
-    }
-
-    fun photoClicked(photo: Photo) {
-        NavigateToPhotoDetailEvent(photo).publish()
+    private fun List<ComparableRvItem<*>>.plusNotEmpty(item: ComparableRvItem<*>): List<ComparableRvItem<*>> {
+        return if (size % ApiX.GENERIC_LIMIT == 0) this + item
+        else this
     }
 }

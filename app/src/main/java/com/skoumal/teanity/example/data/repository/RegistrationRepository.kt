@@ -1,6 +1,7 @@
 package com.skoumal.teanity.example.data.repository
 
 import android.net.ConnectivityManager
+import com.skoumal.teanity.api.ApiXEvaluator
 import com.skoumal.teanity.example.Config
 import com.skoumal.teanity.example.data.network.ApiServices
 import io.reactivex.Completable
@@ -12,13 +13,14 @@ class RegistrationRepository(
     private val cm: ConnectivityManager
 ) {
 
-    fun login(email: String, password: String): Completable {
-        val result = if (cm.activeNetworkInfo != null && cm.activeNetworkInfo.isConnected) {
+    fun login(evaluatorHelper: Login.() -> Unit): Completable {
+        val evaluator = Login().apply(evaluatorHelper)
+
+        return if (evaluator.evaluate() && (cm.activeNetworkInfo?.isConnected == true)) {
             Completable.complete()
         } else {
             Completable.error(IllegalStateException())
         }
-        return result
             .delay(1000, TimeUnit.MILLISECONDS, Schedulers.computation(), true)
             .doOnComplete { Config.token = "token" }
     }
@@ -27,6 +29,11 @@ class RegistrationRepository(
         return Completable.complete()
             .delay(1000, TimeUnit.MILLISECONDS)
             .doOnComplete { Config.token = "" }
+    }
+
+    class Login : ApiXEvaluator<Login>() {
+        var email: String = ""
+        var password: String = ""
     }
 
 }

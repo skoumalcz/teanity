@@ -15,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.InputStream
 
+@Suppress("ConstantConditionIf")
 @GlideModule
 class MyAppGlideModule : AppGlideModule() {
 

@@ -11,6 +11,7 @@ import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
+@Suppress("ConstantConditionIf")
 class MyApplication : Application() {
 
     override fun onCreate() {

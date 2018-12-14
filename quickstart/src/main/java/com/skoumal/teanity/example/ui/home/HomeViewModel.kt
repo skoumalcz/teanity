@@ -14,12 +14,6 @@ class HomeViewModel : LoadingViewModel() {
         itemBinding.bindExtra(BR.viewModel, this@HomeViewModel)
     }
 
-    init {
-    }
-
-    fun retryLoadingButtonClicked() {
-    }
-
-    fun loadMoreItems() {
-    }
+    fun retryLoadingButtonClicked() = Unit
+    fun loadMoreItems() = Unit
 }
