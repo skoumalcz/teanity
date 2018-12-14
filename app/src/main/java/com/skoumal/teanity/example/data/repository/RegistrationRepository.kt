@@ -18,11 +18,12 @@ class RegistrationRepository(
 
         return if (evaluator.evaluate() && (cm.activeNetworkInfo?.isConnected == true)) {
             Completable.complete()
+                .delay(1000, TimeUnit.MILLISECONDS, Schedulers.computation(), true)
+                .doOnComplete { Config.token = "token" }
         } else {
             Completable.error(IllegalStateException())
         }
-            .delay(1000, TimeUnit.MILLISECONDS, Schedulers.computation(), true)
-            .doOnComplete { Config.token = "token" }
+
     }
 
     fun logout(): Completable {
