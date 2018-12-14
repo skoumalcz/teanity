@@ -3,11 +3,8 @@ package com.skoumal.teanity.example
 import android.app.Application
 import android.util.Log
 import com.chibatching.kotpref.Kotpref
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
 import com.facebook.stetho.Stetho
 import com.skoumal.teanity.example.di.koinModules
-import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
@@ -20,8 +17,8 @@ class MyApplication : Application() {
 
         startKoin(this, koinModules)
 
-        val core = CrashlyticsCore.Builder().disabled(Constants.DEBUG).build()
-        Fabric.with(this, Crashlytics.Builder().core(core).build())
+        /*val core = CrashlyticsCore.Builder().disabled(Constants.DEBUG).build()
+        Fabric.with(this, Crashlytics.Builder().core(core).build())*/
 
         if (Constants.DEBUG) {
             Stetho.initializeWithDefaults(this)
@@ -42,10 +39,10 @@ class MyApplication : Application() {
                 return
             }
 
-            Crashlytics.log(priority, tag, message)
+            //Crashlytics.log(priority, tag, message)
 
             if (t != null) {
-                Crashlytics.logException(t)
+                //Crashlytics.logException(t)
             }
         }
     }

@@ -5,9 +5,17 @@ plugins {
     id("kotlin-android-extensions")
     id("kotlin-kapt")
 
-    id("io.fabric")
+    //id("io.fabric")
 
     id("androidx.navigation.safeargs")
+}
+
+repositories {
+    google()
+    jcenter()
+    maven(url = "https://maven.fabric.io/public")
+    maven(url = "https://jitpack.io")
+    maven(url = "http://oss.sonatype.org/content/repositories/snapshots")
 }
 
 kapt {
@@ -48,16 +56,16 @@ android {
 dependencies {
     val versions: Map<String, String> by rootProject.extra
 
-    implementation("com.github.skoumalcz:teanity:0.1")
+    implementation("com.github.skoumalcz:teanity:0.1.1")
 
     // TESTING
     testImplementation("junit:junit:4.12")
     androidTestImplementation("androidx.test:runner:1.1.0-alpha4")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.1.0-alpha4")
 
-    implementation("com.crashlytics.sdk.android:crashlytics:${versions["crashlytics"]}@aar") {
+    /*implementation("com.crashlytics.sdk.android:crashlytics:${versions["crashlytics"]}@aar") {
         isTransitive = true
-    }
+    }*/
     implementation("com.facebook.stetho:stetho:1.5.0")
 
     // KOTLIN

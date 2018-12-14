@@ -24,9 +24,9 @@
         </activity>
 
         <!--FIXME-->
-        <meta-data
+        <!--<meta-data
             android:name="io.fabric.ApiKey"
-            android:value="enteryourkey" />
+            android:value="enteryourkey" />-->
 
     </application>
 

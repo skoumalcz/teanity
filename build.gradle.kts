@@ -33,6 +33,7 @@ buildscript {
         jcenter()
         maven(url = "https://maven.fabric.io/public")
         maven(url = "https://jitpack.io")
+        maven(url = "http://oss.sonatype.org/content/repositories/snapshots")
     }
 
     val versions: Map<String, String> by extra
