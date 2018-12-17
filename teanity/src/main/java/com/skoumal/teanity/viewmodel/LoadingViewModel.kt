@@ -1,40 +1,48 @@
 package com.skoumal.teanity.viewmodel
 
 import androidx.databinding.Bindable
-import androidx.databinding.ObservableBoolean
 import com.skoumal.teanity.BR
 
-abstract class LoadingViewModel : ObservableViewModel() {
+abstract class LoadingViewModel : StatefulViewModel<LoadingViewModel.State>(State.LOADING) {
 
-    var state = STATE_LOADING
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.loading)
-            notifyPropertyChanged(BR.loaded)
-            notifyPropertyChanged(BR.loadingFailed)
-        }
+    val loading @Bindable get() = state == State.LOADING
+    val loaded @Bindable get() = state == State.LOADED
+    val loadingFailed @Bindable get() = state == State.LOADING_FAILED
 
-    val loading @Bindable get() = state == STATE_LOADING
-    val loaded @Bindable get() = state == STATE_LOADED
-    val loadingFailed @Bindable get() = state == STATE_LOADING_FAILED
-
-    val loadingManual = ObservableBoolean(false)
-
+    @Deprecated(
+        "Direct access is recommended since 0.2. This access method will be removed in 1.0",
+        ReplaceWith("state = State.LOADING", "com.skoumal.teanity.viewmodel.LoadingViewModel.State"),
+        DeprecationLevel.WARNING
+    )
     fun setLoading() {
-        state = STATE_LOADING
+        state = State.LOADING
     }
 
+    @Deprecated(
+        "Direct access is recommended since 0.2. This access method will be removed in 1.0",
+        ReplaceWith("state = State.LOADED", "com.skoumal.teanity.viewmodel.LoadingViewModel.State"),
+        DeprecationLevel.WARNING
+    )
     fun setLoaded() {
-        state = STATE_LOADED
+        state = State.LOADED
     }
 
+    @Deprecated(
+        "Direct access is recommended since 0.2. This access method will be removed in 1.0",
+        ReplaceWith("state = State.LOADING_FAILED", "com.skoumal.teanity.viewmodel.LoadingViewModel.State"),
+        DeprecationLevel.WARNING
+    )
     fun setLoadingFailed() {
-        state = STATE_LOADING_FAILED
+        state = State.LOADING_FAILED
     }
 
-    companion object {
-        private const val STATE_LOADING = 1
-        private const val STATE_LOADED = 2
-        private const val STATE_LOADING_FAILED = 3
+    override fun notifyStateChanged() {
+        notifyPropertyChanged(BR.loading)
+        notifyPropertyChanged(BR.loaded)
+        notifyPropertyChanged(BR.loadingFailed)
+    }
+
+    enum class State {
+        LOADED, LOADING, LOADING_FAILED
     }
 }
