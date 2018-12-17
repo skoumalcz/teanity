@@ -1,13 +1,24 @@
 package com.skoumal.teanity.extensions
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Build
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 
-fun Context.colorCompat(@ColorRes id: Int) = ContextCompat.getColor(this, id)
+fun Context.colorCompat(@ColorRes id: Int) = try {
+    ContextCompat.getColor(this, id)
+} catch (e: Resources.NotFoundException) {
+    null
+}
+
+fun Context.colorStateListCompat(@ColorRes id: Int) = try {
+    ContextCompat.getColorStateList(this, id)
+} catch (e: Resources.NotFoundException) {
+    null
+}
 
 fun Context.drawableCompat(@DrawableRes id: Int) = ContextCompat.getDrawable(this, id)
 
