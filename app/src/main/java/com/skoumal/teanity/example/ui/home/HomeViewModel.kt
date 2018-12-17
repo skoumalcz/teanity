@@ -44,17 +44,17 @@ class HomeViewModel(
             .applySchedulers()
             .doOnSubscribe {
                 if (photoItems.isEmpty()) {
-                    setLoading()
+                    state = State.LOADING
                 } else {
                     currentLoadingItem?.failed?.set(false)
                 }
             }
             .subscribe({
-                setLoaded()
+                state = State.LOADED
                 itemsLoaded(it)
             }, {
                 if (photoItems.isEmpty()) {
-                    setLoadingFailed()
+                    state = State.LOADING_FAILED
                 } else {
                     currentLoadingItem?.failed?.set(true)
                 }

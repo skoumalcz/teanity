@@ -2,7 +2,6 @@ package com.skoumal.teanity.extensions
 
 import androidx.databinding.ObservableField
 import com.skoumal.teanity.util.KObservableField
-import com.skoumal.teanity.viewmodel.LoadingViewModel
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposables
@@ -33,32 +32,6 @@ fun Completable.applySchedulers(
     subscribeOn: Scheduler = Schedulers.io(),
     observeOn: Scheduler = AndroidSchedulers.mainThread()
 ): Completable = this.subscribeOn(subscribeOn).observeOn(observeOn)
-
-fun <T> Observable<T>.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-    doOnSubscribe { viewModel.setLoading() }
-        .doOnError { viewModel.setLoadingFailed() }
-        .doOnNext { if (allowFinishing) viewModel.setLoaded() }
-
-fun <T> Single<T>.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-    doOnSubscribe { viewModel.setLoading() }
-        .doOnError { viewModel.setLoadingFailed() }
-        .doOnSuccess { if (allowFinishing) viewModel.setLoaded() }
-
-fun <T> Maybe<T>.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-    doOnSubscribe { viewModel.setLoading() }
-        .doOnError { viewModel.setLoadingFailed() }
-        .doOnComplete { if (allowFinishing) viewModel.setLoaded() }
-        .doOnSuccess { if (allowFinishing) viewModel.setLoaded() }
-
-fun <T> Flowable<T>.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-    doOnSubscribe { viewModel.setLoading() }
-        .doOnError { viewModel.setLoadingFailed() }
-        .doOnNext { if (allowFinishing) viewModel.setLoaded() }
-
-fun Completable.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-    doOnSubscribe { viewModel.setLoading() }
-        .doOnError { viewModel.setLoadingFailed() }
-        .doOnComplete { if (allowFinishing) viewModel.setLoaded() }
 
 /*=== ALIASES FOR OBSERVABLES ===*/
 
