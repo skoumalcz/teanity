@@ -33,16 +33,19 @@ fun AppCompatActivity.requestPermission(
                 onDenied()
                 if (response.isPermanentlyDenied) {
                     snackbar(view, explanation, Snackbar.LENGTH_LONG) {
-                        action(actionTitle) {
-                            val appSettings = Intent(
-                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                "package:$packageName".toUri()
-                            ).apply {
-                                addCategory(Intent.CATEGORY_DEFAULT)
-                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            }
+                        action {
+                            title = actionTitle
+                            onClickListener = {
+                                val appSettings = Intent(
+                                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                    "package:$packageName".toUri()
+                                ).apply {
+                                    addCategory(Intent.CATEGORY_DEFAULT)
+                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                }
 
-                            startActivity(appSettings)
+                                startActivity(appSettings)
+                            }
                         }
                     }
                 }

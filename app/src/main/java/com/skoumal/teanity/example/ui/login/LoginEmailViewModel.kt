@@ -25,7 +25,7 @@ class LoginEmailViewModel(
     var passwordError = KObservableField("")
 
     init {
-        setLoaded()
+        state = State.LOADED
     }
 
     fun loginButtonClicked() {
