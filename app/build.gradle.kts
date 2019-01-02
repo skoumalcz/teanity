@@ -70,6 +70,7 @@ dependencies {
 
     // KOTLIN
     implementation(kotlin("stdlib-jdk7", version = versions["kotlin"]))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions["coroutines"]}")
 
     // SUPPORT LIBS
     implementation("com.google.android.material:material:${versions["material"]}")
@@ -83,7 +84,7 @@ dependencies {
     // NETWORKING
     implementation("com.squareup.retrofit2:retrofit:${versions["retrofit"]}")
     implementation("com.squareup.retrofit2:converter-moshi:${versions["retrofit"]}")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:${versions["retrofit"]}")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${versions["retrofit-coroutines"]}")
     implementation("com.squareup.okhttp3:okhttp:${versions["okhttp"]}")
     implementation("com.squareup.okhttp3:logging-interceptor:${versions["okhttp"]}")
     implementation("com.squareup.moshi:moshi:${versions["moshi"]}")

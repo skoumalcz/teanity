@@ -2,16 +2,19 @@ package com.skoumal.teanity.example.ui.home
 
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.api.ApiX
+import com.skoumal.teanity.example.model.entity.Result
+import com.skoumal.teanity.example.model.entity.map
 import com.skoumal.teanity.databinding.ComparableRvItem
 import com.skoumal.teanity.example.data.repository.PhotoRepository
 import com.skoumal.teanity.example.model.entity.LoadingRvItem
 import com.skoumal.teanity.example.model.entity.Photo
 import com.skoumal.teanity.example.model.entity.PhotoRvItem
-import com.skoumal.teanity.extensions.applySchedulers
 import com.skoumal.teanity.util.DiffObservableList
 import com.skoumal.teanity.viewmodel.LoadingViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import me.tatarka.bindingcollectionadapter2.OnItemBind
-import java.util.concurrent.TimeUnit
 
 class HomeViewModel(
     private val photoRepository: PhotoRepository
@@ -36,30 +39,32 @@ class HomeViewModel(
     }
 
     private fun loadItems() {
-        photoRepository.getPhotos { offset = photoItems.size }
-            .flattenAsFlowable { it }
-            .map { PhotoRvItem(it) }
-            .toList()
-            .delay(1000, TimeUnit.MILLISECONDS)
-            .applySchedulers()
-            .doOnSubscribe {
-                if (photoItems.isEmpty()) {
-                    state = State.LOADING
-                } else {
-                    currentLoadingItem?.failed?.set(false)
+        launch {
+            if (photoItems.isEmpty()) {
+                state = State.LOADING
+            } else {
+                currentLoadingItem?.failed?.set(false)
+            }
+
+            val result = withContext(Dispatchers.IO) {
+                delay(1000)
+                photoRepository.getPhotos { offset = photoItems.size }.map { it.map { PhotoRvItem(it) } }
+            }
+
+            when (result) {
+                is Result.Success -> {
+                    state = State.LOADED
+                    itemsLoaded(result.data)
+                }
+                is Result.Error -> {
+                    if (photoItems.isEmpty()) {
+                        state = State.LOADING_FAILED
+                    } else {
+                        currentLoadingItem?.failed?.set(true)
+                    }
                 }
             }
-            .subscribe({
-                state = State.LOADED
-                itemsLoaded(it)
-            }, {
-                if (photoItems.isEmpty()) {
-                    state = State.LOADING_FAILED
-                } else {
-                    currentLoadingItem?.failed?.set(true)
-                }
-            })
-            .add()
+        }
     }
 
     fun loadMoreItems() = loadItems()

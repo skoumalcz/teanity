@@ -23,6 +23,7 @@ buildscript {
             "gradlePlugin" to "3.3.0-alpha03",
             "koin" to "1.0.2",
             "retrofit" to "2.5.0",
+            "retrofit-coroutines" to "0.9.2",
             "okhttp" to "3.12.0",
             "moshi" to "1.8.0",
             "crashlytics" to "2.9.7",

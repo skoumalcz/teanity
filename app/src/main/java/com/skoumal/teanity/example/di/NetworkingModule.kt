@@ -1,5 +1,6 @@
 package com.skoumal.teanity.example.di
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.skoumal.teanity.example.Constants
 import com.skoumal.teanity.example.data.network.ApiServices
 import com.skoumal.teanity.example.data.network.TokenInterceptor
@@ -10,7 +11,6 @@ import org.koin.dsl.module.module
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 val networkingModule = module {
@@ -44,7 +44,7 @@ fun createConverterFactory(): Converter.Factory {
 }
 
 fun createCallAdapterFactory(): CallAdapter.Factory {
-    return RxJava2CallAdapterFactory.create()
+    return CoroutineCallAdapterFactory()
 }
 
 fun createRetrofit(

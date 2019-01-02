@@ -1,9 +1,10 @@
 package com.skoumal.teanity.example.ui.settings
 
+import com.skoumal.teanity.example.model.entity.Result
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
-import com.skoumal.teanity.extensions.applySchedulers
-import com.skoumal.teanity.extensions.subscribeK
 import com.skoumal.teanity.viewmodel.TeanityViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class SettingsViewModel(
     private val registrationRepo: RegistrationRepository
@@ -11,10 +12,16 @@ class SettingsViewModel(
 
     fun logoutButtonClicked() {
         // there should be some progress bar, but I'm too lazy
-        registrationRepo.logout()
-            .applySchedulers()
-            .subscribeK(onComplete = this::logoutSuccess, onError = this::logoutFailed)
-            .add()
+        launch {
+            val result = withContext(Dispatchers.IO) {
+                registrationRepo.logout()
+            }
+
+            when (result) {
+                is Result.Success -> logoutSuccess()
+                is Result.Error -> logoutFailed(result.exception)
+            }
+        }
     }
 
     private fun logoutSuccess() {

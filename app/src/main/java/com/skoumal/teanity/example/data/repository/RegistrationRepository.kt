@@ -2,34 +2,43 @@ package com.skoumal.teanity.example.data.repository
 
 import android.net.ConnectivityManager
 import com.skoumal.teanity.api.ApiXEvaluator
+import com.skoumal.teanity.example.model.entity.Result
 import com.skoumal.teanity.example.Config
 import com.skoumal.teanity.example.data.network.ApiServices
-import io.reactivex.Completable
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
 
 class RegistrationRepository(
     private val api: ApiServices,
     private val cm: ConnectivityManager
 ) {
 
-    fun login(evaluatorHelper: Login.() -> Unit): Completable {
+    suspend fun login(evaluatorHelper: Login.() -> Unit): Result<Unit> {
         val evaluator = Login().apply(evaluatorHelper)
 
-        return if (evaluator.evaluate() && (cm.activeNetworkInfo?.isConnected == true)) {
-            Completable.complete()
-                .delay(1000, TimeUnit.MILLISECONDS, Schedulers.computation(), true)
-                .doOnComplete { Config.token = "token" }
+        val result = if (evaluator.evaluate() && (cm.activeNetworkInfo?.isConnected == true)) {
+            delay(1000)
+            Result.Success()
         } else {
-            Completable.error(IllegalStateException())
+            Result.Error(IllegalStateException())
         }
 
+        if (result.isSuccess) {
+            Config.token = "token"
+        }
+
+        return result
     }
 
-    fun logout(): Completable {
-        return Completable.complete()
-            .delay(1000, TimeUnit.MILLISECONDS)
-            .doOnComplete { Config.token = "" }
+    suspend fun logout(): Result<Unit> {
+        delay(1000)
+
+        val result = Result.Success()
+
+        if (result.isSuccess) {
+            Config.token = ""
+        }
+
+        return result
     }
 
     class Login : ApiXEvaluator<Login>() {
