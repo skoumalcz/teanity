@@ -60,8 +60,8 @@ dependencies {
 
     // TESTING
     testImplementation("junit:junit:4.12")
-    androidTestImplementation("androidx.test:runner:1.1.0-alpha4")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.1.0-alpha4")
+    androidTestImplementation("androidx.test:runner:1.1.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.1.1")
 
     /*implementation("com.crashlytics.sdk.android:crashlytics:${versions["crashlytics"]}@aar") {
         isTransitive = true
@@ -72,7 +72,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk7", version = versions["kotlin"]))
 
     // SUPPORT LIBS
-    implementation("com.google.android.material:material:${versions["supportlib"]}")
+    implementation("com.google.android.material:material:${versions["material"]}")
     implementation("androidx.constraintlayout:constraintlayout:${versions["constraintLayout"]}")
 
     // DEPENDENCY INJECTION
@@ -92,8 +92,8 @@ dependencies {
     implementation("com.github.bumptech.glide:okhttp3-integration:${versions["glide"]}@aar")
 
     // EASING
-    implementation("com.chibatching.kotpref:kotpref:2.5.0")
-    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation("com.chibatching.kotpref:kotpref:${versions["kotpref"]}")
+    implementation("com.jakewharton.timber:timber:${versions["timber"]}")
 
     // KAPTs
     kapt("com.squareup.moshi:moshi-kotlin-codegen:${versions["moshi"]}")

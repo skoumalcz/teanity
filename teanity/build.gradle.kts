@@ -36,16 +36,16 @@ dependencies {
     val versions: Map<String, String> by rootProject.extra
 
     testImplementation("junit:junit:4.12")
-    androidTestImplementation("androidx.test:runner:1.1.0-alpha4")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.1.0-alpha4")
+    androidTestImplementation("androidx.test:runner:1.1.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.1.1")
 
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions["kotlin"]}")
 
     /* === SUPPORT === */
-    api("androidx.appcompat:appcompat:${versions["supportlib"]}")
+    api("androidx.appcompat:appcompat:${versions["appcompat"]}")
 
     /* === CORE === */
-    api("androidx.core:core-ktx:${versions["supportlib"]}")
+    api("androidx.core:core-ktx:${versions["ktx"]}")
     api("androidx.lifecycle:lifecycle-extensions:${versions["lifecycle"]}")
     api("android.arch.navigation:navigation-fragment-ktx:${versions["navigation"]}")
     api("android.arch.navigation:navigation-ui-ktx:${versions["navigation"]}")

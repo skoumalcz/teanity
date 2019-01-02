@@ -3,7 +3,9 @@ buildscript {
         "versions", mapOf(
             /* === LIB === */
             "kotlin" to "1.3.10",
-            "supportlib" to "1.0.0",
+            "appcompat" to "1.0.2",
+            "ktx" to "1.0.1",
+            "material" to "1.0.0",
             "room" to "2.0.0",
             "lifecycle" to "2.0.0",
             "navigation" to "1.0.0-alpha08",
@@ -23,7 +25,9 @@ buildscript {
             "okhttp" to "3.12.0",
             "moshi" to "1.8.0",
             "crashlytics" to "2.9.7",
-            "fabric" to "1.+"
+            "fabric" to "1.+",
+            "kotpref" to "2.6.0",
+            "timber" to "4.7.1"
         )
     )
 
