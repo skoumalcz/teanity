@@ -40,6 +40,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.1.1")
 
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions["kotlin"]}")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions["coroutines"]}")
 
     /* === SUPPORT === */
     api("androidx.appcompat:appcompat:${versions["appcompat"]}")

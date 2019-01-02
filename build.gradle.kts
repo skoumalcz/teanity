@@ -3,6 +3,7 @@ buildscript {
         "versions", mapOf(
             /* === LIB === */
             "kotlin" to "1.3.10",
+            "coroutines" to "1.1.0",
             "appcompat" to "1.0.2",
             "ktx" to "1.0.1",
             "material" to "1.0.0",
