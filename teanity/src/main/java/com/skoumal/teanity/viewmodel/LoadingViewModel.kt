@@ -4,7 +4,8 @@ import androidx.databinding.Bindable
 import com.skoumal.teanity.BR
 import io.reactivex.*
 
-abstract class LoadingViewModel : StatefulViewModel<LoadingViewModel.State>(State.LOADING) {
+abstract class LoadingViewModel(defaultState: State = State.LOADING) :
+    StatefulViewModel<LoadingViewModel.State>(defaultState) {
 
     val loading @Bindable get() = state == State.LOADING
     val loaded @Bindable get() = state == State.LOADED
