@@ -17,6 +17,7 @@ buildscript {
             "rxandroid" to "2.1.0",
             "dexter" to "5.0.0",
             "ktx" to "1.0.0",
+            "work" to "1.0.0-beta01",
 
             /* === APP === */
             "constraintLayout" to "2.0.0-alpha2",

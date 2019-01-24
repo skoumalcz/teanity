@@ -1,14 +1,26 @@
 package com.skoumal.teanity.databinding
 
 import android.view.View
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("gone")
 fun setGone(view: View, gone: Boolean) {
-    view.visibility = if (gone) View.GONE else View.VISIBLE
+    view.isGone = gone
 }
 
 @BindingAdapter("invisible")
 fun setInvisible(view: View, invisible: Boolean) {
-    view.visibility = if (invisible) View.INVISIBLE else View.VISIBLE
+    view.isInvisible = invisible
+}
+
+@BindingAdapter("goneUnless")
+fun setGoneUnless(view: View, goneUnless: Boolean) {
+    setGone(view, goneUnless.not())
+}
+
+@BindingAdapter("invisibleUnless")
+fun setInvisibleUnless(view: View, invisibleUnless: Boolean) {
+    setInvisible(view, invisibleUnless.not())
 }
