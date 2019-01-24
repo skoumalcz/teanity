@@ -2,9 +2,9 @@ package com.skoumal.teanity.example.data.repository
 
 import com.skoumal.teanity.api.ApiX
 import com.skoumal.teanity.example.model.entity.Result
-import com.skoumal.teanity.example.model.entity.toResult
 import com.skoumal.teanity.example.data.network.ApiServices
 import com.skoumal.teanity.example.model.entity.Photo
+import com.skoumal.teanity.example.model.entity.awaitResult
 
 class PhotoRepository(
     private val api: ApiServices
@@ -15,7 +15,7 @@ class PhotoRepository(
         return api.getPhotos(
             page = requestDefinition.page,
             perPage = requestDefinition.limit
-        ).await().toResult()
+        ).awaitResult()
     }
 
 }
