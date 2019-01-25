@@ -8,8 +8,8 @@ buildscript {
             "material" to "1.0.0",
             "room" to "2.0.0",
             "lifecycle" to "2.0.0",
-            "navigation" to "1.0.0-alpha08",
-            "bca" to "3.0.0-beta3",
+            "navigation" to "1.0.0-alpha11",
+            "bca" to "3.0.0-beta1",
             "glide" to "4.8.0",
             "state" to "1.4.1",
             "rxkotlin" to "2.3.0",
@@ -20,7 +20,7 @@ buildscript {
 
             /* === APP === */
             "constraintLayout" to "2.0.0-alpha2",
-            "gradlePlugin" to "3.3.0-alpha03",
+            "gradlePlugin" to "3.5.0-alpha01",
             "koin" to "1.0.2",
             "retrofit" to "2.5.0",
             "okhttp" to "3.12.0",
