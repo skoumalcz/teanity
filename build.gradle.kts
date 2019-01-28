@@ -2,7 +2,7 @@ buildscript {
     extra.set(
         "versions", mapOf(
             /* === LIB === */
-            "kotlin" to "1.3.10",
+            "kotlin" to "1.3.20",
             "appcompat" to "1.0.2",
             "ktx" to "1.0.1",
             "material" to "1.0.0",
@@ -20,7 +20,7 @@ buildscript {
 
             /* === APP === */
             "constraintLayout" to "2.0.0-alpha2",
-            "gradlePlugin" to "3.5.0-alpha01",
+            "gradlePlugin" to "3.3.0-alpha03",
             "koin" to "1.0.2",
             "retrofit" to "2.5.0",
             "okhttp" to "3.12.0",
