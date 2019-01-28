@@ -9,7 +9,7 @@ buildscript {
             "room" to "2.0.0",
             "lifecycle" to "2.0.0",
             "navigation" to "1.0.0-alpha11",
-            "bca" to "3.0.0-beta1",
+            "bca" to "3.0.0-beta1",/*please do not update; nested binding fails to resolve on newer versions*/
             "glide" to "4.8.0",
             "state" to "1.4.1",
             "rxkotlin" to "2.3.0",
