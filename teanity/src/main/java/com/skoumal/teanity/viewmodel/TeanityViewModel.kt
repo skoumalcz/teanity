@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.evernote.android.state.StateSaver
+import com.skoumal.teanity.coroutine.CoroutineChain
 import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEvent
 import io.reactivex.disposables.CompositeDisposable
@@ -34,7 +35,7 @@ abstract class TeanityViewModel : ViewModel() {
     }
 
     fun saveState(outState: Bundle) {
-        StateSaver.saveInstanceState(this, outState);
+        StateSaver.saveInstanceState(this, outState)
     }
 
     fun <Event : ViewEvent> Event.publish() {
@@ -49,11 +50,14 @@ abstract class TeanityViewModel : ViewModel() {
         disposables.add(this)
     }
 
-    protected fun launch(
+    protected fun <LaunchTarget> launch(
         context: CoroutineContext = EmptyCoroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
-        block: suspend CoroutineScope.() -> Unit
+        block: CoroutineChain.Builder<LaunchTarget>.() -> Unit
     ): Job {
-        return scope.launch(context, start, block)
+        val task = CoroutineChain.Builder<LaunchTarget>().apply(block).build()
+        return scope.launch(context, start) {
+            task.chain()
+        }
     }
 }

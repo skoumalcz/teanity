@@ -1,8 +1,8 @@
 package com.skoumal.teanity.example.ui.login
 
-import com.skoumal.teanity.example.model.entity.Result
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
+import com.skoumal.teanity.example.model.entity.Result
 import com.skoumal.teanity.example.ui.events.SnackbarEvent
 import com.skoumal.teanity.example.util.isEmail
 import com.skoumal.teanity.example.util.isPassword
@@ -14,7 +14,7 @@ import com.evernote.android.state.State as SavedState
 
 class LoginEmailViewModel(
     private val registrationRepo: RegistrationRepository
-) : LoadingViewModel() {
+) : LoadingViewModel(State.LOADED) {
 
     @SavedState
     var email = KObservableField("")
@@ -25,36 +25,39 @@ class LoginEmailViewModel(
     @SavedState
     var passwordError = KObservableField("")
 
-    init {
-        state = State.LOADED
+    fun loginButtonClicked() = launch<Result<Unit>> {
+        onStart(::onStartLogin)
+        onProcess(::onProcessLogin)
+        onFinished(::onFinishedLogin)
     }
 
-    fun loginButtonClicked() {
-        launch {
+    //region login()
+    private fun onStartLogin() {
+        state = State.LOADING
+    }
 
-            state = State.LOADING
+    private suspend fun onProcessLogin() = withContext(Dispatchers.IO) {
+        registrationRepo.login {
+            email = this@LoginEmailViewModel.email.value
+            password = this@LoginEmailViewModel.password.value
 
-            val result = withContext(Dispatchers.IO) {
-                registrationRepo.login {
-                    email = this@LoginEmailViewModel.email.value
-                    password = this@LoginEmailViewModel.password.value
+            onEvaluate { email.isEmail(emailError) && password.isPassword(passwordError) }
+        }
+    }
 
-                    onEvaluate { email.isEmail(emailError) && password.isPassword(passwordError) }
-                }
+    private fun onFinishedLogin(it: Result<Unit>) {
+        state = when (it) {
+            is Result.Success -> {
+                loginSucceeded()
+                State.LOADED
             }
-
-            state = when (result) {
-                is Result.Success -> {
-                    loginSucceeded()
-                    State.LOADED
-                }
-                is Result.Error -> {
-                    loginFailed(result.exception)
-                    State.LOADING_FAILED
-                }
+            is Result.Error -> {
+                loginFailed(it.exception)
+                State.LOADING_FAILED
             }
         }
     }
+    //endregion
 
     private fun loginSucceeded() {
         LoginEmailFragment.EVENT_NAVIGATE_TO_MAIN_ACTIVITY.publish()

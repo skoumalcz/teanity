@@ -2,13 +2,9 @@ package com.skoumal.teanity.example.ui.home
 
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.api.ApiX
-import com.skoumal.teanity.example.model.entity.Result
-import com.skoumal.teanity.example.model.entity.map
 import com.skoumal.teanity.databinding.ComparableRvItem
 import com.skoumal.teanity.example.data.repository.PhotoRepository
-import com.skoumal.teanity.example.model.entity.LoadingRvItem
-import com.skoumal.teanity.example.model.entity.Photo
-import com.skoumal.teanity.example.model.entity.PhotoRvItem
+import com.skoumal.teanity.example.model.entity.*
 import com.skoumal.teanity.util.DiffObservableList
 import com.skoumal.teanity.viewmodel.LoadingViewModel
 import kotlinx.coroutines.Dispatchers
@@ -38,36 +34,44 @@ class HomeViewModel(
         loadItems()
     }
 
-    private fun loadItems() {
-        launch {
-            if (photoItems.isEmpty()) {
-                state = State.LOADING
-            } else {
-                currentLoadingItem?.failed?.set(false)
-            }
+    private fun loadItems() = launch<Result<List<PhotoRvItem>>> {
+        onStart(::onStartLoadItems)
+        onProcess(::onProcessLoadItems)
+        onFinished(::onFinishedLoadItems)
+    }
 
-            val result = withContext(Dispatchers.IO) {
-                delay(1000)
-                photoRepository.getPhotos { offset = photoItems.size }.map { it.map { PhotoRvItem(it) } }
-            }
-
-            when (result) {
-                is Result.Success -> {
-                    state = State.LOADED
-                    itemsLoaded(result.data)
-                }
-                is Result.Error -> {
-                    if (photoItems.isEmpty()) {
-                        state = State.LOADING_FAILED
-                    } else {
-                        currentLoadingItem?.failed?.set(true)
-                    }
-                }
-            }
+    //region loadItems()
+    private fun onStartLoadItems() {
+        if (photoItems.isEmpty()) {
+            state = State.LOADING
+        } else {
+            currentLoadingItem?.failed?.set(false)
         }
     }
 
-    fun loadMoreItems() = loadItems()
+    private suspend fun onProcessLoadItems() = withContext(Dispatchers.IO) {
+        delay(1000)
+        photoRepository.getPhotos { offset = photoItems.size }.map { it.map { PhotoRvItem(it) } }
+    }
+
+    private fun onFinishedLoadItems(it: Result<List<PhotoRvItem>>): Unit = when (it) {
+        is Result.Success -> {
+            state = State.LOADED
+            itemsLoaded(it.data)
+        }
+        is Result.Error -> {
+            if (photoItems.isEmpty()) {
+                state = State.LOADING_FAILED
+            } else {
+                currentLoadingItem?.failed?.set(true) ?: Unit
+            }
+        }
+    }
+    //endregion
+
+    fun loadMoreItems() {
+        loadItems()
+    }
 
     private fun itemsLoaded(newItems: List<PhotoRvItem>) {
         val updatedList = photoItems + newItems
