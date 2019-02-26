@@ -39,7 +39,7 @@ dependencies {
     androidTestImplementation("androidx.test", "runner", "1.1.1")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.1.1")
 
-    compileOnly("org.jetbrains.kotlin", "kotlin-stdlib-jdk7", versions["kotlin"])
+    implementation(kotlin("stdlib-jdk7", versions["kotlin"]))
 
     /* === SUPPORT === */
     api("androidx.appcompat", "appcompat", versions["appcompat"])

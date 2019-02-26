@@ -20,7 +20,7 @@ buildscript {
 
             /* === APP === */
             "constraintLayout" to "2.0.0-alpha2",
-            "gradlePlugin" to "3.4.0-beta05",
+            "gradlePlugin" to "3.3.1",
             "koin" to "1.0.2",
             "retrofit" to "2.5.0",
             "okhttp" to "3.12.0",
