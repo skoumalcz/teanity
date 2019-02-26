@@ -2,7 +2,7 @@ buildscript {
     extra.set(
         "versions", mapOf(
             /* === LIB === */
-            "kotlin" to "1.3.20",
+            "kotlin" to "1.3.21",
             "appcompat" to "1.0.2",
             "ktx" to "1.0.1",
             "material" to "1.0.0",
@@ -20,7 +20,7 @@ buildscript {
 
             /* === APP === */
             "constraintLayout" to "2.0.0-alpha2",
-            "gradlePlugin" to "3.3.0-alpha03",
+            "gradlePlugin" to "3.4.0-beta05",
             "koin" to "1.0.2",
             "retrofit" to "2.5.0",
             "okhttp" to "3.12.0",
@@ -65,9 +65,11 @@ tasks.register("clean", Delete::class.java) {
 }
 
 tasks.register("generateChangelog") {
-    try {
-        exec { commandLine("git-chglog", "-o", "CHANGELOG.md") }
-    } catch (e: Exception) {
-        println(">> You don't have git-chglog installed, please visit https://github.com/git-chglog/git-chglog for installation instructions.")
+    doLast {
+        try {
+            exec { commandLine("git-chglog", "-o", "CHANGELOG.md") }
+        } catch (e: Exception) {
+            println(">> You don't have git-chglog installed, please visit https://github.com/git-chglog/git-chglog for installation instructions.")
+        }
     }
 }
