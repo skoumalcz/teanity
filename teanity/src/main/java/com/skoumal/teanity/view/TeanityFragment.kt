@@ -1,15 +1,20 @@
 package com.skoumal.teanity.view
 
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
+import com.skoumal.teanity.view.navigation.navigate
+import com.skoumal.teanity.viewevents.NavigationEvent
 import com.skoumal.teanity.viewevents.SimpleViewEvent
+import com.skoumal.teanity.viewevents.ViewEvent
 import com.skoumal.teanity.viewevents.ViewEventObserver
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
@@ -45,7 +50,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
 
         binding = DataBindingUtil.inflate<Binding>(inflater, layoutRes, container, false).apply {
             setVariable(BR.viewModel, this@TeanityFragment.viewModel)
-            setLifecycleOwner(this@TeanityFragment)
+            lifecycleOwner = this@TeanityFragment
         }
 
         return binding.root
@@ -73,5 +78,16 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     override fun restoreState(savedInstanceState: Bundle?) {
         super.restoreState(savedInstanceState)
         viewModel.restoreState(savedInstanceState)
+    }
+
+    @CallSuper
+    override fun onEventDispatched(event: ViewEvent) {
+        when (event) {
+            is NavigationEvent -> (event.destination to event.args).navigate(event.navOptions)
+        }
+    }
+
+    override fun Pair<Int, Bundle>.navigate(options: NavOptions?) {
+        navController.navigate(this, options)
     }
 }

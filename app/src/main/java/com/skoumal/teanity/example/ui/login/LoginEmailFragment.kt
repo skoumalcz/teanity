@@ -14,6 +14,7 @@ class LoginEmailFragment : TeanityFragment<LoginEmailViewModel, FragmentLoginEma
     override val viewModel: LoginEmailViewModel by viewModel()
 
     override fun onEventDispatched(event: ViewEvent) {
+        super.onEventDispatched(event)
         when (event) {
             is SnackbarEvent -> snackbar(binding.root, event.text, event.length)
         }
