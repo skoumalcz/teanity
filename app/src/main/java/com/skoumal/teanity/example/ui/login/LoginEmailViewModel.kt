@@ -1,8 +1,8 @@
 package com.skoumal.teanity.example.ui.login
 
+import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
-import com.skoumal.teanity.example.model.entity.Result
 import com.skoumal.teanity.example.ui.events.SnackbarEvent
 import com.skoumal.teanity.example.util.isEmail
 import com.skoumal.teanity.example.util.isPassword
@@ -25,7 +25,7 @@ class LoginEmailViewModel(
     @SavedState
     var passwordError = KObservableField("")
 
-    fun loginButtonClicked() = launch<Result<Unit>> {
+    fun loginButtonClicked() = network<Unit> {
         onStart(::onStartLogin)
         onProcess(::onProcessLogin)
         onFinished(::onFinishedLogin)

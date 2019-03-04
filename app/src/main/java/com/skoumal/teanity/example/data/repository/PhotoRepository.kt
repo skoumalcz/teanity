@@ -1,7 +1,7 @@
 package com.skoumal.teanity.example.data.repository
 
 import com.skoumal.teanity.api.ApiX
-import com.skoumal.teanity.example.model.entity.Result
+import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.data.network.ApiServices
 import com.skoumal.teanity.example.model.entity.Photo
 import com.skoumal.teanity.example.model.entity.awaitResult

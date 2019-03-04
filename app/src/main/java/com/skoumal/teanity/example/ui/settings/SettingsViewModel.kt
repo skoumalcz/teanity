@@ -1,7 +1,7 @@
 package com.skoumal.teanity.example.ui.settings
 
+import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
-import com.skoumal.teanity.example.model.entity.Result
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,7 +11,7 @@ class SettingsViewModel(
 ) : TeanityViewModel() {
 
     // there should be some progress bar, but I'm too lazy
-    fun logoutButtonClicked() = launch<Result<Unit>> {
+    fun logoutButtonClicked() = network<Unit> {
         onProcess(::onProcessLogout)
         onFinished(::onFinishedLogout)
     }

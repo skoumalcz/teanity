@@ -2,7 +2,7 @@ package com.skoumal.teanity.example.data.repository
 
 import android.net.ConnectivityManager
 import com.skoumal.teanity.api.ApiXEvaluator
-import com.skoumal.teanity.example.model.entity.Result
+import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.Config
 import com.skoumal.teanity.example.data.network.ApiServices
 import kotlinx.coroutines.delay

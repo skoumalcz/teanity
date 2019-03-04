@@ -2,9 +2,13 @@ package com.skoumal.teanity.example.ui.home
 
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.api.ApiX
+import com.skoumal.teanity.api.Result
+import com.skoumal.teanity.api.map
 import com.skoumal.teanity.databinding.ComparableRvItem
 import com.skoumal.teanity.example.data.repository.PhotoRepository
-import com.skoumal.teanity.example.model.entity.*
+import com.skoumal.teanity.example.model.entity.LoadingRvItem
+import com.skoumal.teanity.example.model.entity.Photo
+import com.skoumal.teanity.example.model.entity.PhotoRvItem
 import com.skoumal.teanity.util.DiffObservableList
 import com.skoumal.teanity.viewmodel.LoadingViewModel
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +38,7 @@ class HomeViewModel(
         loadItems()
     }
 
-    private fun loadItems() = launch<Result<List<PhotoRvItem>>> {
+    private fun loadItems() = network<List<PhotoRvItem>> {
         onStart(::onStartLoadItems)
         onProcess(::onProcessLoadItems)
         onFinished(::onFinishedLoadItems)
