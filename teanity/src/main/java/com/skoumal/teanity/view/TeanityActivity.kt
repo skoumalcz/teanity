@@ -59,12 +59,9 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        if (outState != null) {
-            saveState(outState)
-        }
+        saveState(outState)
     }
 
     override fun saveState(outState: Bundle) {
