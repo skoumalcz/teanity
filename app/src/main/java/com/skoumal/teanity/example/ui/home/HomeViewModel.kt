@@ -6,11 +6,11 @@ import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.api.map
 import com.skoumal.teanity.databinding.ComparableRvItem
 import com.skoumal.teanity.example.data.repository.PhotoRepository
+import com.skoumal.teanity.example.model.base.ExampleViewModel
 import com.skoumal.teanity.example.model.entity.LoadingRvItem
 import com.skoumal.teanity.example.model.entity.Photo
 import com.skoumal.teanity.example.model.entity.PhotoRvItem
 import com.skoumal.teanity.util.DiffObservableList
-import com.skoumal.teanity.viewmodel.LoadingViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -18,7 +18,7 @@ import me.tatarka.bindingcollectionadapter2.OnItemBind
 
 class HomeViewModel(
     private val photoRepository: PhotoRepository
-) : LoadingViewModel() {
+) : ExampleViewModel() {
 
     val items = DiffObservableList(ComparableRvItem.callback)
     val itemBinding = OnItemBind<ComparableRvItem<*>> { itemBinding, _, item ->
@@ -83,7 +83,7 @@ class HomeViewModel(
         items.update(updatedList.plusNotEmpty(loadingItem))
     }
 
-    fun photoClicked(photo: Photo) = NavigateToPhotoDetailEvent(photo).publish()
+    fun photoClicked(photo: Photo) = photoDetail(photo)
 
     private fun List<ComparableRvItem<*>>.plusNotEmpty(item: ComparableRvItem<*>): List<ComparableRvItem<*>> {
         return if (size % ApiX.GENERIC_LIMIT == 0) this + item
