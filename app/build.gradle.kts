@@ -7,7 +7,7 @@ plugins {
 
     id("io.fabric")
 
-    id("androidx.navigation.safeargs")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 repositories {
