@@ -11,7 +11,7 @@ class PhotoDetailFragment : TeanityFragment<PhotoDetailViewModel, FragmentPhotoD
     override val layoutRes: Int = R.layout.fragment_photo_detail
     override val viewModel: PhotoDetailViewModel by viewModel { parametersOf(args.photoId) }
     
-    private val args by lazy { PhotoDetailFragmentArgs.fromBundle(arguments) }
+    private val args by lazy { PhotoDetailFragmentArgs.fromBundle(requireArguments()) }
 
     override fun onSimpleEventDispatched(event: Int) {
         when (event) {
