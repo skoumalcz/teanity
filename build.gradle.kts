@@ -8,7 +8,7 @@ buildscript {
             "material" to "1.1.0-alpha04",
             "room" to "2.0.0",
             "lifecycle" to "2.0.0",
-            "navigation" to "1.0.0-rc02",
+            "navigation" to "2.0.0-rc02",
             "bca" to "3.0.0-beta1",/*please do not update; nested binding fails to resolve on newer versions*/
             "glide" to "4.8.0",
             "state" to "1.4.1",
@@ -45,7 +45,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:${versions["gradlePlugin"]}")
         classpath(kotlin("gradle-plugin", version = versions["kotlin"]))
-        classpath("android.arch.navigation:navigation-safe-args-gradle-plugin:${versions["navigation"]}")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${versions["navigation"]}")
         classpath("io.fabric.tools:gradle:${versions["fabric"]}")
         classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
