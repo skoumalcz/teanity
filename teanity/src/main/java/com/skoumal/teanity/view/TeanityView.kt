@@ -2,7 +2,6 @@ package com.skoumal.teanity.view
 
 import android.os.Bundle
 import androidx.annotation.CallSuper
-import androidx.navigation.NavOptions
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEvent
@@ -42,6 +41,4 @@ internal interface TeanityView<Binding> {
     fun saveState(outState: Bundle) {
         StateSaver.saveInstanceState(this, outState)
     }
-
-    fun Pair<Int, Bundle>.navigate(options: NavOptions? = null)
 }
