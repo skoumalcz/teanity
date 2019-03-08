@@ -2,6 +2,7 @@ package com.skoumal.teanity.viewevents
 
 import android.os.Bundle
 import androidx.annotation.IdRes
+import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions as xNavOptions
@@ -10,8 +11,7 @@ import androidx.navigation.navOptions as xNavOptions
 annotation class NavigationDslMarker
 
 class NavigationEvent(
-    val destination: Int,
-    val args: Bundle,
+    val navDirections: NavDirections,
     val navOptions: NavOptions
 ) : ViewEvent() {
 
@@ -25,6 +25,7 @@ class NavigationEvent(
 
         @IdRes
         var destination: Int = -1
+        var navDirections: NavDirections? = null
         private var args: Bundle = Bundle()
         private var navOptions: NavOptions = xNavOptions {}
 
@@ -36,7 +37,16 @@ class NavigationEvent(
             navOptions = xNavOptions(builder)
         }
 
-        internal fun build() = NavigationEvent(destination, args, navOptions)
+        internal fun build() = NavigationEvent(
+            navDirections ?: GenericNavDirections(destination, args),
+            navOptions
+        )
     }
+}
+
+class GenericNavDirections(private val target: Int, private val args: Bundle) : NavDirections {
+
+    override fun getArguments(): Bundle = args
+    override fun getActionId(): Int = target
 
 }
