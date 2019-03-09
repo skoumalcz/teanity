@@ -35,7 +35,6 @@ class LoginEmailViewModel(
                 password = this@LoginEmailViewModel.password.value
 
                 onEvaluate { email.isEmail(emailError) && password.isPassword(passwordError) }
-                onEvaluateFailed { SnackbarEvent(R.string.login_failed).publish() }
             }
             .applyViewModel(this)
             .applySchedulers()
