@@ -2,23 +2,13 @@ package com.skoumal.teanity.example.ui.login
 
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentLoginEmailBinding
-import com.skoumal.teanity.example.ui.events.SnackbarEvent
-import com.skoumal.teanity.extensions.snackbar
 import com.skoumal.teanity.view.TeanityFragment
-import com.skoumal.teanity.viewevents.ViewEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginEmailFragment : TeanityFragment<LoginEmailViewModel, FragmentLoginEmailBinding>() {
 
     override val layoutRes: Int = R.layout.fragment_login_email
     override val viewModel: LoginEmailViewModel by viewModel()
-
-    override fun onEventDispatched(event: ViewEvent) {
-        super.onEventDispatched(event)
-        when (event) {
-            is SnackbarEvent -> snackbar(binding.root, event.text, event.length)
-        }
-    }
 
     override fun onSimpleEventDispatched(event: Int) {
         when (event) {
