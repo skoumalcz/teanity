@@ -1,6 +1,7 @@
 package com.skoumal.teanity.extensions
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorInt
@@ -8,6 +9,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 
@@ -109,7 +111,10 @@ fun Snackbar.backgroundColorRes(@ColorRes colorRes: Int) {
 }
 
 fun Snackbar.backgroundColor(@ColorInt color: Int) {
-    view.setBackgroundColor(color)
+    ViewCompat.setBackgroundTintList(
+        view,
+        ColorStateList.valueOf(color)
+    )
 }
 
 fun Snackbar.alert() {
