@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
+import com.skoumal.teanity.extensions.snackbar
 import com.skoumal.teanity.viewevents.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
@@ -18,6 +19,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected lateinit var binding: Binding
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
+    protected open val snackbarView get() = binding.root
     protected open val navHostId: Int = 0
     protected val navController: NavController
         get() {
@@ -73,6 +75,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     override fun onEventDispatched(event: ViewEvent) {
         when (event) {
             is NavigationEvent -> navController.navigate(event.navDirections, event.navOptions)
+            is SnackbarEvent -> snackbar(snackbarView, event.message(this), event.length, event.f)
         }
     }
 }

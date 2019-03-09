@@ -3,10 +3,10 @@ package com.skoumal.teanity.example.ui.login
 import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
-import com.skoumal.teanity.example.ui.events.SnackbarEvent
 import com.skoumal.teanity.example.util.isEmail
 import com.skoumal.teanity.example.util.isPassword
 import com.skoumal.teanity.util.KObservableField
+import com.skoumal.teanity.viewevents.SnackbarEvent
 import com.skoumal.teanity.viewmodel.LoadingViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

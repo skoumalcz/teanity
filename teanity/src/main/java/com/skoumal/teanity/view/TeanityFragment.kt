@@ -10,10 +10,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
-import com.skoumal.teanity.viewevents.NavigationEvent
-import com.skoumal.teanity.viewevents.SimpleViewEvent
-import com.skoumal.teanity.viewevents.ViewEvent
-import com.skoumal.teanity.viewevents.ViewEventObserver
+import com.skoumal.teanity.extensions.snackbar
+import com.skoumal.teanity.viewevents.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
 abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
@@ -23,6 +21,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected lateinit var binding: Binding
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
+    protected open val snackbarView get() = binding.root
     protected val navController get() = binding.root.findNavController()
     protected val teanityActivity get() = activity as? TeanityActivity<*, *>
     private val viewEventObserver = ViewEventObserver {
@@ -82,6 +81,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     override fun onEventDispatched(event: ViewEvent) {
         when (event) {
             is NavigationEvent -> navController.navigate(event.navDirections, event.navOptions)
+            is SnackbarEvent -> snackbar(snackbarView, event.message(requireContext()), event.length, event.f)
         }
     }
 }
