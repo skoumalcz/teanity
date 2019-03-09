@@ -95,7 +95,6 @@ fun Snackbar.action(action: String, @ColorInt color: Int? = null, listener: (Vie
     color?.let { setActionTextColor(color) }
 }
 
-
 fun Snackbar.textColorRes(@ColorRes colorRes: Int) {
     textColor(context.colorCompat(colorRes) ?: return)
 }
@@ -103,6 +102,14 @@ fun Snackbar.textColorRes(@ColorRes colorRes: Int) {
 fun Snackbar.textColor(@ColorInt color: Int) {
     val tv = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
     tv.setTextColor(color)
+}
+
+fun Snackbar.backgroundColorRes(@ColorRes colorRes: Int) {
+    backgroundColor(context.colorCompat(colorRes) ?: return)
+}
+
+fun Snackbar.backgroundColor(@ColorInt color: Int) {
+    view.setBackgroundColor(color)
 }
 
 fun Snackbar.alert() {
