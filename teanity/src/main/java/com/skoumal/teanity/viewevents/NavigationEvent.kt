@@ -12,7 +12,7 @@ annotation class NavigationDslMarker
 
 class NavigationEvent(
     val navDirections: NavDirections,
-    val navOptions: NavOptions
+    val navOptions: NavOptions?
 ) : ViewEvent() {
 
     companion object {
@@ -27,7 +27,7 @@ class NavigationEvent(
         var destination: Int = -1
         var navDirections: NavDirections? = null
         private var args: Bundle = Bundle()
-        private var navOptions: NavOptions = xNavOptions {}
+        private var navOptions: NavOptions? = null
 
         fun args(builder: Bundle.() -> Unit) {
             args = args.apply(builder)
