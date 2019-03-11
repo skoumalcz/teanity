@@ -8,9 +8,10 @@ import com.skoumal.teanity.viewmodel.LoadingViewModel
 
 abstract class ExampleViewModel : LoadingViewModel() {
 
-    fun photoDetail(photo: Photo) = NavigationEvent {
-        destination = R.id.photoDetailFragment
-        args { photoId = photo.id }
-    }.publish()
+    fun photoDetail(photo: Photo) =
+        NavigationEvent {
+            navDirections { destination = R.id.photoDetailFragment }
+            args { photoId = photo.id }
+        }.publish()
 
 }
