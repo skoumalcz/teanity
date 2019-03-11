@@ -1,6 +1,7 @@
 package com.skoumal.teanity.extensions
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorInt
@@ -8,6 +9,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 
@@ -95,7 +97,6 @@ fun Snackbar.action(action: String, @ColorInt color: Int? = null, listener: (Vie
     color?.let { setActionTextColor(color) }
 }
 
-
 fun Snackbar.textColorRes(@ColorRes colorRes: Int) {
     textColor(context.colorCompat(colorRes) ?: return)
 }
@@ -103,6 +104,17 @@ fun Snackbar.textColorRes(@ColorRes colorRes: Int) {
 fun Snackbar.textColor(@ColorInt color: Int) {
     val tv = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
     tv.setTextColor(color)
+}
+
+fun Snackbar.backgroundColorRes(@ColorRes colorRes: Int) {
+    backgroundColor(context.colorCompat(colorRes) ?: return)
+}
+
+fun Snackbar.backgroundColor(@ColorInt color: Int) {
+    ViewCompat.setBackgroundTintList(
+        view,
+        ColorStateList.valueOf(color)
+    )
 }
 
 fun Snackbar.alert() {
