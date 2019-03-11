@@ -8,11 +8,9 @@ import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.snackbar
-import com.skoumal.teanity.view.navigation.navigate
 import com.skoumal.teanity.viewevents.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
@@ -82,12 +80,8 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     @CallSuper
     override fun onEventDispatched(event: ViewEvent) {
         when (event) {
-            is NavigationEvent -> (event.destination to event.args).navigate(event.navOptions)
+            is NavigationEvent -> navController.navigate(event.navDirections, event.navOptions)
             is SnackbarEvent -> snackbar(snackbarView, event.message(requireContext()), event.length, event.f)
         }
-    }
-
-    override fun Pair<Int, Bundle>.navigate(options: NavOptions?) {
-        navController.navigate(this, options)
     }
 }
