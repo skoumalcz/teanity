@@ -17,7 +17,7 @@ annotation class NavigationDslMarker
  * */
 class NavigationEvent(
     val navDirections: NavDirections,
-    val navOptions: NavOptions?
+    val navOptions: NavOptions? = null
 ) : ViewEvent() {
 
     companion object {
