@@ -1,7 +1,7 @@
 package com.skoumal.teanity.example.ui.home
 
 import com.skoumal.teanity.BR
-import com.skoumal.teanity.api.ApiX
+import com.skoumal.teanity.api.IApiX
 import com.skoumal.teanity.databinding.ComparableRvItem
 import com.skoumal.teanity.example.data.repository.PhotoRepository
 import com.skoumal.teanity.example.model.base.ExampleViewModel
@@ -73,7 +73,7 @@ class HomeViewModel(
     fun photoClicked(photo: Photo) = photoDetail(photo)
 
     private fun List<ComparableRvItem<*>>.plusNotEmpty(item: ComparableRvItem<*>): List<ComparableRvItem<*>> {
-        return if (size % ApiX.GENERIC_LIMIT == 0) this + item
+        return if (size % IApiX.GENERIC_LIMIT == 0) this + item
         else this
     }
 }

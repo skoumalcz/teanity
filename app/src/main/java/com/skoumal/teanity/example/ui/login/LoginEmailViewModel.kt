@@ -1,6 +1,5 @@
 package com.skoumal.teanity.example.ui.login
 
-import com.evernote.android.state.State as SavedState
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
 import com.skoumal.teanity.example.util.isEmail
@@ -10,6 +9,7 @@ import com.skoumal.teanity.extensions.subscribeK
 import com.skoumal.teanity.util.KObservableField
 import com.skoumal.teanity.viewevents.SnackbarEvent
 import com.skoumal.teanity.viewmodel.LoadingViewModel
+import com.evernote.android.state.State as SavedState
 
 class LoginEmailViewModel(
     private val registrationRepo: RegistrationRepository
@@ -34,12 +34,16 @@ class LoginEmailViewModel(
                 email = this@LoginEmailViewModel.email.value
                 password = this@LoginEmailViewModel.password.value
 
-                onEvaluate { email.isEmail(emailError) && password.isPassword(passwordError) }
+                onEvaluate(this@LoginEmailViewModel::evaluateLoginInfo)
             }
             .applyViewModel(this)
             .applySchedulers()
             .subscribeK(onComplete = this::loginSucceeded, onError = this::loginFailed)
             .add()
+    }
+
+    private fun evaluateLoginInfo(login: RegistrationRepository.Login): Boolean {
+        return login.email.isEmail(emailError) && login.password.isPassword(passwordError)
     }
 
     private fun loginSucceeded() {
