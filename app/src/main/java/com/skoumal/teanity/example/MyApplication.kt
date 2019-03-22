@@ -1,7 +1,7 @@
 package com.skoumal.teanity.example
 
-import android.app.Application
 import android.util.Log
+import androidx.multidex.MultiDexApplication
 import com.chibatching.kotpref.Kotpref
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
@@ -12,7 +12,7 @@ import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
 @Suppress("ConstantConditionIf")
-class MyApplication : Application() {
+class MyApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
