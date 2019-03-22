@@ -3,7 +3,7 @@ package com.skoumal.teanity.example.ui.login
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentLoginEmailBinding
 import com.skoumal.teanity.view.TeanityFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.viewModel
 
 class LoginEmailFragment : TeanityFragment<LoginEmailViewModel, FragmentLoginEmailBinding>() {
 

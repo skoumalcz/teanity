@@ -1,9 +1,9 @@
 package com.skoumal.teanity.example.di
 
-import androidx.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.skoumal.teanity.example.data.database.AppDatabase
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 val databaseModule = module {
     single { createDatabase(get()) }
