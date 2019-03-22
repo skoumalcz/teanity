@@ -6,8 +6,8 @@ import com.skoumal.teanity.example.ui.login.LoginEmailViewModel
 import com.skoumal.teanity.example.ui.login.LoginViewModel
 import com.skoumal.teanity.example.ui.photodetail.PhotoDetailViewModel
 import com.skoumal.teanity.example.ui.settings.SettingsViewModel
-import org.koin.androidx.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 val viewModelModules = module {
     viewModel { LoginEmailViewModel(get()) }
