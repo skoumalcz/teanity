@@ -41,6 +41,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
     }
     buildTypes {
         getByName("release") {
@@ -67,6 +68,7 @@ dependencies {
         isTransitive = true
     }*/
     implementation("com.facebook.stetho", "stetho", "1.5.0")
+    implementation("com.android.support", "multidex", "1.0.3")
 
     // KOTLIN
     implementation(kotlin("stdlib-jdk7", version = versions["kotlin"]))
