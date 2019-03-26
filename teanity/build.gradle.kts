@@ -49,7 +49,7 @@ dependencies {
     api("androidx.lifecycle", "lifecycle-extensions", versions["lifecycle"])
     api("androidx.navigation", "navigation-fragment-ktx", versions["navigation"])
     api("androidx.navigation", "navigation-ui-ktx", versions["navigation"])
-    api("android.arch.work", "work-runtime-ktx", versions["work"])
+    api("androidx.work", "work-runtime-ktx", versions["work"])
 
     /* === DB === */
     api("androidx.room", "room-runtime", versions["room"])
