@@ -74,12 +74,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     @CallSuper
     override fun onEventDispatched(event: ViewEvent) {
         when (event) {
-            is NavigationEvent -> {
-                navController.navigate(event.navDirections, event.navOptions)
-                if (event.navDirections is GenericNavDirections) {
-
-                }
-            }
+            is NavigationEvent -> event.navigate()
             is SnackbarEvent -> snackbar(snackbarView, event.message(this), event.length, event.f)
         }
     }

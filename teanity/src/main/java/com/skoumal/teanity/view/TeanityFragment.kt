@@ -80,8 +80,15 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     @CallSuper
     override fun onEventDispatched(event: ViewEvent) {
         when (event) {
-            is NavigationEvent -> navController.navigate(event.navDirections, event.navOptions)
+            is NavigationEvent -> event.navigate()
             is SnackbarEvent -> snackbar(snackbarView, event.message(requireContext()), event.length, event.f)
+        }
+    }
+
+    private fun NavigationEvent.navigate() {
+        navController.navigate(navDirections, navOptions)
+        if (navDirections is GenericNavDirections && navDirections.clearTask) {
+            activity?.finish()
         }
     }
 }
