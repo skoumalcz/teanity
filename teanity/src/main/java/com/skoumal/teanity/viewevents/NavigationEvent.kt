@@ -96,7 +96,9 @@ class NavDirectionsBuilder {
      * */
     fun args(builder: Bundle.() -> Unit) = args.apply(builder)
 
-    internal fun build() = GenericNavDirections(destination, args)
+    internal fun build() = GenericNavDirections(destination, args).apply {
+        clearTask = this@NavDirectionsBuilder.clearTask
+    }
 
 }
 
