@@ -1,20 +1,20 @@
 package com.skoumal.teanity.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import android.os.Bundle
+import androidx.lifecycle.ViewModel
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEvent
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
 
 abstract class TeanityViewModel : ViewModel() {
 
     private val disposables = CompositeDisposable()
-    private val _viewEvents = MutableLiveData<ViewEvent>()
-    val viewEvents: LiveData<ViewEvent> get() = _viewEvents
+    private val _viewEvents = PublishSubject.create<ViewEvent>()
+    val viewEvents: Observable<ViewEvent> get() = _viewEvents
 
     override fun onCleared() {
         super.onCleared()
@@ -26,15 +26,15 @@ abstract class TeanityViewModel : ViewModel() {
     }
 
     fun saveState(outState: Bundle) {
-        StateSaver.saveInstanceState(this, outState);
+        StateSaver.saveInstanceState(this, outState)
     }
 
     fun <Event : ViewEvent> Event.publish() {
-        _viewEvents.value = this
+        _viewEvents.onNext(this)
     }
 
     fun Int.publish() {
-        _viewEvents.value = SimpleViewEvent(this)
+        _viewEvents.onNext(SimpleViewEvent(this))
     }
 
     fun Disposable.add() {

@@ -1,6 +1,7 @@
 package com.skoumal.teanity.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.snackbar
 import com.skoumal.teanity.viewevents.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
+import io.reactivex.disposables.Disposable
 
 abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
     Fragment(),
@@ -24,19 +26,21 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected open val snackbarView get() = binding.root
     protected val navController get() = binding.root.findNavController()
     protected val teanityActivity get() = activity as? TeanityActivity<*, *>
-    private val viewEventObserver = ViewEventObserver {
-        onEventDispatched(it)
-        if (it is SimpleViewEvent) {
-            onSimpleEventDispatched(it.event)
-        }
-    }
+    private lateinit var subscriber: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         restoreState(savedInstanceState)
 
-        viewModel.viewEvents.observe(this, viewEventObserver)
+        subscriber = viewModel.viewEvents.subscribe({
+            when (it) {
+                is SimpleViewEvent -> onSimpleEventDispatched(it.event)
+                else -> onEventDispatched(it)
+            }
+        }, {
+            Log.e(this::class.java.simpleName, "No further events will be received", it)
+        })
     }
 
     override fun onCreateView(
@@ -58,6 +62,9 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
 
         if (::binding.isInitialized) {
             binding.unbindViews()
+        }
+        if (::subscriber.isInitialized) {
+            subscriber.dispose()
         }
     }
 
