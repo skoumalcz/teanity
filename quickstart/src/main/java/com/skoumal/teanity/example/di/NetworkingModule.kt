@@ -12,11 +12,13 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import wiki.depasquale.responsesanitizer.ResponseSanitizer
 
 val networkingModule = module {
     single { TokenInterceptor() }
+    single { ResponseSanitizer() }
 
-    single { createOkHttpClient(get()) }
+    single { createOkHttpClient(get(), get()) }
 
     single { createConverterFactory() }
     single { createCallAdapterFactory() }
@@ -26,7 +28,7 @@ val networkingModule = module {
     single { createApiService<ApiServices>(get(), Constants.API_URL) }
 }
 
-fun createOkHttpClient(tokenInterceptor: TokenInterceptor): OkHttpClient {
+fun createOkHttpClient(tokenInterceptor: TokenInterceptor, sanitizer: ResponseSanitizer): OkHttpClient {
 
     val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -34,6 +36,7 @@ fun createOkHttpClient(tokenInterceptor: TokenInterceptor): OkHttpClient {
 
     return OkHttpClient.Builder()
         .addInterceptor(tokenInterceptor)
+        .addInterceptor(sanitizer)
         .addInterceptor(httpLoggingInterceptor)
         .build()
 }
