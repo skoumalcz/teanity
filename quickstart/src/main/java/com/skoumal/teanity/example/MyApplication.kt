@@ -5,7 +5,8 @@ import androidx.multidex.MultiDexApplication
 import com.chibatching.kotpref.Kotpref
 import com.facebook.stetho.Stetho
 import com.skoumal.teanity.example.di.koinModules
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 @Suppress("ConstantConditionIf")
@@ -16,7 +17,10 @@ class MyApplication : MultiDexApplication() {
 
         Kotpref.init(this)
 
-        startKoin(this, koinModules)
+        startKoin {
+            androidContext(this@MyApplication)
+            modules(koinModules)
+        }
 
         /*val core = CrashlyticsCore.Builder().disabled(Constants.DEBUG).build()
         Fabric.with(this, Crashlytics.Builder().core(core).build())*/

@@ -64,6 +64,7 @@ dependencies {
     api("com.karumi", "dexter", versions["dexter"])
     api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter", versions["bca"])
     api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter-recyclerview", versions["bca"])
+    api("com.github.diareuse", "response-sanitizer", "0.3")
 
     /* === UI === */
     api("com.github.bumptech.glide", "glide", versions["glide"])

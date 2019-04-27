@@ -69,6 +69,14 @@ class NavDirectionsBuilder {
      * */
     @IdRes
     var destination: Int = -1
+
+    /**
+     * Current task (activity) will be finished after navigated to another destination. Make sure this this used only
+     * in conjunction with destination being activity as it will **always** finish it.
+     *
+     * Defaults to false.
+     * */
+    var clearTask: Boolean = false
     private val args: Bundle = Bundle()
 
     /**
@@ -88,11 +96,15 @@ class NavDirectionsBuilder {
      * */
     fun args(builder: Bundle.() -> Unit) = args.apply(builder)
 
-    internal fun build() = GenericNavDirections(destination, args)
+    internal fun build() = GenericNavDirections(destination, args).apply {
+        clearTask = this@NavDirectionsBuilder.clearTask
+    }
 
 }
 
 class GenericNavDirections(private val target: Int, private val args: Bundle) : NavDirections {
+
+    var clearTask: Boolean = false
 
     override fun getArguments(): Bundle = args
     override fun getActionId(): Int = target

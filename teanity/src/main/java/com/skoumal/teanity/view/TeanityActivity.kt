@@ -1,6 +1,7 @@
 package com.skoumal.teanity.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -11,6 +12,7 @@ import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.snackbar
 import com.skoumal.teanity.viewevents.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
+import io.reactivex.disposables.Disposable
 
 abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
     AppCompatActivity(),
@@ -28,12 +30,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
             }
             return findNavController(navHostId)
         }
-    private val viewEventObserver = ViewEventObserver {
-        onEventDispatched(it)
-        if (it is SimpleViewEvent) {
-            onSimpleEventDispatched(it.event)
-        }
-    }
+    private lateinit var subscriber: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +42,14 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
             lifecycleOwner = this@TeanityActivity
         }
 
-        viewModel.viewEvents.observe(this, viewEventObserver)
+        subscriber = viewModel.viewEvents.subscribe({
+            when (it) {
+                is SimpleViewEvent -> onSimpleEventDispatched(it.event)
+                else -> onEventDispatched(it)
+            }
+        }, {
+            Log.e(this::class.java.simpleName, "No further events will be received", it)
+        })
     }
 
     override fun onDestroy() {
@@ -53,6 +57,9 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
 
         if (::binding.isInitialized) {
             binding.unbindViews()
+        }
+        if (::subscriber.isInitialized) {
+            subscriber.dispose()
         }
     }
 
@@ -74,8 +81,15 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     @CallSuper
     override fun onEventDispatched(event: ViewEvent) {
         when (event) {
-            is NavigationEvent -> navController.navigate(event.navDirections, event.navOptions)
+            is NavigationEvent -> event.navigate()
             is SnackbarEvent -> snackbar(snackbarView, event.message(this), event.length, event.f)
+        }
+    }
+
+    private fun NavigationEvent.navigate() {
+        navController.navigate(navDirections, navOptions)
+        if (navDirections is GenericNavDirections && navDirections.clearTask) {
+            finish()
         }
     }
 }
