@@ -41,10 +41,9 @@ abstract class BaseDiffObservableList<T>(
         val frozenOldList = synchronized(listLock) { list.toList() }
         val frozenNewList = synchronized(listLock) { newItems.toList() }
 
-        list = frozenNewList.toMutableList()
-
-        fun updateSelf(result: DiffUtil.DiffResult) = synchronized(listCallback) {
-            result.dispatchUpdatesTo(listCallback)
+        fun updateSelf(result: DiffUtil.DiffResult) {
+            synchronized(listLock) { list = frozenNewList.toMutableList() }
+            synchronized(listCallback) { result.dispatchUpdatesTo(listCallback) }
         }
 
         result?.let { updateSelf(it) } ?: awaitDifferenceFrom(frozenOldList, frozenNewList) {
