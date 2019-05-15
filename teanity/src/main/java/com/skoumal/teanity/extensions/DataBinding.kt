@@ -1,6 +1,10 @@
 package com.skoumal.teanity.extensions
 
-import androidx.databinding.*
+import androidx.databinding.Observable
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
+import com.skoumal.teanity.util.KObservableField
 
 fun <T> ObservableField<T>.addOnPropertyChangedCallback(
     removeAfterChanged: Boolean = false,
@@ -9,6 +13,18 @@ fun <T> ObservableField<T>.addOnPropertyChangedCallback(
     addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             callback(get())
+            if (removeAfterChanged) removeOnPropertyChangedCallback(this)
+        }
+    })
+}
+
+fun <T> KObservableField<T>.addOnPropertyChangedCallback(
+    removeAfterChanged: Boolean = false,
+    callback: (T) -> Unit
+) {
+    addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+            callback(value)
             if (removeAfterChanged) removeOnPropertyChangedCallback(this)
         }
     })
