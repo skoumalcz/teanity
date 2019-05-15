@@ -68,3 +68,7 @@ inline fun <T> ObservableField<T>.updateNonNull(block: (T) -> Unit) {
 inline fun ObservableInt.update(block: (Int) -> Unit) {
     set(get().apply(block))
 }
+
+fun KObservableField<Boolean>.toggle() {
+    value = !value
+}

@@ -1,23 +1,19 @@
 package com.skoumal.teanity.example.model.entity
 
 import androidx.databinding.ObservableBoolean
-import com.skoumal.teanity.databinding.ComparableRvItem
+import com.skoumal.teanity.databinding.GenericRvItem
 import com.skoumal.teanity.example.R
-import com.skoumal.teanity.util.ComparableCallback
+import com.skoumal.teanity.extensions.compareToSafe
 
-class PhotoRvItem(val photo: Photo) : ComparableRvItem<PhotoRvItem>() {
+class PhotoRvItem(val photo: Photo) : GenericRvItem() {
 
     override val layoutRes = R.layout.item_photo
 
-    override fun itemSameAs(other: PhotoRvItem): Boolean {
-        return photo.sameAs(other.photo)
-    }
+    override fun sameAs(other: GenericRvItem) =
+        other.compareToSafe<PhotoRvItem> { photo.sameAs(it.photo) }
 
-    override fun contentSameAs(other: PhotoRvItem): Boolean {
-        return photo.contentSameAs(other.photo)
-    }
-
-    companion object : ComparableCallback<PhotoRvItem>()
+    override fun contentSameAs(other: GenericRvItem) =
+        other.compareToSafe<PhotoRvItem> { photo.contentSameAs(it.photo) }
 }
 
 class LoadingRvItem(
@@ -25,7 +21,7 @@ class LoadingRvItem(
     val failActionText: String,
     private val failAction: () -> Unit,
     isFailed: Boolean = false
-) : ComparableRvItem<LoadingRvItem>() {
+) : GenericRvItem() {
 
     override val layoutRes = R.layout.item_loading_more
 
@@ -33,9 +29,6 @@ class LoadingRvItem(
 
     fun failActionClicked() = failAction()
 
-    override fun itemSameAs(other: LoadingRvItem) = true
-
-    override fun contentSameAs(other: LoadingRvItem) = true
-
-    companion object : ComparableCallback<PhotoRvItem>()
+    override fun sameAs(other: GenericRvItem) = other.compareToSafe<LoadingRvItem> { true }
+    override fun contentSameAs(other: GenericRvItem) = other.compareToSafe<LoadingRvItem> { true }
 }

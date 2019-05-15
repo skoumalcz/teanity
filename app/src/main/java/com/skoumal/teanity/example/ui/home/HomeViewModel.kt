@@ -2,25 +2,24 @@ package com.skoumal.teanity.example.ui.home
 
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.api.IApiX
-import com.skoumal.teanity.databinding.ComparableRvItem
+import com.skoumal.teanity.databinding.GenericRvItem
 import com.skoumal.teanity.example.data.repository.PhotoRepository
 import com.skoumal.teanity.example.model.base.ExampleViewModel
 import com.skoumal.teanity.example.model.entity.LoadingRvItem
 import com.skoumal.teanity.example.model.entity.Photo
 import com.skoumal.teanity.example.model.entity.PhotoRvItem
 import com.skoumal.teanity.extensions.applySchedulers
-import com.skoumal.teanity.util.DiffObservableList
-import me.tatarka.bindingcollectionadapter2.OnItemBind
+import com.skoumal.teanity.extensions.asyncListOf
+import com.skoumal.teanity.extensions.bindingOf
 import java.util.concurrent.TimeUnit
 
 class HomeViewModel(
     private val photoRepository: PhotoRepository
 ) : ExampleViewModel() {
 
-    val items = DiffObservableList(ComparableRvItem.callback)
-    val itemBinding = OnItemBind<ComparableRvItem<*>> { itemBinding, _, item ->
-        item.bind(itemBinding)
-        itemBinding.bindExtra(BR.viewModel, this@HomeViewModel)
+    val items = asyncListOf<GenericRvItem>()
+    val itemBinding = bindingOf<GenericRvItem> {
+        it.bindExtra(BR.viewModel, this@HomeViewModel)
     }
 
     private val photoItems get() = items.filterIsInstance<PhotoRvItem>()
@@ -53,6 +52,7 @@ class HomeViewModel(
                 state = State.LOADED
                 itemsLoaded(it)
             }, {
+                it.printStackTrace()
                 if (photoItems.isEmpty()) {
                     state = State.LOADING_FAILED
                 } else {
@@ -72,7 +72,7 @@ class HomeViewModel(
 
     fun photoClicked(photo: Photo) = photoDetail(photo)
 
-    private fun List<ComparableRvItem<*>>.plusNotEmpty(item: ComparableRvItem<*>): List<ComparableRvItem<*>> {
+    private fun <T> List<T>.plusNotEmpty(item: T): List<T> {
         return if (size % IApiX.GENERIC_LIMIT == 0) this + item
         else this
     }
