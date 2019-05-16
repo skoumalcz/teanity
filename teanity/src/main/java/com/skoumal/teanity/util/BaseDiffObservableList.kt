@@ -16,8 +16,6 @@ abstract class BaseDiffObservableList<T>(
     private val detectMoves: Boolean = true
 ) : AbstractList<T>(), ObservableList<T> {
 
-    abstract fun awaitDifferenceFrom(oldItems: List<T>, newItems: List<T>, callback: (DiffUtil.DiffResult) -> Unit)
-
     protected val listLock = Any()
     protected var list: MutableList<T> = mutableListOf()
     protected val listeners = ListChangeRegistry()
@@ -169,6 +167,12 @@ abstract class BaseDiffObservableList<T>(
     private fun notifyRemove(start: Int, count: Int) {
         listeners.notifyRemoved(this, start, count)
     }
+
+    protected abstract fun awaitDifferenceFrom(
+        oldItems: List<T>,
+        newItems: List<T>,
+        callback: (DiffUtil.DiffResult) -> Unit
+    )
 
     /**
      * A Callback class used by DiffUtil while calculating the diff between two lists.
