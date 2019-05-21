@@ -9,15 +9,16 @@ import com.skoumal.teanity.example.model.entity.LoadingRvItem
 import com.skoumal.teanity.example.model.entity.Photo
 import com.skoumal.teanity.example.model.entity.PhotoRvItem
 import com.skoumal.teanity.extensions.applySchedulers
-import com.skoumal.teanity.extensions.asyncListOf
 import com.skoumal.teanity.extensions.bindingOf
+import com.skoumal.teanity.extensions.diffListOf
+import com.skoumal.teanity.extensions.subscribeK
 import java.util.concurrent.TimeUnit
 
 class HomeViewModel(
     private val photoRepository: PhotoRepository
 ) : ExampleViewModel() {
 
-    val items = asyncListOf<GenericRvItem>()
+    val items = diffListOf<GenericRvItem>()
     val itemBinding = bindingOf<GenericRvItem> {
         it.bindExtra(BR.viewModel, this@HomeViewModel)
     }
@@ -48,10 +49,10 @@ class HomeViewModel(
                     currentLoadingItem?.failed?.set(false)
                 }
             }
-            .subscribe({
-                state = State.LOADED
-                itemsLoaded(it)
-            }, {
+            .flatMap { items.updateRx((photoItems + it).plusNotEmpty(loadingItem)) }
+            .applySchedulers()
+            .doOnSuccess { state = State.LOADED }
+            .subscribeK(onError = {
                 it.printStackTrace()
                 if (photoItems.isEmpty()) {
                     state = State.LOADING_FAILED
@@ -63,12 +64,6 @@ class HomeViewModel(
     }
 
     fun loadMoreItems() = loadItems()
-
-    private fun itemsLoaded(newItems: List<PhotoRvItem>) {
-        val updatedList = photoItems + newItems
-
-        items.update(updatedList.plusNotEmpty(loadingItem))
-    }
 
     fun photoClicked(photo: Photo) = photoDetail(photo)
 

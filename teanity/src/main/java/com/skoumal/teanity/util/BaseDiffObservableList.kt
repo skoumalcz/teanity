@@ -74,8 +74,8 @@ abstract class BaseDiffObservableList<T>(
      * afterwards.
      *
      * Children (lists extended from this one) are free to implement whatever strategy they want for computing the diff.
-     * Default (legacy) implementation is available at [DiffObservableList]. New async is available at
-     * [AsyncDiffObservableList]. Refer to documentation of each of those lists to learn more about their strategy.
+     * Default implementation is available at [DiffObservableList]. Refer to documentation of each of those lists to
+     * learn more about its strategy.
      *
      * @param newItems The items to set this list to.
      */

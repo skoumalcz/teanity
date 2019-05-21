@@ -1,7 +1,6 @@
 package com.skoumal.teanity.extensions
 
 import com.skoumal.teanity.databinding.RvItem
-import com.skoumal.teanity.util.AsyncDiffObservableList
 import com.skoumal.teanity.util.BaseDiffObservableList
 import com.skoumal.teanity.util.ComparableEntity
 import com.skoumal.teanity.util.DiffObservableList
@@ -19,7 +18,6 @@ inline fun <T : RvItem> bindingOf(crossinline init: (ItemBinding<*>) -> Unit) = 
 //region DiffList
 
 fun <T : ComparableEntity<T>> diffListOf() = DiffObservableList<T>(comparableCallback())
-fun <T : ComparableEntity<T>> asyncListOf() = AsyncDiffObservableList<T>(comparableCallback())
 internal fun <T : ComparableEntity<T>> comparableCallback() = object : BaseDiffObservableList.Callback<T> {
     override fun areContentsTheSame(oldItem: T, newItem: T) = oldItem.contentSameAs(newItem)
     override fun areItemsTheSame(oldItem: T, newItem: T) = oldItem.sameAs(newItem)
