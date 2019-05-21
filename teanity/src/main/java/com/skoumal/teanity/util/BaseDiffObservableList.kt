@@ -39,31 +39,31 @@ abstract class BaseDiffObservableList<T>(
         val frozenOldList = synchronized(listLock) { list.toList() }
         val frozenNewList = synchronized(listLock) { newItems.toList() }
 
-        fun updateSelf(result: DiffUtil.DiffResult) {
-            synchronized(listLock) { list = frozenNewList.toMutableList() }
+        fun updateSelf(newList: List<T>, result: DiffUtil.DiffResult) {
+            synchronized(listLock) { list = newList.toMutableList() }
             synchronized(listCallback) { result.dispatchUpdatesTo(listCallback) }
         }
 
-        result?.let { updateSelf(it) } ?: awaitDifferenceFrom(frozenOldList, frozenNewList) {
-            updateSelf(it)
+        result?.let { updateSelf(frozenNewList, it) } ?: awaitDifferenceFrom(frozenOldList, frozenNewList) {
+            updateSelf(it.first, it.second)
         }
     }
 
-    protected open fun doCalculateDiff(oldItems: List<T>, newItems: List<T>?): DiffUtil.DiffResult {
+    protected open fun doCalculateDiff(oldItems: List<T>, newItems: List<T>): DiffUtil.DiffResult {
         return DiffUtil.calculateDiff(object : DiffUtil.Callback() {
 
             override fun getOldListSize() = oldItems.size
-            override fun getNewListSize() = newItems?.size ?: 0
+            override fun getNewListSize() = newItems.size
 
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 val oldItem = oldItems[oldItemPosition]
-                val newItem = newItems!![newItemPosition]
+                val newItem = newItems[newItemPosition]
                 return callback.areItemsTheSame(oldItem, newItem)
             }
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 val oldItem = oldItems[oldItemPosition]
-                val newItem = newItems!![newItemPosition]
+                val newItem = newItems[newItemPosition]
                 return callback.areContentsTheSame(oldItem, newItem)
             }
         }, detectMoves)
@@ -171,7 +171,7 @@ abstract class BaseDiffObservableList<T>(
     protected abstract fun awaitDifferenceFrom(
         oldItems: List<T>,
         newItems: List<T>,
-        callback: (DiffUtil.DiffResult) -> Unit
+        callback: (Pair<List<T>, DiffUtil.DiffResult>) -> Unit
     )
 
     /**

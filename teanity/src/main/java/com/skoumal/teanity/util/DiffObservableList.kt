@@ -31,8 +31,12 @@ open class DiffObservableList<T>(
         updateSelfFrom(newItems, diffResult)
     }
 
-    override fun awaitDifferenceFrom(oldItems: List<T>, newItems: List<T>, callback: (DiffUtil.DiffResult) -> Unit) {
-        callback(doCalculateDiff(oldItems, newItems))
+    override fun awaitDifferenceFrom(
+        oldItems: List<T>,
+        newItems: List<T>,
+        callback: (Pair<List<T>, DiffUtil.DiffResult>) -> Unit
+    ) {
+        callback(newItems to doCalculateDiff(oldItems, newItems))
     }
 
 }

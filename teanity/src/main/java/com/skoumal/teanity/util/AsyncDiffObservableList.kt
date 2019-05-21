@@ -23,7 +23,7 @@ open class AsyncDiffObservableList<T>(
     detectMoves: Boolean = true
 ) : BaseDiffObservableList<T>(callback, detectMoves) {
 
-    private var dispatchQueue = PublishSubject.create<Single<DiffUtil.DiffResult>>()
+    private var dispatchQueue = PublishSubject.create<Single<Pair<List<T>, DiffUtil.DiffResult>>>()
     private var pendingList = mutableListOf<T>()
 
     init {
@@ -38,11 +38,16 @@ open class AsyncDiffObservableList<T>(
     }
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun awaitDifferenceFrom(ignored: List<T>, newItems: List<T>, callback: (DiffUtil.DiffResult) -> Unit) {
-        val task = Single.just(newItems)
+    override fun awaitDifferenceFrom(
+        ignored: List<T>,
+        newItems: List<T>,
+        callback: (Pair<List<T>, DiffUtil.DiffResult>) -> Unit
+    ) {
+        val pending = synchronized(listLock) { pendingList.toList() }
+        val task = Single.just(pending)
             .map {
                 val old = synchronized(listLock) { list.toList() }
-                doCalculateDiff(old, it)
+                it to doCalculateDiff(old, it)
             }
             .applySchedulers()
             .doOnSuccess(callback)
