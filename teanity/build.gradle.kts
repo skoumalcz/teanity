@@ -48,6 +48,7 @@ dependencies {
     /* === CORE === */
     api("androidx.core", "core-ktx", versions["ktx"])
     api("androidx.lifecycle", "lifecycle-extensions", versions["lifecycle"])
+    api("androidx.lifecycle", "lifecycle-viewmodel-ktx", versions["lifecycle"])
     api("androidx.navigation", "navigation-fragment-ktx", versions["navigation"])
     api("androidx.navigation", "navigation-ui-ktx", versions["navigation"])
     api("androidx.work", "work-runtime-ktx", versions["work"])

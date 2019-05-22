@@ -2,6 +2,7 @@ package com.skoumal.teanity.viewmodel
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.coroutine.CoroutineChain
@@ -19,8 +20,7 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
 
     private val disposables = CompositeDisposable()
 
-    private val parentJob = SupervisorJob()
-    override val coroutineContext: CoroutineContext = Dispatchers.Main + parentJob
+    override val coroutineContext: CoroutineContext get() = viewModelScope.coroutineContext
 
     private val _viewEvents = PublishSubject.create<ViewEvent>()
     val viewEvents: Observable<ViewEvent> get() = _viewEvents
@@ -28,7 +28,6 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
-        parentJob.cancel()
     }
 
     fun restoreState(savedInstanceState: Bundle?) {
