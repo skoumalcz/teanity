@@ -63,10 +63,12 @@ dependencies {
     api("com.karumi", "dexter", versions["dexter"])
     api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter", versions["bca"])
     api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter-recyclerview", versions["bca"])
-    api("com.github.diareuse", "response-sanitizer", "0.3")
+    api("com.github.diareuse", "response-sanitizer", "1a81b6fdb6")
 
     /* === UI === */
     api("com.github.bumptech.glide", "glide", versions["glide"])
+    api("androidx.dynamicanimation", "dynamicanimation", versions["animation"])
+    api("androidx.dynamicanimation", "dynamicanimation-ktx", versions["animation-ktx"])
 }
 
 apply(from = "groovy.gradle")

@@ -6,7 +6,6 @@ import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.ActivityMainBinding
 import com.skoumal.teanity.example.util.setupWith
 import com.skoumal.teanity.view.TeanityActivity
-import com.skoumal.teanity.viewevents.ViewEvent
 import org.koin.androidx.viewmodel.ext.viewModel
 
 class MainActivity : TeanityActivity<MainViewModel, ActivityMainBinding>() {
@@ -25,6 +24,4 @@ class MainActivity : TeanityActivity<MainViewModel, ActivityMainBinding>() {
 
         binding.bottomNavView.setupWith(navController)
     }
-
-    override fun onEventDispatched(event: ViewEvent) {}
 }
