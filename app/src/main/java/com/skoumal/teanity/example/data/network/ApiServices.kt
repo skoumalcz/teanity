@@ -1,8 +1,8 @@
 package com.skoumal.teanity.example.data.network
 
 import com.skoumal.teanity.example.model.entity.Photo
-import io.reactivex.Single
-import okhttp3.ResponseBody
+import kotlinx.coroutines.Deferred
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -16,11 +16,11 @@ interface ApiServices {
      */
     @POST("login/")
     @Headers(TokenInterceptor.NO_AUTH_HEADER)
-    fun login(): Single<ResponseBody>
+    fun login(): Deferred<Response<Unit>>
 
     @GET("photos/")
     fun getPhotos(
         @Query("page") page: Int = 1,
         @Query("per_page") perPage: Int = 10
-    ): Single<List<Photo>>
+    ): Deferred<Response<List<Photo>>>
 }

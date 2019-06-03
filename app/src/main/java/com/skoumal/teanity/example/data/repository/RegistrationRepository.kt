@@ -1,34 +1,49 @@
 package com.skoumal.teanity.example.data.repository
 
 import android.net.ConnectivityManager
-import com.skoumal.teanity.api.ApiXBuilder
-import com.skoumal.teanity.api.build
+import com.skoumal.teanity.api.ApiXEvaluator
+import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.Config
 import com.skoumal.teanity.example.data.network.ApiServices
-import io.reactivex.Completable
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
 
 class RegistrationRepository(
     private val api: ApiServices,
     private val cm: ConnectivityManager
 ) {
 
-    fun login(helper: Login.() -> Unit): Completable = Login(helper)
-        .build()
-        .afterEvaluate(Completable.complete())
-        .delay(1000, TimeUnit.MILLISECONDS, Schedulers.computation(), true)
-        .doOnComplete { Config.token = "token" }
+    suspend fun login(evaluatorHelper: Login.() -> Unit): Result<Unit> {
+        val evaluator = Login().apply(evaluatorHelper)
 
-    fun logout(): Completable = Completable.complete()
-        .delay(1000, TimeUnit.MILLISECONDS)
-        .doOnComplete { Config.token = "" }
+        val result = if (evaluator.evaluate() && (cm.activeNetworkInfo?.isConnected == true)) {
+            delay(1000)
+            Result.Success()
+        } else {
+            Result.Error(IllegalStateException())
+        }
 
-    class Login : ApiXBuilder<Login>() {
+        if (result.isSuccess) {
+            Config.token = "token"
+        }
+
+        return result
+    }
+
+    suspend fun logout(): Result<Unit> {
+        delay(1000)
+
+        val result = Result.Success()
+
+        if (result.isSuccess) {
+            Config.token = ""
+        }
+
+        return result
+    }
+
+    class Login : ApiXEvaluator<Login>() {
         var email: String = ""
         var password: String = ""
-
-        companion object : ApiXBuilder.Creator<Login>(Login::class)
     }
 
 }

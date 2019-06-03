@@ -38,6 +38,7 @@ dependencies {
     //androidTestImplementation("androidx.test.espresso", "espresso-core", "3.1.1")
 
     implementation(kotlin("stdlib-jdk7", Config.Dependency.kotlin))
+    api("org.jetbrains.kotlinx", "kotlinx-coroutines-android", Config.Dependency.kotlinCoroutines)
 
     /* === SUPPORT === */
     api("androidx.appcompat", "appcompat", Config.Dependency.appcompat)
@@ -45,6 +46,7 @@ dependencies {
     /* === CORE === */
     api("androidx.core", "core-ktx", Config.Dependency.ktx)
     api("androidx.lifecycle", "lifecycle-extensions", Config.Dependency.lifecycle)
+    api("androidx.lifecycle", "lifecycle-viewmodel-ktx", Config.Dependency.lifecycle)
     api("androidx.navigation", "navigation-fragment-ktx", Config.Dependency.navigation)
     api("androidx.navigation", "navigation-ui-ktx", Config.Dependency.navigation)
     api("androidx.work", "work-runtime-ktx", Config.Dependency.work)

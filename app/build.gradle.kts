@@ -136,6 +136,7 @@ dependencies {
 
     // KOTLIN
     implementation(kotlin("stdlib-jdk7", version = Config.Dependency.kotlin))
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", Config.Dependency.kotlinCoroutines)
 
     // SUPPORT LIBS
     implementation("com.google.android.material", "material", Config.Dependency.material)
@@ -147,13 +148,13 @@ dependencies {
     implementation("org.koin", "koin-androidx-viewmodel", Config.Dependency.koin)
 
     // NETWORKING
+    implementation("com.jakewharton.retrofit", "retrofit2-kotlin-coroutines-adapter", Config.Dependency.retrofitCoroutines)
     implementation("com.squareup.retrofit2", "retrofit", Config.Dependency.retrofit)
     implementation("com.squareup.retrofit2", "converter-moshi", Config.Dependency.retrofit)
     implementation("com.squareup.retrofit2", "adapter-rxjava2", Config.Dependency.retrofit)
     implementation("com.squareup.okhttp3", "okhttp", Config.Dependency.okhttp)
     implementation("com.squareup.okhttp3", "logging-interceptor", Config.Dependency.okhttp)
     implementation("com.squareup.moshi", "moshi", Config.Dependency.moshi)
-
     // GLIDE
     implementation("com.github.bumptech.glide", "okhttp3-integration", Config.Dependency.glide, ext = "aar")
 

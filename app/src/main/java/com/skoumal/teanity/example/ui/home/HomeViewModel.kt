@@ -2,6 +2,8 @@ package com.skoumal.teanity.example.ui.home
 
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.api.IApiX
+import com.skoumal.teanity.api.Result
+import com.skoumal.teanity.api.map
 import com.skoumal.teanity.databinding.GenericRvItem
 import com.skoumal.teanity.example.data.repository.PhotoRepository
 import com.skoumal.teanity.example.model.base.ExampleViewModel
@@ -9,10 +11,14 @@ import com.skoumal.teanity.example.model.entity.LoadingRvItem
 import com.skoumal.teanity.example.model.entity.Photo
 import com.skoumal.teanity.example.model.entity.PhotoRvItem
 import com.skoumal.teanity.extensions.applySchedulers
+import com.skoumal.teanity.util.DiffObservableList
+import me.tatarka.bindingcollectionadapter2.OnItemBind
 import com.skoumal.teanity.extensions.bindingOf
 import com.skoumal.teanity.extensions.diffListOf
-import com.skoumal.teanity.extensions.subscribeK
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 class HomeViewModel(
     private val photoRepository: PhotoRepository
@@ -35,35 +41,44 @@ class HomeViewModel(
         loadItems()
     }
 
-    private fun loadItems() {
-        photoRepository.getPhotos { offset = photoItems.size }
-            .flattenAsFlowable { it }
-            .map { PhotoRvItem(it) }
-            .toList()
-            .delay(1000, TimeUnit.MILLISECONDS)
-            .applySchedulers()
-            .doOnSubscribe {
-                if (photoItems.isEmpty()) {
-                    state = State.LOADING
-                } else {
-                    currentLoadingItem?.failed?.set(false)
-                }
-            }
-            .flatMap { items.updateRx((photoItems + it).plusNotEmpty(loadingItem)) }
-            .applySchedulers()
-            .doOnSuccess { state = State.LOADED }
-            .subscribeK(onError = {
-                it.printStackTrace()
-                if (photoItems.isEmpty()) {
-                    state = State.LOADING_FAILED
-                } else {
-                    currentLoadingItem?.failed?.set(true)
-                }
-            })
-            .add()
+    private fun loadItems() = network<List<PhotoRvItem>> {
+        onStart(::onStartLoadItems)
+        onProcess(::onProcessLoadItems)
+        onFinished(::onFinishedLoadItems)
     }
 
-    fun loadMoreItems() = loadItems()
+    //region loadItems()
+    private fun onStartLoadItems() {
+        if (photoItems.isEmpty()) {
+            state = State.LOADING
+        } else {
+            currentLoadingItem?.failed?.set(false)
+        }
+    }
+
+    private suspend fun onProcessLoadItems() = withContext(Dispatchers.IO) {
+        delay(1000)
+        photoRepository.getPhotos { offset = photoItems.size }.map { it.map { PhotoRvItem(it) } }
+    }
+
+    private fun onFinishedLoadItems(it: Result<List<PhotoRvItem>>): Unit = when (it) {
+        is Result.Success -> {
+            state = State.LOADED
+            itemsLoaded(it.data)
+        }
+        is Result.Error -> {
+            if (photoItems.isEmpty()) {
+                state = State.LOADING_FAILED
+            } else {
+                currentLoadingItem?.failed?.set(true) ?: Unit
+            }
+        }
+    }
+    //endregion
+
+    fun loadMoreItems() {
+        loadItems()
+    }
 
     fun photoClicked(photo: Photo) = photoDetail(photo)
 

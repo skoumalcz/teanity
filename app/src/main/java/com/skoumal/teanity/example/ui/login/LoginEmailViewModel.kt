@@ -1,19 +1,20 @@
 package com.skoumal.teanity.example.ui.login
 
+import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
 import com.skoumal.teanity.example.util.isEmail
 import com.skoumal.teanity.example.util.isPassword
-import com.skoumal.teanity.extensions.applySchedulers
-import com.skoumal.teanity.extensions.subscribeK
 import com.skoumal.teanity.util.KObservableField
 import com.skoumal.teanity.viewevents.SnackbarEvent
 import com.skoumal.teanity.viewmodel.LoadingViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import com.evernote.android.state.State as SavedState
 
 class LoginEmailViewModel(
     private val registrationRepo: RegistrationRepository
-) : LoadingViewModel() {
+) : LoadingViewModel(State.LOADED) {
 
     @SavedState
     var email = KObservableField("")
@@ -24,27 +25,39 @@ class LoginEmailViewModel(
     @SavedState
     var passwordError = KObservableField("")
 
-    init {
-        state = State.LOADED
+    fun loginButtonClicked() = network<Unit> {
+        onStart(::onStartLogin)
+        onProcess(::onProcessLogin)
+        onFinished(::onFinishedLogin)
     }
 
-    fun loginButtonClicked() {
-        registrationRepo
-            .login {
-                email = this@LoginEmailViewModel.email.value
-                password = this@LoginEmailViewModel.password.value
+    //region login()
+    private fun onStartLogin() {
+        state = State.LOADING
+    }
 
-                onEvaluate(this@LoginEmailViewModel::evaluateLoginInfo)
+    private suspend fun onProcessLogin() = withContext(Dispatchers.IO) {
+        registrationRepo.login {
+            email = this@LoginEmailViewModel.email.value
+            password = this@LoginEmailViewModel.password.value
+
+            onEvaluate { email.isEmail(emailError) && password.isPassword(passwordError) }
+        }
+    }
+
+    private fun onFinishedLogin(it: Result<Unit>) {
+        state = when (it) {
+            is Result.Success -> {
+                loginSucceeded()
+                State.LOADED
             }
-            .applyViewModel(this)
-            .applySchedulers()
-            .subscribeK(onComplete = this::loginSucceeded, onError = this::loginFailed)
-            .add()
+            is Result.Error -> {
+                loginFailed(it.exception)
+                State.LOADING_FAILED
+            }
+        }
     }
-
-    private fun evaluateLoginInfo(login: RegistrationRepository.Login): Boolean {
-        return login.email.isEmail(emailError) && login.password.isPassword(passwordError)
-    }
+    //endregion
 
     private fun loginSucceeded() {
         LoginEmailFragment.EVENT_NAVIGATE_TO_MAIN_ACTIVITY.publish()
