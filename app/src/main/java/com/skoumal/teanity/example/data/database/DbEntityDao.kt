@@ -3,15 +3,15 @@ package com.skoumal.teanity.example.data.database
 import androidx.room.Dao
 import androidx.room.Query
 import com.skoumal.teanity.database.BaseDao
-import com.skoumal.teanity.example.model.entity.DbEntity
+import com.skoumal.teanity.example.model.entity.internal.DbEntity
 
 @Dao
 interface DbEntityDao : BaseDao<DbEntity> {
 
     @Query("DELETE from entity")
-    override fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("SELECT * from entity")
-    override fun fetchAll(): List<DbEntity>
+    suspend fun fetchAll(): List<DbEntity>
 
 }

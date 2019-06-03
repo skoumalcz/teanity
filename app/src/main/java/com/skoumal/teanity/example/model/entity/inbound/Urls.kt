@@ -1,4 +1,4 @@
-package com.skoumal.teanity.example.model.entity
+package com.skoumal.teanity.example.model.entity.inbound
 
 import com.skoumal.teanity.util.ComparableEntity
 import com.squareup.moshi.JsonClass

@@ -1,8 +1,8 @@
 package com.skoumal.teanity.example.model.base
 
 import com.skoumal.teanity.example.R
-import com.skoumal.teanity.example.model.entity.Photo
-import com.skoumal.teanity.example.util.navigation.photoId
+import com.skoumal.teanity.example.model.entity.inbound.Photo
+import com.skoumal.teanity.example.model.navigation.photoId
 import com.skoumal.teanity.viewevents.NavigationEvent
 import com.skoumal.teanity.viewmodel.LoadingViewModel
 

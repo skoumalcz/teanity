@@ -1,4 +1,4 @@
-package com.skoumal.teanity.example.util.navigation
+package com.skoumal.teanity.example.model.navigation
 
 import android.os.Bundle
 

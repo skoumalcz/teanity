@@ -52,7 +52,7 @@ dependencies {
     api("androidx.work", "work-runtime-ktx", Config.Dependency.work)
 
     /* === DB === */
-    api("androidx.room", "room-runtime", Config.Dependency.room)
+    api("androidx.room", "room-ktx", Config.Dependency.room)
 
     /* === RX === */
     api("io.reactivex.rxjava2", "rxkotlin", Config.Dependency.rxkotlin)

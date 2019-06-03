@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="com.skoumal.teanity.example.model.entity.LoadingRvItem" />
+            type="com.skoumal.teanity.example.model.entity.recycler.LoadingRvItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

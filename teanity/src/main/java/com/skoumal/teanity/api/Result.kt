@@ -1,5 +1,9 @@
 package com.skoumal.teanity.api
 
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
 sealed class Result<out T : Any> {
 
     data class Success<out T : Any>(val data: T) : Result<T>() {
@@ -7,6 +11,8 @@ sealed class Result<out T : Any> {
             operator fun invoke() = Success(Unit)
         }
     }
+
+    object Void : Result<Nothing>()
 
     data class Error(val exception: Exception) : Result<Nothing>()
 
@@ -17,13 +23,27 @@ sealed class Result<out T : Any> {
         return when (this) {
             is Success -> "Success[data=$data]"
             is Error -> "Error[exception=$exception]"
+            is Void -> "Void[no result]"
         }
     }
 }
 
-inline fun <T : Any, R : Any> Result<T>.map(block: (T) -> R): Result<R> {
+@UseExperimental(ExperimentalContracts::class)
+inline fun <T : Any, R : Any> Result<T>.transform(block: (T) -> R): Result<R> {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
     return when (this) {
         is Result.Error -> this
+        is Result.Void -> this
         is Result.Success -> Result.Success(block(data))
+    }
+}
+
+inline fun <Data : Any, Stream : List<Data>, R : Any> Result<Stream>.map(block: (Data) -> R): Result<List<R>> {
+    return when (this) {
+        is Result.Error -> this
+        is Result.Void -> this
+        is Result.Success -> Result.Success(data.map(block))
     }
 }

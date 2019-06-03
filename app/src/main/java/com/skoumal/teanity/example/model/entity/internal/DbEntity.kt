@@ -1,4 +1,4 @@
-package com.skoumal.teanity.example.model.entity
+package com.skoumal.teanity.example.model.entity.internal
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

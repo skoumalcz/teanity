@@ -36,7 +36,7 @@ fun createOkHttpClient(tokenInterceptor: TokenInterceptor, sanitizer: ResponseSa
 
     return OkHttpClient.Builder()
         .addInterceptor(tokenInterceptor)
-        .addInterceptor(sanitizer)
+        //.addInterceptor(sanitizer)
         .addInterceptor(httpLoggingInterceptor)
         .build()
 }

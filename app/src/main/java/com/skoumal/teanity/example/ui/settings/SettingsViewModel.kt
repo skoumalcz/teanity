@@ -3,27 +3,22 @@ package com.skoumal.teanity.example.ui.settings
 import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
 import com.skoumal.teanity.viewmodel.TeanityViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class SettingsViewModel(
     private val registrationRepo: RegistrationRepository
 ) : TeanityViewModel() {
 
     // there should be some progress bar, but I'm too lazy
-    fun logoutButtonClicked() = network<Unit> {
-        onProcess(::onProcessLogout)
-        onFinished(::onFinishedLogout)
+    fun logoutButtonClicked() = launch {
+        val result = registrationRepo.logout()
+        onFinishedLogout(result)
     }
 
     //region logout()
-    private suspend fun onProcessLogout() = withContext(Dispatchers.IO) {
-        registrationRepo.logout()
-    }
-
     private fun onFinishedLogout(result: Result<Unit>) = when (result) {
         is Result.Success -> logoutSuccess()
         is Result.Error -> logoutFailed(result.exception)
+        is Result.Void -> logoutSuccess()
     }
     //endregion
 

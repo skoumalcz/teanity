@@ -1,5 +1,9 @@
 package com.skoumal.teanity.coroutine
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
+@Deprecated("This is unnecessary complicated clutter")
 class CoroutineChain<Target> private constructor(
     private val onStartCallback: OnStartCallback,
     private val onProcessCallback: OnProcessCallback<Target>,
@@ -7,7 +11,7 @@ class CoroutineChain<Target> private constructor(
 ) {
 
     private fun onStart() = onStartCallback()
-    private suspend fun onProcess() = onProcessCallback()
+    private suspend fun onProcess() = withContext(Dispatchers.Default) { onProcessCallback() }
     private fun onFinished(target: Target) = onFinishedCallback(target)
 
     suspend fun chain() {

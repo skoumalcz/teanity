@@ -1,8 +1,9 @@
-package com.skoumal.teanity.example.model.entity
+package com.skoumal.teanity.example.model.entity.recycler
 
 import androidx.databinding.ObservableBoolean
 import com.skoumal.teanity.databinding.GenericRvItem
 import com.skoumal.teanity.example.R
+import com.skoumal.teanity.example.model.entity.inbound.Photo
 import com.skoumal.teanity.extensions.compareToSafe
 
 class PhotoRvItem(val photo: Photo) : GenericRvItem() {

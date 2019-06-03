@@ -1,4 +1,4 @@
-package com.skoumal.teanity.example.model.entity
+package com.skoumal.teanity.example.util.retrofit
 
 import com.skoumal.teanity.api.Result
 import kotlinx.coroutines.Deferred
@@ -8,8 +8,10 @@ import java.io.IOException
 fun <T : Any> Response<T>.toResult(): Result<T> {
     if (isSuccessful) {
         val body = body()
-        if (body != null) {
-            return Result.Success(body)
+        return if (body != null) {
+            Result.Success(body)
+        } else {
+            Result.Void
         }
     }
 

@@ -58,21 +58,21 @@ android {
         create(Config.Sign.DEFAULT) {
             isV1SigningEnabled = true
             isV2SigningEnabled = true
-            //storeFile = File("keystore.jks")
-            //storePassword = "yourpassword"
+            storeFile = File("keystore.jks")
+            storePassword = "yourpassword"
         }
 
         createChild(Config.Sign.DEBUG) {
-            //keyAlias = "debug"
-            //keyPassword = "yourpassword"
+            keyAlias = "debug"
+            keyPassword = "yourpassword"
         }
         createChild(Config.Sign.ALPHA) {
-            //keyAlias = "alpha"
-            //keyPassword = "yourpassword"
+            keyAlias = "alpha"
+            keyPassword = "yourpassword"
         }
         createChild(Config.Sign.BETA) {
-            //keyAlias = "beta"
-            //keyPassword = "yourpassword"
+            keyAlias = "beta"
+            keyPassword = "yourpassword"
         }
     }
 

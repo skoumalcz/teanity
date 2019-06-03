@@ -10,7 +10,7 @@
 
         <variable
             name="item"
-            type="com.skoumal.teanity.example.model.entity.PhotoRvItem" />
+            type="com.skoumal.teanity.example.model.entity.recycler.PhotoRvItem" />
 
         <variable
             name="viewModel"

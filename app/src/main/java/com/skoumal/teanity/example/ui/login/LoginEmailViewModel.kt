@@ -3,13 +3,12 @@ package com.skoumal.teanity.example.ui.login
 import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
+import com.skoumal.teanity.example.model.entity.outbound.Login
 import com.skoumal.teanity.example.util.isEmail
 import com.skoumal.teanity.example.util.isPassword
 import com.skoumal.teanity.util.KObservableField
 import com.skoumal.teanity.viewevents.SnackbarEvent
 import com.skoumal.teanity.viewmodel.LoadingViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.evernote.android.state.State as SavedState
 
 class LoginEmailViewModel(
@@ -25,26 +24,19 @@ class LoginEmailViewModel(
     @SavedState
     var passwordError = KObservableField("")
 
-    fun loginButtonClicked() = network<Unit> {
-        onStart(::onStartLogin)
-        onProcess(::onProcessLogin)
-        onFinished(::onFinishedLogin)
-    }
-
-    //region login()
-    private fun onStartLogin() {
-        state = State.LOADING
-    }
-
-    private suspend fun onProcessLogin() = withContext(Dispatchers.IO) {
-        registrationRepo.login {
-            email = this@LoginEmailViewModel.email.value
-            password = this@LoginEmailViewModel.password.value
-
-            onEvaluate { email.isEmail(emailError) && password.isPassword(passwordError) }
+    fun loginButtonClicked() {
+        if (!email.value.isEmail(emailError) || !password.value.isPassword(passwordError)) {
+            return
+        }
+        launch {
+            state = State.LOADING
+            // this is certainly deferred, so it should be safe to call it without wrapping `async() {}`
+            val result = registrationRepo.login(Login(email.value, password.value))
+            onFinishedLogin(result)
         }
     }
 
+    //region login()
     private fun onFinishedLogin(it: Result<Unit>) {
         state = when (it) {
             is Result.Success -> {
@@ -53,6 +45,10 @@ class LoginEmailViewModel(
             }
             is Result.Error -> {
                 loginFailed(it.exception)
+                State.LOADING_FAILED
+            }
+            is Result.Void -> {
+                loginFailed(IllegalStateException())
                 State.LOADING_FAILED
             }
         }

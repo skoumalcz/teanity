@@ -1,6 +1,6 @@
 package com.skoumal.teanity.example.data.network
 
-import com.skoumal.teanity.example.model.entity.Photo
+import com.skoumal.teanity.example.model.entity.inbound.Photo
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
