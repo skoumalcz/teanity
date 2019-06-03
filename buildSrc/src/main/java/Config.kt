@@ -24,7 +24,7 @@ object Config {
         const val work = "2.1.0-alpha02"
         const val animation = "1.1.0-alpha01"
         const val animationKtx = "1.0.0-alpha02"
-        const val constraintLayout = "2.0.0-beta01"
+        const val constraintLayout = "2.0.0-beta1"
         const val gradlePlugin = "3.4.0"
         const val koin = "2.0.0"
         const val retrofit = "2.5.0"

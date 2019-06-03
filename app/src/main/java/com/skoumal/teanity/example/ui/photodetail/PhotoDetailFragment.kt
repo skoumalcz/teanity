@@ -3,7 +3,7 @@ package com.skoumal.teanity.example.ui.photodetail
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentPhotoDetailBinding
 import com.skoumal.teanity.view.TeanityFragment
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class PhotoDetailFragment : TeanityFragment<PhotoDetailViewModel, FragmentPhotoDetailBinding>() {

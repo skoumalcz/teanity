@@ -6,7 +6,7 @@ import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.ActivityMainBinding
 import com.skoumal.teanity.example.util.setupWith
 import com.skoumal.teanity.view.TeanityActivity
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : TeanityActivity<MainViewModel, ActivityMainBinding>() {
 
