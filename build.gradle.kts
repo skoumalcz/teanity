@@ -1,39 +1,4 @@
 buildscript {
-    extra.set(
-        "versions", mapOf(
-            /* === LIB === */
-            "kotlin" to "1.3.21",
-            "appcompat" to "1.1.0-alpha03",
-            "ktx" to "1.1.0-alpha05",
-            "material" to "1.1.0-alpha04",
-            "room" to "2.1.0-alpha05",
-            "lifecycle" to "2.1.0-alpha03",
-            "navigation" to "2.0.0",
-            "bca" to "3.0.0-beta1",/*please do not update; nested binding fails to resolve on newer versions*/
-            "glide" to "4.9.0",
-            "state" to "1.4.1",
-            "rxkotlin" to "2.3.0",
-            "rxandroid" to "2.1.1",
-            "dexter" to "5.0.0",
-            "ktx" to "1.0.0",
-            "work" to "2.0.0",
-            "animation" to "1.1.0-alpha01",
-            "animation-ktx" to "1.0.0-alpha02",
-
-            /* === APP === */
-            "constraintLayout" to "2.0.0-alpha3",
-            "gradlePlugin" to "3.4.0",
-            "koin" to "2.0.0-beta-1",
-            "retrofit" to "2.5.0",
-            "okhttp" to "3.12.0",
-            "moshi" to "1.8.0",
-            "crashlytics" to "2.9.9",
-            "fabric" to "1.+",
-            "kotpref" to "2.6.0",
-            "timber" to "4.7.1"
-        )
-    )
-
     repositories {
         google()
         jcenter()
@@ -42,14 +7,12 @@ buildscript {
         maven(url = "http://oss.sonatype.org/content/repositories/snapshots")
     }
 
-    val versions: Map<String, String> by extra
-
     dependencies {
-        classpath("com.android.tools.build:gradle:${versions["gradlePlugin"]}")
-        classpath(kotlin("gradle-plugin", version = versions["kotlin"]))
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${versions["navigation"]}")
-        classpath("io.fabric.tools:gradle:${versions["fabric"]}")
-        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
+        classpath("com.android.tools.build", "gradle", Config.Dependency.gradlePlugin)
+        classpath(kotlin("gradle-plugin", version = Config.Dependency.kotlin))
+        classpath("androidx.navigation", "navigation-safe-args-gradle-plugin", Config.Dependency.navigation)
+        classpath("io.fabric.tools", "gradle", Config.Dependency.fabric)
+        classpath("com.github.dcendents", "android-maven-gradle-plugin", "2.1")
     }
 }
 

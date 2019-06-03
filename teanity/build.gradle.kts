@@ -10,11 +10,11 @@ plugins {
 val group = "com.github.skoumalcz"
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(Config.Android.compileSdk)
 
     defaultConfig {
-        minSdkVersion(16)
-        targetSdkVersion(28)
+        minSdkVersion(Config.Android.minSdk)
+        targetSdkVersion(Config.Android.targetSdk)
         versionCode = 1
         versionName = "1.0"
 
@@ -22,7 +22,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        getByName(Config.Build.Type.RELEASE) {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
@@ -33,42 +33,40 @@ android {
 }
 
 dependencies {
-    val versions: Map<String, String> by rootProject.extra
+    //testImplementation("junit", "junit", "4.12")
+    //androidTestImplementation("androidx.test", "runner", "1.1.1")
+    //androidTestImplementation("androidx.test.espresso", "espresso-core", "3.1.1")
 
-    testImplementation("junit", "junit", "4.12")
-    androidTestImplementation("androidx.test", "runner", "1.1.1")
-    androidTestImplementation("androidx.test.espresso", "espresso-core", "3.1.1")
-
-    implementation(kotlin("stdlib-jdk7", versions["kotlin"]))
+    implementation(kotlin("stdlib-jdk7", Config.Dependency.kotlin))
 
     /* === SUPPORT === */
-    api("androidx.appcompat", "appcompat", versions["appcompat"])
+    api("androidx.appcompat", "appcompat", Config.Dependency.appcompat)
 
     /* === CORE === */
-    api("androidx.core", "core-ktx", versions["ktx"])
-    api("androidx.lifecycle", "lifecycle-extensions", versions["lifecycle"])
-    api("androidx.navigation", "navigation-fragment-ktx", versions["navigation"])
-    api("androidx.navigation", "navigation-ui-ktx", versions["navigation"])
-    api("androidx.work", "work-runtime-ktx", versions["work"])
+    api("androidx.core", "core-ktx", Config.Dependency.ktx)
+    api("androidx.lifecycle", "lifecycle-extensions", Config.Dependency.lifecycle)
+    api("androidx.navigation", "navigation-fragment-ktx", Config.Dependency.navigation)
+    api("androidx.navigation", "navigation-ui-ktx", Config.Dependency.navigation)
+    api("androidx.work", "work-runtime-ktx", Config.Dependency.work)
 
     /* === DB === */
-    api("androidx.room", "room-runtime", versions["room"])
+    api("androidx.room", "room-runtime", Config.Dependency.room)
 
     /* === RX === */
-    api("io.reactivex.rxjava2", "rxkotlin", versions["rxkotlin"])
-    api("io.reactivex.rxjava2", "rxandroid", versions["rxandroid"])
+    api("io.reactivex.rxjava2", "rxkotlin", Config.Dependency.rxkotlin)
+    api("io.reactivex.rxjava2", "rxandroid", Config.Dependency.rxandroid)
 
     /* === EASING === */
-    api("com.evernote", "android-state", versions["state"])
-    api("com.karumi", "dexter", versions["dexter"])
-    api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter", versions["bca"])
-    api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter-recyclerview", versions["bca"])
+    api("com.evernote", "android-state", Config.Dependency.state)
+    api("com.karumi", "dexter", Config.Dependency.dexter)
+    api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter", Config.Dependency.bca)
+    api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter-recyclerview", Config.Dependency.bca)
     api("com.github.diareuse", "response-sanitizer", "1a81b6fdb6")
 
     /* === UI === */
-    api("com.github.bumptech.glide", "glide", versions["glide"])
-    api("androidx.dynamicanimation", "dynamicanimation", versions["animation"])
-    api("androidx.dynamicanimation", "dynamicanimation-ktx", versions["animation-ktx"])
+    api("com.github.bumptech.glide", "glide", Config.Dependency.glide)
+    api("androidx.dynamicanimation", "dynamicanimation", Config.Dependency.animation)
+    api("androidx.dynamicanimation", "dynamicanimation-ktx", Config.Dependency.animationKtx)
 }
 
 apply(from = "groovy.gradle")

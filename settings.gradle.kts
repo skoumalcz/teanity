@@ -1,3 +1,3 @@
 rootProject.buildFileName = "build.gradle.kts"
 
-include("app", "teanity")
+include("app", "teanity", "buildSrc")
