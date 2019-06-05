@@ -6,8 +6,11 @@ import androidx.annotation.MainThread
 import androidx.recyclerview.widget.DiffUtil
 import com.skoumal.teanity.extensions.applySchedulers
 import com.skoumal.teanity.extensions.subscribeK
+import com.skoumal.teanity.viewmodel.TeanityViewModel
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Default synchronous implementation of [BaseDiffObservableList]. Execution of all diff calculations by [update] is
@@ -24,7 +27,6 @@ open class DiffObservableList<T>(
     callback: Callback<T>,
     detectMoves: Boolean = true
 ) : BaseDiffObservableList<T>(callback, detectMoves) {
-
 
     /**
      * Updates the contents of this list to the given one using the DiffResults to dispatch change
@@ -68,6 +70,18 @@ open class DiffObservableList<T>(
         .doOnSuccess { update(it.first, it.second) }
         .applySchedulers(observeOn = Schedulers.io())
         .map { it.first }
+
+    /**
+     * Computes list diff on [Dispatchers.Default]. Requires call from [TeanityViewModel.launch] or similar.
+     *
+     * @param newItems  Future set of items
+     * @return  [DiffUtil.DiffResult] that should be put into [update] right away. Contains all necessary info for
+     * recycler to properly accommodate new items
+     */
+    suspend fun computeDiff(newItems: List<T>) = withContext(Dispatchers.Default) {
+        val oldItems = synchronized(listLock) { list.toList() }
+        doCalculateDiff(oldItems, newItems)
+    }
 
     override fun awaitDifferenceFrom(
         oldItems: List<T>,
