@@ -40,6 +40,14 @@ inline fun <T : Any, R : Any> Result<T>.transform(block: (T) -> R): Result<R> {
     }
 }
 
+inline fun <T : Any, R : Any> Result<T>.transformToResult(block: (T) -> Result<R>): Result<R> {
+    return when (this) {
+        is Result.Error -> this
+        is Result.Void -> this
+        is Result.Success -> block(data)
+    }
+}
+
 inline fun <Data : Any, Stream : List<Data>, R : Any> Result<Stream>.map(block: (Data) -> R): Result<List<R>> {
     return when (this) {
         is Result.Error -> this
