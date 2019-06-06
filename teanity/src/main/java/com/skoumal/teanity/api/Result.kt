@@ -40,7 +40,11 @@ inline fun <T : Any, R : Any> Result<T>.transform(block: (T) -> R): Result<R> {
     }
 }
 
+@UseExperimental(ExperimentalContracts::class)
 inline fun <T : Any, R : Any> Result<T>.transformToResult(block: (T) -> Result<R>): Result<R> {
+    contract {
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+    }
     return when (this) {
         is Result.Error -> this
         is Result.Void -> this
