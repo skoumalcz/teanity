@@ -31,7 +31,7 @@ sealed class Result<out T : Any> {
 @UseExperimental(ExperimentalContracts::class)
 inline fun <T : Any, R : Any> Result<T>.transform(block: (T) -> R): Result<R> {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     return when (this) {
         is Result.Error -> this
