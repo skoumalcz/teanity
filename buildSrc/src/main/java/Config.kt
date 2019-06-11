@@ -1,3 +1,5 @@
+import org.gradle.api.artifacts.dsl.DependencyHandler
+
 object Config {
 
     object Android {
@@ -36,6 +38,7 @@ object Config {
         const val kotpref = "2.8.0"
         const val timber = "4.7.1"
         const val sanitizer = "0.4"
+        const val teanity = "0.+"
     }
 
     object Build {
@@ -64,3 +67,6 @@ object Config {
     }
 
 }
+
+fun DependencyHandler.teanity(version: String = Config.Dependency.teanity): Any =
+    "com.github.skoumalcz:teanity:$version"

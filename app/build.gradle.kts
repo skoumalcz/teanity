@@ -122,6 +122,7 @@ android {
 
 dependencies {
     implementation(project(":teanity"))
+    //implementation(teanity()) //<< framework from remote
 
     // TESTING
     //testImplementation("junit", "junit", "4.12")
