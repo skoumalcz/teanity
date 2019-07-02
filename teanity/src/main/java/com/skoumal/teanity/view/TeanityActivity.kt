@@ -86,6 +86,8 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
         }
     }
 
+    protected fun detachEvents() = subscriber.dispose()
+
     private fun NavigationEvent.navigate() {
         navController.navigate(navDirections, navOptions)
         if (navDirections is GenericNavDirections && navDirections.clearTask) {
