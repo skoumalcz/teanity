@@ -1,6 +1,5 @@
 package com.skoumal.teanity.example.ui.settings
 
-import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
@@ -15,10 +14,9 @@ class SettingsViewModel(
     }
 
     //region logout()
-    private fun onFinishedLogout(result: Result<Unit>) = when (result) {
-        is Result.Success -> logoutSuccess()
-        is Result.Error -> logoutFailed(result.exception)
-        is Result.Void -> logoutSuccess()
+    private fun onFinishedLogout(result: Result<Unit>) = when {
+        result.isSuccess -> logoutSuccess()
+        else -> logoutFailed(result.exceptionOrNull() ?: IllegalStateException())
     }
     //endregion
 

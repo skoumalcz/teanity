@@ -1,0 +1,5 @@
+android {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type", "-Xuse-experimental=kotlin.Experimental"]
+    }
+}

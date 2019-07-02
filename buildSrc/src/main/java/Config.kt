@@ -29,7 +29,7 @@ object Config {
         const val constraintLayout = "2.0.0-beta1"
         const val gradlePlugin = "3.4.0"
         const val koin = "2.0.0"
-        const val retrofit = "2.5.0"
+        const val retrofit = "2.6.0"
         const val retrofitCoroutines = "0.9.2"
         const val okhttp = "3.12.0"
         const val moshi = "1.8.0"

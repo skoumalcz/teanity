@@ -19,3 +19,9 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
+
+android {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type", "-Xuse-experimental=kotlin.Experimental"]
+    }
+}

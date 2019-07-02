@@ -1,6 +1,5 @@
 package com.skoumal.teanity.example.ui.login
 
-import com.skoumal.teanity.api.Result
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.data.repository.RegistrationRepository
 import com.skoumal.teanity.example.model.entity.outbound.Login
@@ -38,17 +37,13 @@ class LoginEmailViewModel(
 
     //region login()
     private fun onFinishedLogin(it: Result<Unit>) {
-        state = when (it) {
-            is Result.Success -> {
+        state = when {
+            it.isSuccess -> {
                 loginSucceeded()
                 State.LOADED
             }
-            is Result.Error -> {
-                loginFailed(it.exception)
-                State.LOADING_FAILED
-            }
-            is Result.Void -> {
-                loginFailed(IllegalStateException())
+            else -> {
+                loginFailed(it.exceptionOrNull() ?: IllegalStateException())
                 State.LOADING_FAILED
             }
         }

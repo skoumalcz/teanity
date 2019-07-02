@@ -58,6 +58,9 @@ dependencies {
     api("io.reactivex.rxjava2", "rxkotlin", Config.Dependency.rxkotlin)
     api("io.reactivex.rxjava2", "rxandroid", Config.Dependency.rxandroid)
 
+    /* === RETROFIT === */
+    compileOnly("com.squareup.retrofit2", "retrofit", Config.Dependency.retrofit)
+
     /* === EASING === */
     api("com.evernote", "android-state", Config.Dependency.state)
     api("com.karumi", "dexter", Config.Dependency.dexter)

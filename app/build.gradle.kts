@@ -169,3 +169,5 @@ dependencies {
     kapt("com.evernote", "android-state-processor", Config.Dependency.state)
     kapt("androidx.room", "room-compiler", Config.Dependency.room)
 }
+
+apply(from = "groovy.gradle")
