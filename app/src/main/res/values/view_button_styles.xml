@@ -34,15 +34,15 @@
     <style name="Widget.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="strokeColor">@color/colorAccent</item>
-        <item name="rippleColor">@color/colorAccent</item>
+        <item name="strokeColor">@color/colorSecondary</item>
+        <item name="rippleColor">@color/colorSecondary</item>
     </style>
 
     <style name="Widget.Button.Outlined.Iconified" parent="Widget.MaterialComponents.Button.OutlinedButton.Icon">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="strokeColor">@color/colorAccent</item>
-        <item name="rippleColor">@color/colorAccent</item>
+        <item name="strokeColor">@color/colorSecondary</item>
+        <item name="rippleColor">@color/colorSecondary</item>
     </style>
 
 </resources>

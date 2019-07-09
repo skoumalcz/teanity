@@ -1,7 +1,6 @@
 package com.skoumal.teanity.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,35 +11,35 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.snackbar
-import com.skoumal.teanity.viewevents.*
+import com.skoumal.teanity.util.Insets
+import com.skoumal.teanity.viewevents.GenericNavDirections
+import com.skoumal.teanity.viewevents.NavigationEvent
+import com.skoumal.teanity.viewevents.SnackbarEvent
+import com.skoumal.teanity.viewevents.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
-import io.reactivex.disposables.Disposable
 
 abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
     Fragment(),
     TeanityView<Binding> {
 
     protected lateinit var binding: Binding
+
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
+
     protected open val snackbarView get() = binding.root
+
     protected val navController get() = binding.root.findNavController()
     protected val teanityActivity get() = activity as? TeanityActivity<*, *>
-    private lateinit var subscriber: Disposable
+
+    private val delegate by lazy { TeanityDelegate(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         restoreState(savedInstanceState)
 
-        subscriber = viewModel.viewEvents.subscribe({
-            when (it) {
-                is SimpleViewEvent -> onSimpleEventDispatched(it.event)
-                else -> onEventDispatched(it)
-            }
-        }, {
-            Log.e(this::class.java.simpleName, "No further events will be received", it)
-        })
+        delegate.subscribe(viewModel.viewEvents)
     }
 
     override fun onCreateView(
@@ -54,6 +53,10 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
             lifecycleOwner = this@TeanityFragment
         }
 
+        delegate.ensureInsets(binding.root) {
+            viewModel.insets.value = it
+        }
+
         return binding.root
     }
 
@@ -63,9 +66,8 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
         if (::binding.isInitialized) {
             binding.unbindViews()
         }
-        if (::subscriber.isInitialized) {
-            subscriber.dispose()
-        }
+
+        delegate.dispose()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -92,7 +94,9 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
         }
     }
 
-    protected fun detachEvents() = subscriber.dispose()
+    protected fun detachEvents() = delegate.dispose()
+
+    override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) = Insets.empty
 
     private fun NavigationEvent.navigate() {
         navController.navigate(navDirections, navOptions)

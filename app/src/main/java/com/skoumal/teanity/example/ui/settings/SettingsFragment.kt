@@ -2,6 +2,7 @@ package com.skoumal.teanity.example.ui.settings
 
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentSettingsBinding
+import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.view.TeanityFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,6 +22,8 @@ class SettingsFragment : TeanityFragment<SettingsViewModel, FragmentSettingsBind
             }
         }
     }
+
+    override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) = Insets(top = top)
 
     companion object {
         const val EVENT_NAVIGATE_TO_LOGIN_ACTIVITY = 1

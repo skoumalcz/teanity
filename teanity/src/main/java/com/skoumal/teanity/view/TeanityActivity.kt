@@ -1,7 +1,6 @@
 package com.skoumal.teanity.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -10,19 +9,25 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.snackbar
-import com.skoumal.teanity.viewevents.*
+import com.skoumal.teanity.util.Insets
+import com.skoumal.teanity.viewevents.GenericNavDirections
+import com.skoumal.teanity.viewevents.NavigationEvent
+import com.skoumal.teanity.viewevents.SnackbarEvent
+import com.skoumal.teanity.viewevents.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
-import io.reactivex.disposables.Disposable
 
 abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
     AppCompatActivity(),
     TeanityView<Binding> {
 
     protected lateinit var binding: Binding
+
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
+
     protected open val snackbarView get() = binding.root
     protected open val navHostId: Int = 0
+
     protected val navController: NavController
         get() {
             if (navHostId == 0) {
@@ -30,7 +35,8 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
             }
             return findNavController(navHostId)
         }
-    private lateinit var subscriber: Disposable
+
+    private val delegate by lazy { TeanityDelegate(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,14 +48,10 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
             lifecycleOwner = this@TeanityActivity
         }
 
-        subscriber = viewModel.viewEvents.subscribe({
-            when (it) {
-                is SimpleViewEvent -> onSimpleEventDispatched(it.event)
-                else -> onEventDispatched(it)
-            }
-        }, {
-            Log.e(this::class.java.simpleName, "No further events will be received", it)
-        })
+        delegate.subscribe(viewModel.viewEvents)
+        delegate.ensureInsets(binding.root) {
+            viewModel.insets.value = it
+        }
     }
 
     override fun onDestroy() {
@@ -58,9 +60,8 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
         if (::binding.isInitialized) {
             binding.unbindViews()
         }
-        if (::subscriber.isInitialized) {
-            subscriber.dispose()
-        }
+
+        delegate.dispose()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -86,7 +87,9 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
         }
     }
 
-    protected fun detachEvents() = subscriber.dispose()
+    protected fun detachEvents() = delegate.dispose()
+
+    override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) = Insets.empty
 
     private fun NavigationEvent.navigate() {
         navController.navigate(navDirections, navOptions)

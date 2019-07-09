@@ -1,17 +1,17 @@
 <resources>
 
-    <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="ThemeFoundation" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorSecondary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryDark</item>
     </style>
 
-    <style name="AppTheme" parent="BaseAppTheme" />
+    <style name="ThemeFoundation.ExtraArgs" />
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
+    <style name="AppTheme" parent="ThemeFoundation.ExtraArgs" />
 
     <style name="AppBarLayoutTheme" parent="ThemeOverlay.AppCompat.Dark" />
 
@@ -19,7 +19,7 @@
 
     <style name="LoginButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@android:color/white</item>
-        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorSecondary</item>
     </style>
 
 </resources>

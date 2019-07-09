@@ -17,6 +17,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
+            android:paddingTop="@{viewModel.insets.top}"
             android:layout_height="wrap_content"
             android:theme="@style/AppBarLayoutTheme">
 

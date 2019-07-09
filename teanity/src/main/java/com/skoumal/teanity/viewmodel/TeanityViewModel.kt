@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.evernote.android.state.StateSaver
+import com.skoumal.teanity.util.Insets
+import com.skoumal.teanity.util.KObservableField
 import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEvent
 import io.reactivex.Observable
@@ -23,6 +25,8 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
 
     private val _viewEvents = PublishSubject.create<ViewEvent>()
     val viewEvents: Observable<ViewEvent> get() = _viewEvents
+
+    val insets = KObservableField(Insets.empty)
 
     override fun onCleared() {
         super.onCleared()
