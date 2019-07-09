@@ -121,7 +121,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":teanity"))
+    implementation(project(":teanity")) {
+        exclude(group = "androidx.core", module = "core-ktx")
+    }
+
+    implementation("androidx.core", "core-ktx", "1.2.0-alpha01")
     //implementation(teanity()) //<< framework from remote
 
     // TESTING
