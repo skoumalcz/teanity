@@ -1,5 +1,6 @@
 package com.skoumal.teanity.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.transition.TransitionInflater
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.snackbar
 import com.skoumal.teanity.util.Insets
@@ -28,6 +30,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected abstract val viewModel: ViewModel
 
     protected open val snackbarView get() = binding.root
+    protected open val isTransitionsEnabled = false
 
     protected val navController get() = binding.root.findNavController()
     protected val teanityActivity get() = activity as? TeanityActivity<*, *>
@@ -36,6 +39,13 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (isTransitionsEnabled) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                sharedElementEnterTransition = TransitionInflater.from(context)
+                    .inflateTransition(android.R.transition.move)
+            }
+        }
 
         restoreState(savedInstanceState)
 
