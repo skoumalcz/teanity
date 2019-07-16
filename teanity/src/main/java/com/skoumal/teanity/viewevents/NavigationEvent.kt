@@ -1,10 +1,15 @@
 package com.skoumal.teanity.viewevents
 
+import android.app.Activity
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.navOptions as xNavOptions
 
 @DslMarker
@@ -17,18 +22,36 @@ annotation class NavigationDslMarker
  * */
 class NavigationEvent(
     val navDirections: NavDirections,
-    val navOptions: NavOptions? = null
+    val navOptions: NavOptions? = null,
+    private val extras: FragmentNavigator.Extras? = null,
+    private val pendingExtras: Array<out Pair<Int, String>>? = null
 ) : ViewEvent() {
 
+    fun getExtras(activity: Activity) = activity.run {
+        extras ?: pendingExtras
+            ?.map { findViewById<View>(it.first) to it.second }
+            ?.let { FragmentNavigatorExtras(*it.toTypedArray()) }
+    }
+
+    fun getExtras(fragment: Fragment) = fragment.run {
+        extras ?: view?.let { view ->
+            pendingExtras
+                ?.map { view.findViewById<View>(it.first) to it.second }
+                ?.let { FragmentNavigatorExtras(*it.toTypedArray()) }
+        }
+    }
+
     companion object {
-        operator fun invoke(builder: NavigationEvent.Builder.() -> Unit): NavigationEvent =
-            NavigationEvent.Builder().apply(builder).build()
+        operator fun invoke(builder: Builder.() -> Unit): NavigationEvent =
+            Builder().apply(builder).build()
     }
 
     @NavigationDslMarker
     class Builder {
 
         private var navOptions: NavOptions? = null
+        private var extras: FragmentNavigator.Extras? = null
+        private var pendingExtras: Array<out Pair<Int, String>>? = null
         private val directionsBuilder = NavDirectionsBuilder()
 
         /**
@@ -52,9 +75,22 @@ class NavigationEvent(
             directionsBuilder.apply(builder)
         }
 
+        /**
+         * Builds extras for view transitions
+         * */
+        fun extras(vararg transitions: Pair<View, String>) {
+            extras = FragmentNavigatorExtras(*transitions)
+        }
+
+        fun extrasIds(vararg transitions: Pair<Int, String>) {
+            pendingExtras = transitions
+        }
+
         internal fun build() = NavigationEvent(
             directionsBuilder.build(),
-            navOptions
+            navOptions,
+            extras,
+            pendingExtras
         )
     }
 }

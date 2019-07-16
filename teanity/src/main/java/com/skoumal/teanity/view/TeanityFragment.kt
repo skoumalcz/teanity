@@ -99,7 +99,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) = Insets.empty
 
     private fun NavigationEvent.navigate() {
-        navController.navigate(navDirections, navOptions)
+        navController.navigate(navDirections, navOptions, getExtras(this@TeanityFragment))
         if (navDirections is GenericNavDirections && navDirections.clearTask) {
             activity?.finish()
         }

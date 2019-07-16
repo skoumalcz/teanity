@@ -2,6 +2,10 @@ package com.skoumal.teanity.view
 
 import android.os.Bundle
 import androidx.annotation.CallSuper
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.FragmentNavigator
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevents.SimpleViewEvent
@@ -57,3 +61,9 @@ internal interface TeanityView<Binding> {
         StateSaver.saveInstanceState(this, outState)
     }
 }
+
+internal fun NavController.navigate(
+    navDirections: NavDirections,
+    navOptions: NavOptions?,
+    extras: FragmentNavigator.Extras?
+) = navigate(navDirections.actionId, navDirections.arguments, navOptions, extras)
