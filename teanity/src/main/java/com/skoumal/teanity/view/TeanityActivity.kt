@@ -54,6 +54,12 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.requestRefresh()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 

@@ -38,6 +38,14 @@ abstract class LoadingViewModel(defaultState: State = State.LOADING) :
         state = State.LOADING_FAILED
     }
 
+    override suspend fun induceRefresh() {
+        if (lastRefresh == 0L) {
+            state = State.LOADING
+        }
+        super.induceRefresh()
+        state = State.LOADED
+    }
+
     override fun notifyStateChanged() {
         notifyPropertyChanged(BR.loading)
         notifyPropertyChanged(BR.loaded)

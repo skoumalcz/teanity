@@ -70,6 +70,18 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.requestRefresh()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.requestRefresh()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
