@@ -29,7 +29,8 @@ class KObservableField<T> : ObservableField<T>, Serializable {
 
     @Deprecated(
         message = "Needed for data binding, use KObservableField.value syntax from code",
-        replaceWith = ReplaceWith("value")
+        replaceWith = ReplaceWith("value"),
+        level = DeprecationLevel.HIDDEN
     )
     override fun get(): T {
         return value
@@ -37,7 +38,8 @@ class KObservableField<T> : ObservableField<T>, Serializable {
 
     @Deprecated(
         message = "Needed for data binding, use KObservableField.value = ... syntax from code",
-        replaceWith = ReplaceWith("value = newValue")
+        replaceWith = ReplaceWith("value = newValue"),
+        level = DeprecationLevel.HIDDEN
     )
     override fun set(newValue: T) {
         value = newValue
