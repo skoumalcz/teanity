@@ -31,15 +31,11 @@ class HomeViewModel(
             ::loadMoreItems
         )
 
-    init {
-        loadItems()
-    }
-
     fun retryLoadingButtonClicked() {
-        loadItems()
+        requestRefresh()
     }
 
-    private fun loadItems() = launch {
+    override suspend fun refresh() {
         if (photoItems.isEmpty()) {
             state = State.LOADING
         } else {
@@ -73,7 +69,7 @@ class HomeViewModel(
     //endregion
 
     fun loadMoreItems() {
-        loadItems()
+        requestRefresh()
     }
 
     fun photoClicked(photo: Photo) = Navigation.photo(photo).publish()

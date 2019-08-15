@@ -3,3 +3,9 @@ android {
         freeCompilerArgs = ["-Xallow-result-return-type", "-Xuse-experimental=kotlin.Experimental"]
     }
 }
+
+android {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}

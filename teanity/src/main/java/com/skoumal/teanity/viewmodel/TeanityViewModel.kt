@@ -15,11 +15,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 abstract class TeanityViewModel : ViewModel(), CoroutineScope {
@@ -35,8 +31,9 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
 
     internal var lastRefresh = 0L
     private var currentJob: Job? = null
+    private var currentHandle: DisposableHandle? = null
 
-    protected open val minRefreshDelay = TimeUnit.MINUTES.toMillis(1)
+    protected open val minRefreshDelay = 0
 
     override fun onCleared() {
         super.onCleared()
@@ -71,7 +68,7 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
      *      and they like to swipe to refresh repeatedly. Using override of [minRefreshDelay] you can adjust
      *      (or disable) the minimal delay.
      *
-     *      By default [minRefreshDelay]=1 minute, and can be disabled by setting it to 0.
+     *      By default [minRefreshDelay]=0, and can be enabled by setting it to >0. The [minRefreshDelay] is specified in millis.
      *
      * Please note that [refresh] is not guaranteed to run after issuing refresh request. This can be problematic for
      * when you've your UI logic (namely resetting) placed within [refresh] method and using a view that controls its
@@ -84,9 +81,15 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
      * user will see loader just whenever there's nothing to display. Moreover it will automatically set itself
      * to [State.LOADED] as it completes.
      * */
+    @Synchronized
     fun requestRefresh(): Boolean {
         if (currentJob?.isActive == true) {
-            Log.i(javaClass.simpleName, "Data cannot be refreshed concurrently. Request to refresh is denied.")
+            currentHandle?.dispose()
+            currentHandle = currentJob?.invokeOnCompletion { requestRefresh() }
+            Log.i(
+                javaClass.simpleName,
+                "Data cannot be refreshed concurrently. Request will be automatically invoked once job has completed."
+            )
             return false
         }
 
