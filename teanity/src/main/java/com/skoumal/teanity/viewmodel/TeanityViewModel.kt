@@ -15,7 +15,10 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 abstract class TeanityViewModel : ViewModel(), CoroutineScope {
@@ -31,7 +34,6 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
 
     internal var lastRefresh = 0L
     private var currentJob: Job? = null
-    private var currentHandle: DisposableHandle? = null
 
     protected open val minRefreshDelay = 0
 
@@ -84,11 +86,9 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
     @Synchronized
     fun requestRefresh(): Boolean {
         if (currentJob?.isActive == true) {
-            currentHandle?.dispose()
-            currentHandle = currentJob?.invokeOnCompletion { requestRefresh() }
             Log.i(
                 javaClass.simpleName,
-                "Data cannot be refreshed concurrently. Request will be automatically invoked once job has completed."
+                "Data cannot be refreshed concurrently. Request to refresh is denied."
             )
             return false
         }
