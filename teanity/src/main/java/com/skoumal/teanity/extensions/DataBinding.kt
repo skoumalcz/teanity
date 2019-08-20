@@ -6,18 +6,6 @@ import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import com.skoumal.teanity.util.KObservableField
 
-fun <T> ObservableField<T>.addOnPropertyChangedCallback(
-    removeAfterChanged: Boolean = false,
-    callback: (T?) -> Unit
-) {
-    addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-            callback(get())
-            if (removeAfterChanged) removeOnPropertyChangedCallback(this)
-        }
-    })
-}
-
 fun <T> KObservableField<T>.addOnPropertyChangedCallback(
     removeAfterChanged: Boolean = false,
     callback: (T) -> Unit
@@ -54,19 +42,19 @@ fun ObservableBoolean.addOnPropertyChangedCallback(
     })
 }
 
-inline fun <T> ObservableField<T>.update(block: (T?) -> Unit) {
-    set(get().apply(block))
+inline fun <T> ObservableField<T>.update(block: (T?) -> T) {
+    set(get().run(block))
 }
 
-inline fun <T> ObservableField<T>.updateNonNull(block: (T) -> Unit) {
+inline fun <T> ObservableField<T>.updateNonNull(block: (T) -> T) {
     update {
-        it ?: return@update
+        it ?: return@updateNonNull
         block(it)
     }
 }
 
-inline fun ObservableInt.update(block: (Int) -> Unit) {
-    set(get().apply(block))
+inline fun ObservableInt.update(block: (Int) -> Int) {
+    set(get().run(block))
 }
 
 fun KObservableField<Boolean>.toggle() {
