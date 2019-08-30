@@ -1,0 +1,43 @@
+plugins {
+    id("com.android.library")
+    id("kotlin-android")
+}
+
+android {
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    implementation(Lib.kotlin.lib)
+    implementation(Lib.kotlin.coroutines)
+
+    /* === SUPPORT === */
+    implementation(Lib.androidx.appcompat)
+
+    /* === CORE === */
+    implementation(Lib.androidx.core)
+    implementation(Lib.androidx.work)
+    implementation(Lib.lifecycle.extensions)
+    implementation(Lib.lifecycle.viewModel)
+    implementation(Lib.navigation.fragment)
+    implementation(Lib.navigation.ui)
+
+    /* === DB === */
+    implementation(Lib.androidx.room)
+
+    /* === RX === */
+    implementation(Lib.reactive.kotlin)
+    implementation(Lib.reactive.android)
+
+    /* === EASING === */
+    implementation(Lib.state)
+    implementation(Lib.dexter)
+    implementation(Lib.bindingCollection.collections)
+    implementation(Lib.bindingCollection.recycler)
+    implementation(Lib.sanitizer)
+
+    /* === UI === */
+    implementation(Lib.androidx.animation)
+}

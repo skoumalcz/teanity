@@ -1,0 +1,20 @@
+allprojects {
+    afterEvaluate {
+        if (!plugins.hasPlugin("com.android.library")) return
+        android {
+            compileSdkVersion(Sdk.compileSdk)
+
+            defaultConfig {
+                minSdkVersion(Sdk.minSdk)
+                targetSdkVersion(Sdk.targetSdk)
+                versionCode = 1
+                versionName = "1.0"
+            }
+
+            kotlinOptions {
+                freeCompilerArgs = ["-Xallow-result-return-type", "-Xuse-experimental=kotlin.Experimental"]
+                jvmTarget = "1.8"
+            }
+        }
+    }
+}

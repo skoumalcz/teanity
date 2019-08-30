@@ -1,34 +1,22 @@
 buildscript {
-    repositories {
-        google()
-        jcenter()
-        maven(url = "https://maven.fabric.io/public")
-        maven(url = "https://jitpack.io")
-        maven(url = "http://oss.sonatype.org/content/repositories/snapshots")
-    }
+    repositories { Repositories.with(this) }
 
     dependencies {
-        classpath("com.android.tools.build", "gradle", Config.Dependency.gradlePlugin)
-        classpath(kotlin("gradle-plugin", version = Config.Dependency.kotlin))
-        classpath("androidx.navigation", "navigation-safe-args-gradle-plugin", Config.Dependency.navigation)
-        classpath("io.fabric.tools", "gradle", Config.Dependency.fabric)
-        classpath("com.github.dcendents", "android-maven-gradle-plugin", "2.1")
+        classpath(Lib.androidx.build)
+        classpath(Lib.kotlin.gradle)
+        classpath(Lib.navigation.build)
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        maven(url = "https://maven.fabric.io/public")
-        maven(url = "https://jitpack.io")
-    }
-}
+allprojects { repositories { Repositories.with(this) } }
+
+apply(from = "helper.gradle")
 
 tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)
 }
 
+/** @deprecated use terminal, this takes way too much time */
 tasks.register("generateChangelog") {
     doLast {
         try {
