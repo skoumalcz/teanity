@@ -1,4 +1,4 @@
-package com.skoumal.teanity.animation
+package com.skoumal.teanity.ui
 
 import android.view.View
 import androidx.dynamicanimation.animation.DynamicAnimation

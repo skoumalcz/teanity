@@ -120,6 +120,7 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
         _viewEvents.onNext(this)
     }
 
+    @Deprecated("Use static objects instead of integers.")
     fun Int.publish() {
         _viewEvents.onNext(SimpleViewEvent(this))
     }

@@ -1,4 +1,4 @@
-package com.skoumal.teanity.databinding
+package com.skoumal.teanity.ui
 
 import com.bumptech.glide.request.RequestOptions
 

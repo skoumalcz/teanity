@@ -3,4 +3,14 @@ plugins {
     id("kotlin-android")
 }
 
-dependencies {}
+dependencies {
+
+    implementation(Lib.kotlin.lib)
+    implementation(Lib.kotlin.coroutines)
+
+    implementation(Lib.square.moshi)
+    implementation(Lib.square.moshiConverter)
+    implementation(Lib.square.retrofit)
+    implementation(Lib.sanitizer)
+
+}

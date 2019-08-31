@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.transition.TransitionInflater
 import com.skoumal.teanity.BR
-import com.skoumal.teanity.extensions.snackbar
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevents.GenericNavDirections
 import com.skoumal.teanity.viewevents.NavigationEvent
@@ -29,7 +28,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
 
-    protected open val snackbarView get() = binding.root
+    open val snackbarView get() = binding.root
     protected open val isTransitionsEnabled = false
 
     protected val navController get() = binding.root.findNavController()
@@ -106,7 +105,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     override fun onEventDispatched(event: ViewEvent) {
         when (event) {
             is NavigationEvent -> event.navigate()
-            is SnackbarEvent -> snackbar(snackbarView, event.message(requireContext()), event.length, event.f)
+            is SnackbarEvent -> event.consume(this)
         }
     }
 

@@ -1,9 +1,9 @@
 package com.skoumal.teanity.extensions
 
 import com.skoumal.teanity.databinding.RvItem
-import com.skoumal.teanity.util.BaseDiffObservableList
+import com.skoumal.teanity.list.BaseDiffObservableList
+import com.skoumal.teanity.list.DiffObservableList
 import com.skoumal.teanity.util.ComparableEntity
-import com.skoumal.teanity.util.DiffObservableList
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import me.tatarka.bindingcollectionadapter2.OnItemBind
 

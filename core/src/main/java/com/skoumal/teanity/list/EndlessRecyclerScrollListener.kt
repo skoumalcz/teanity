@@ -1,4 +1,4 @@
-package com.skoumal.teanity.util
+package com.skoumal.teanity.list
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager

@@ -6,21 +6,21 @@ import androidx.core.view.isInvisible
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("gone")
-fun setGone(view: View, gone: Boolean) {
-    view.isGone = gone
+fun View.setGone(gone: Boolean) {
+    isGone = gone
 }
 
 @BindingAdapter("invisible")
-fun setInvisible(view: View, invisible: Boolean) {
-    view.isInvisible = invisible
+fun View.setInvisible(invisible: Boolean) {
+    isInvisible = invisible
 }
 
 @BindingAdapter("goneUnless")
-fun setGoneUnless(view: View, goneUnless: Boolean) {
-    setGone(view, goneUnless.not())
+fun View.setGoneUnless(goneUnless: Boolean) {
+    setGone(goneUnless.not())
 }
 
 @BindingAdapter("invisibleUnless")
-fun setInvisibleUnless(view: View, invisibleUnless: Boolean) {
-    setInvisible(view, invisibleUnless.not())
+fun View.setInvisibleUnless(invisibleUnless: Boolean) {
+    setInvisible(invisibleUnless.not())
 }

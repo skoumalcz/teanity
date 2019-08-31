@@ -3,4 +3,9 @@ plugins {
     id("kotlin-android")
 }
 
-dependencies {}
+dependencies {
+
+    implementation(Lib.androidx.animation)
+    implementation(Lib.glide)
+
+}

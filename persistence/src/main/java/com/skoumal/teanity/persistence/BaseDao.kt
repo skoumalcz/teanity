@@ -1,4 +1,4 @@
-package com.skoumal.teanity.database
+package com.skoumal.teanity.persistence
 
 import androidx.room.*
 

@@ -1,4 +1,4 @@
-package com.skoumal.teanity.util
+package com.skoumal.teanity.list
 
 import androidx.annotation.MainThread
 import androidx.databinding.ListChangeRegistry
@@ -22,18 +22,6 @@ abstract class BaseDiffObservableList<T>(
     protected val listCallback = ObservableListUpdateCallback()
 
     override val size: Int get() = list.size
-
-    /**
-     * Calculates the list of update operations that can convert this list into the given one.
-     *
-     * @param newItems The items that this list will be set to.
-     * @return A DiffResult that contains the information about the edit sequence to covert this
-     * list into the given one.
-     */
-    @Deprecated("", level = DeprecationLevel.ERROR)
-    fun calculateDiff(newItems: List<T>): Nothing {
-        throw RuntimeException("This behavior is no longer supported. Use AsyncDiffObservableList.")
-    }
 
     protected fun updateSelfFrom(newItems: List<T>, result: DiffUtil.DiffResult? = null) {
         val frozenOldList = synchronized(listLock) { list.toList() }

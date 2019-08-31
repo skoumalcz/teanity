@@ -44,6 +44,17 @@ internal interface TeanityView<Binding> {
     fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int): Insets
 
     /**
+     * Called before [consumeSystemWindowInsets]. This will not consume insets which is beneficial
+     * when wanting to pass insets to child fragments as well as keep them in your activity for
+     * various reasons.
+     *
+     *
+     * Keep in mind that by not consuming your insets it **will** be passed to your offsprings which
+     * might cause inconsistencies down the line. **Use with caution.**
+     * */
+    fun peekSystemWindowInsets(insets: Insets) {}
+
+    /**
      * Override this method if you have more viewModels or anything else you want to restore
      * You should also override [saveState]
      */

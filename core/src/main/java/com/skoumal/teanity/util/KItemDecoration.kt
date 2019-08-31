@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.skoumal.teanity.extensions.drawableCompat
 
+@Deprecated("Since \"showAfterLast\" is a main feature of this override and it's not working great (the recycler framework won't come back to check whether the item that doesn't have the divider appended is not last anymore) it's being deprecated in favor of the \"old\" solution.")
 class KItemDecoration(
     private val context: Context,
     @RecyclerView.Orientation private val orientation: Int
-) :
-    RecyclerView.ItemDecoration() {
+) : RecyclerView.ItemDecoration() {
 
     private val bounds = Rect()
     private var divider: Drawable? = null

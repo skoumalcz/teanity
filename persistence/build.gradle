@@ -3,4 +3,11 @@ plugins {
     id("kotlin-android")
 }
 
-dependencies {}
+dependencies {
+
+    implementation(Lib.kotlin.lib)
+    implementation(Lib.kotlin.coroutines)
+
+    implementation(Lib.androidx.room)
+
+}

@@ -1,7 +1,8 @@
-package com.skoumal.teanity.api
+package com.skoumal.teanity.network
 
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
+import java.io.IOException
 
 fun <T : Any> Response<T>.toResult(): Result<T?> {
     if (isSuccessful) {

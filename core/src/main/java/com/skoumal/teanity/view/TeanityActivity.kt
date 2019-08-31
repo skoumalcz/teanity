@@ -8,7 +8,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
-import com.skoumal.teanity.extensions.snackbar
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevents.GenericNavDirections
 import com.skoumal.teanity.viewevents.NavigationEvent
@@ -25,14 +24,12 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
 
-    protected open val snackbarView get() = binding.root
+    open val snackbarView get() = binding.root
     protected open val navHostId: Int = 0
 
     protected val navController: NavController
         get() {
-            if (navHostId == 0) {
-                throw IllegalStateException("You must override \"navHostId\" if you want to use navController")
-            }
+            check(navHostId != 0) { "You must override \"navHostId\" if you want to use navController" }
             return findNavController(navHostId)
         }
 
@@ -89,13 +86,17 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     override fun onEventDispatched(event: ViewEvent) {
         when (event) {
             is NavigationEvent -> event.navigate()
-            is SnackbarEvent -> snackbar(snackbarView, event.message(this), event.length, event.f)
+            is SnackbarEvent -> event.consume(this)
         }
     }
 
-    protected fun detachEvents() = delegate.dispose()
+    override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) =
+        Insets.empty
 
-    override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) = Insets.empty
+    protected fun detachEvents() = delegate.dispose()
+    protected fun ViewEvent.onSelf() {
+        viewModel.apply { publish() }
+    }
 
     private fun NavigationEvent.navigate() {
         navController.navigate(navDirections, navOptions, getExtras(this@TeanityActivity))

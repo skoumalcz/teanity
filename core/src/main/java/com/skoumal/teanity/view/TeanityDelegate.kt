@@ -20,6 +20,7 @@ internal class TeanityDelegate(private val view: TeanityView<*>) {
             val right = insets.systemWindowInsetRight
             val bottom = insets.systemWindowInsetBottom
 
+            this.view.peekSystemWindowInsets(Insets(left, top, right, bottom))
             val consumedInsets = this.view.consumeSystemWindowInsets(left, top, right, bottom).also(body)
 
             insets.replaceSystemWindowInsets(

@@ -1,4 +1,4 @@
-package com.skoumal.teanity.api
+package com.skoumal.teanity.network
 
 inline fun <T, R> Result<List<T>>.mapList(mapper: (T) -> R) = when {
     isSuccess -> (getOrNull()?.map(mapper) ?: listOf()).let { Result.success(it) }

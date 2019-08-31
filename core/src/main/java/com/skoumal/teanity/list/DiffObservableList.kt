@@ -1,4 +1,4 @@
-package com.skoumal.teanity.util
+package com.skoumal.teanity.list
 
 import android.util.Log
 import androidx.annotation.AnyThread

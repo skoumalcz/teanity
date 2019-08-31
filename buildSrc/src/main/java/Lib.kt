@@ -59,9 +59,29 @@ object Lib {
         val recycler = bindingAdapter("bindingcollectionadapter-recyclerview", version)
     }
 
+    val koin = Koin
+
+    object Koin {
+        private const val version = "2.0.1"
+
+        val core = koin("android", version)
+        val viewModel = koin("android-viewmodel", version)
+    }
+
+    val square = Square
+
+    object Square {
+        private const val version = "2.6.1"
+
+        val moshi = square("moshi", "moshi-kotlin", "1.8.0")
+        val retrofit = square("retrofit2", "retrofit", version)
+        val moshiConverter = square("retrofit2", "converter-moshi", version)
+    }
+
     val sanitizer = github("diareuse", "response-sanitizer", "0.4")
     val dexter = "com.karumi:dexter:5.0.0"
     val state = "com.evernote:android-state:1.4.1"
+    val glide = github("bumptech.glide", "glide", "4.9.0")
 
     // ---
 
@@ -83,5 +103,10 @@ object Lib {
     private fun bindingAdapter(module: String, version: String) =
         "me.tatarka.bindingcollectionadapter2:$module:$version"
 
+    private fun square(group: String, module: String, version: String) =
+        "com.squareup.$group:$module:$version"
+
+    private fun koin(module: String, version: String) =
+        "org.koin:koin-$module:$version"
 }
 
