@@ -1,4 +1,6 @@
-package com.skoumal.teanity.viewevents
+package com.skoumal.teanity.viewevent
+
+import com.skoumal.teanity.viewevent.base.ViewEvent
 
 @Deprecated("Use static objects instead of integers.")
 class SimpleViewEvent(

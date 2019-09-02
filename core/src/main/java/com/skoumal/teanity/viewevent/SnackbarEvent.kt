@@ -1,4 +1,4 @@
-package com.skoumal.teanity.viewevents
+package com.skoumal.teanity.viewevent
 
 import android.content.Context
 import android.view.View
@@ -10,6 +10,7 @@ import com.skoumal.teanity.util.Color
 import com.skoumal.teanity.util.Text
 import com.skoumal.teanity.view.TeanityActivity
 import com.skoumal.teanity.view.TeanityFragment
+import com.skoumal.teanity.viewevent.base.ViewEvent
 import android.graphics.Color as AColor
 
 class SnackbarEvent private constructor(

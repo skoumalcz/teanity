@@ -9,7 +9,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
-import com.skoumal.teanity.viewevents.ViewEvent
+import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 import io.reactivex.disposables.Disposable
 

@@ -1,4 +1,4 @@
-package com.skoumal.teanity.viewevents
+package com.skoumal.teanity.viewevent
 
 import android.app.Activity
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import com.skoumal.teanity.viewevent.base.ViewEvent
 import androidx.navigation.navOptions as xNavOptions
 
 @DslMarker

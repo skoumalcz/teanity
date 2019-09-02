@@ -9,10 +9,10 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.util.Insets
-import com.skoumal.teanity.viewevents.GenericNavDirections
-import com.skoumal.teanity.viewevents.NavigationEvent
-import com.skoumal.teanity.viewevents.SnackbarEvent
-import com.skoumal.teanity.viewevents.ViewEvent
+import com.skoumal.teanity.viewevent.GenericNavDirections
+import com.skoumal.teanity.viewevent.NavigationEvent
+import com.skoumal.teanity.viewevent.SnackbarEvent
+import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
 abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :

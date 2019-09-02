@@ -1,4 +1,4 @@
-package com.skoumal.teanity.viewevents
+package com.skoumal.teanity.viewevent.base
 
 import androidx.lifecycle.Observer
 

@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.util.KObservableField
-import com.skoumal.teanity.viewevents.SimpleViewEvent
-import com.skoumal.teanity.viewevents.ViewEvent
+import com.skoumal.teanity.viewevent.SimpleViewEvent
+import com.skoumal.teanity.viewevent.base.ViewEvent
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

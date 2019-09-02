@@ -8,8 +8,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigator
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.util.Insets
-import com.skoumal.teanity.viewevents.SimpleViewEvent
-import com.skoumal.teanity.viewevents.ViewEvent
+import com.skoumal.teanity.viewevent.SimpleViewEvent
+import com.skoumal.teanity.viewevent.base.ViewEvent
 
 internal interface TeanityView<Binding> {
 

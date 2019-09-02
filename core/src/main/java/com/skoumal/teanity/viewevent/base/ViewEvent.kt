@@ -1,4 +1,4 @@
-package com.skoumal.teanity.viewevents
+package com.skoumal.teanity.viewevent.base
 
 /**
  * Class for passing events from ViewModels to Activities/Fragments

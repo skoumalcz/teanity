@@ -14,7 +14,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.skoumal.teanity.util.Text
-import com.skoumal.teanity.viewevents.SnackbarEvent
+import com.skoumal.teanity.viewevent.SnackbarEvent
 
 @Deprecated("Method has way too much arguments, use builder instead. This method will be removed in future versions.")
 fun AppCompatActivity.requestPermission(

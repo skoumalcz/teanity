@@ -4,8 +4,8 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import com.skoumal.teanity.extensions.subscribeK
 import com.skoumal.teanity.util.Insets
-import com.skoumal.teanity.viewevents.SimpleViewEvent
-import com.skoumal.teanity.viewevents.ViewEvent
+import com.skoumal.teanity.viewevent.SimpleViewEvent
+import com.skoumal.teanity.viewevent.base.ViewEvent
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
