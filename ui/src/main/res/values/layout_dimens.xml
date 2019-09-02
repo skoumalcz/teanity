@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="l1">16dp</dimen>
+    <dimen name="l2">32dp</dimen>
+    <dimen name="l3">48dp</dimen>
+    <dimen name="l4">64dp</dimen>
+
+    <!--Fractions-->
+    <dimen name="l0_125">2dp</dimen>
+    <dimen name="l0_25">4dp</dimen>
+    <dimen name="l0_50">8dp</dimen>
+    <dimen name="l1_50">24dp</dimen>
+    <dimen name="l2_50">40dp</dimen>
+    <dimen name="l3_50">56dp</dimen>
+
+</resources>
