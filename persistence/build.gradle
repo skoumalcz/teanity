@@ -9,5 +9,6 @@ dependencies {
     implementation(Lib.kotlin.coroutines)
 
     implementation(Lib.androidx.room)
+    implementation(Lib.lifecycle.extensions)
 
 }

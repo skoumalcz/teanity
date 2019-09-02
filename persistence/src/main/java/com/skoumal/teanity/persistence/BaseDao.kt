@@ -21,21 +21,4 @@ interface BaseDao<T> {
     @Update
     suspend fun update(objects: List<T>): Int
 
-    /**
-     * Requires proper annotation that deletes the data. If not overridden in DAO it's rendering
-     * itself useless.
-     *
-     * Example:
-     * `@Query("DELETE FROM channel")`
-     */
-    //fun deleteAll()
-
-    /**
-     * Requires proper annotation that fetches the data. If not overridden in DAO it's rendering
-     * itself useless.
-     *
-     * Example:
-     * `@Query("SELECT * FROM channel")`
-     */
-    //fun fetchAll(): List<T>
 }
