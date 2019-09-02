@@ -5,6 +5,8 @@ plugins {
 
 dependencies {
 
+    implementation(Lib.androidx.core)
+
     implementation(Lib.koin.core)
     implementation(Lib.koin.viewModel)
 
