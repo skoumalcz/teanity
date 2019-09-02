@@ -32,6 +32,7 @@ dependencies {
     /* === EASING === */
     implementation(Lib.state)
     implementation(Lib.dexter)
+    implementation(Lib.timber)
     implementation(Lib.bindingCollection.collections)
     implementation(Lib.bindingCollection.recycler)
 

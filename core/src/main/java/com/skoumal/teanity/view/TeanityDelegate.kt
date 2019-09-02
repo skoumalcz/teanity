@@ -8,6 +8,7 @@ import com.skoumal.teanity.viewevents.SimpleViewEvent
 import com.skoumal.teanity.viewevents.ViewEvent
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 
 internal class TeanityDelegate(private val view: TeanityView<*>) {
 
@@ -34,7 +35,10 @@ internal class TeanityDelegate(private val view: TeanityView<*>) {
     internal fun subscribe(events: Observable<ViewEvent>) {
         subscriber = events.subscribeK(onError = { subscribe(events) }) {
             when (it) {
-                is SimpleViewEvent -> view.onSimpleEventDispatched(it.event)
+                is SimpleViewEvent -> {
+                    Timber.e("SimpleViewEvent is deprecated. See documentation for suggested solution.")
+                    view.onSimpleEventDispatched(it.event)
+                }
                 else -> view.onEventDispatched(it)
             }
         }

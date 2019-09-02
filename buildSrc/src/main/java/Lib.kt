@@ -79,9 +79,11 @@ object Lib {
     }
 
     val sanitizer = github("diareuse", "response-sanitizer", "0.4")
-    val dexter = "com.karumi:dexter:5.0.0"
-    val state = "com.evernote:android-state:1.4.1"
     val glide = github("bumptech.glide", "glide", "4.9.0")
+
+    const val dexter = "com.karumi:dexter:5.0.0"
+    const val timber = "com.jakewharton.timber:timber:4.7.1"
+    const val state = "com.evernote:android-state:1.4.1"
 
     // ---
 
