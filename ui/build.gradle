@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("com.github.dcendents.android-maven")
 }
 
 dependencies {
@@ -10,4 +11,8 @@ dependencies {
     api(Lib.androidx.animation)
     api(Lib.glide)
 
+}
+
+afterEvaluate {
+    apply from: "../groovy.gradle"
 }

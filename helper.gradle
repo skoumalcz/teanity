@@ -1,6 +1,7 @@
 allprojects {
     afterEvaluate {
         if (!plugins.hasPlugin("com.android.library")) return
+
         android {
             compileSdkVersion(Sdk.compileSdk)
 
@@ -14,6 +15,13 @@ allprojects {
             kotlinOptions {
                 freeCompilerArgs = ["-Xallow-result-return-type", "-Xuse-experimental=kotlin.Experimental"]
                 jvmTarget = "1.8"
+            }
+
+            buildTypes {
+                release {
+                    minifyEnabled false
+                    proguardFiles getDefaultProguardFile('proguard-android.txt')
+                }
             }
         }
     }

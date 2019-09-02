@@ -16,3 +16,7 @@ dependencies {
     api(Lib.sanitizer)
 
 }
+
+afterEvaluate {
+    apply from: "../groovy.gradle"
+}

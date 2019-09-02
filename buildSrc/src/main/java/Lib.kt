@@ -83,6 +83,7 @@ object Lib {
     const val dexter = "com.karumi:dexter:5.0.0"
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val state = "com.evernote:android-state:1.4.1"
+    const val maven = "com.github.dcendents:android-maven-gradle-plugin:2.1"
 
     // ---
 
