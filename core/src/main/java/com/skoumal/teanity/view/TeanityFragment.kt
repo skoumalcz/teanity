@@ -55,18 +55,17 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View? = DataBindingUtil.inflate<Binding>(inflater, layoutRes, container, false).apply {
+        setVariable(BR.viewModel, this@TeanityFragment.viewModel)
+        lifecycleOwner = this@TeanityFragment
+    }.also { binding = it }.root
 
-        binding = DataBindingUtil.inflate<Binding>(inflater, layoutRes, container, false).apply {
-            setVariable(BR.viewModel, this@TeanityFragment.viewModel)
-            lifecycleOwner = this@TeanityFragment
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         delegate.ensureInsets(binding.root) {
             viewModel.insets.value = it
         }
-
-        return binding.root
     }
 
     override fun onResume() {
