@@ -17,8 +17,10 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
     DialogFragment(), TeanityView<Binding> {
 
     protected lateinit var binding: Binding
+
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
+
     protected val navController get() = binding.root.findNavController()
     protected val teanityActivity get() = activity as? TeanityActivity<*, *>
     private lateinit var subscriber: Disposable
