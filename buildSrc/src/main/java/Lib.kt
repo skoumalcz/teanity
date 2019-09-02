@@ -39,7 +39,6 @@ object Lib {
 
         val fragment = androidx("navigation", "navigation-fragment-ktx", version)
         val ui = androidx("navigation", "navigation-ui-ktx", version)
-        val build = androidx("navigation", "navigation-safe-args-gradle-plugin", version)
     }
 
     val reactive = ReactiveX
