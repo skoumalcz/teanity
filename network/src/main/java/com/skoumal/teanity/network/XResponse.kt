@@ -1,15 +1,17 @@
 package com.skoumal.teanity.network
 
+import com.skoumal.teanity.network.exception.NetworkException
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
-import java.io.IOException
+import timber.log.Timber
 
 fun <T : Any> Response<T>.toResult(): Result<T?> {
     if (isSuccessful) {
         return Result.success(body())
     }
 
-    return Result.failure(IOException("Api error ${code()} ${message()}"))
+    Timber.e("Remote Error [code=${code()},message=${message()}]")
+    return Result.failure(NetworkException(errorBody()))
 }
 
 suspend fun <T : Any> Deferred<Response<T>>.awaitResult(): Result<T?> {
