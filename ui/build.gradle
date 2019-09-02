@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
 
-    implementation(Lib.androidx.animation)
-    implementation(Lib.glide)
+    api(Lib.androidx.animation)
+    api(Lib.glide)
 
 }

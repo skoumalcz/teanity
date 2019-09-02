@@ -15,15 +15,14 @@ dependencies {
     implementation(Lib.kotlin.coroutines)
 
     /* === SUPPORT === */
-    implementation(Lib.androidx.appcompat)
+    api(Lib.androidx.appcompat)
 
     /* === CORE === */
-    implementation(Lib.androidx.core)
-    implementation(Lib.androidx.work)
-    implementation(Lib.lifecycle.extensions)
-    implementation(Lib.lifecycle.viewModel)
-    implementation(Lib.navigation.fragment)
-    implementation(Lib.navigation.ui)
+    api(Lib.androidx.core)
+    api(Lib.lifecycle.extensions)
+    api(Lib.lifecycle.viewModel)
+    api(Lib.navigation.fragment)
+    api(Lib.navigation.ui)
 
     /* === RX === */
     implementation(Lib.reactive.kotlin)
@@ -32,8 +31,8 @@ dependencies {
     /* === EASING === */
     implementation(Lib.state)
     implementation(Lib.dexter)
-    implementation(Lib.timber)
-    implementation(Lib.bindingCollection.collections)
-    implementation(Lib.bindingCollection.recycler)
+    api(Lib.timber)
+    api(Lib.bindingCollection.collections)
+    api(Lib.bindingCollection.recycler)
 
 }

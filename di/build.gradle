@@ -7,7 +7,7 @@ dependencies {
 
     implementation(Lib.androidx.core)
 
-    implementation(Lib.koin.core)
-    implementation(Lib.koin.viewModel)
+    api(Lib.koin.core)
+    api(Lib.koin.viewModel)
 
 }
