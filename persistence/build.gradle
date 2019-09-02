@@ -5,6 +5,8 @@ plugins {
 
 dependencies {
 
+    api(project(":core"))
+
     implementation(Lib.kotlin.lib)
     implementation(Lib.kotlin.coroutines)
 

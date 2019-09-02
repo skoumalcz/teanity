@@ -5,6 +5,8 @@ plugins {
 
 dependencies {
 
+    api(project(":core"))
+
     implementation(Lib.androidx.core)
 
     api(Lib.koin.core)
