@@ -109,6 +109,9 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     }
 
     protected fun detachEvents() = delegate.dispose()
+    protected fun ViewEvent.onSelf() {
+        viewModel.apply { publish() }
+    }
 
     override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) = Insets.empty
 

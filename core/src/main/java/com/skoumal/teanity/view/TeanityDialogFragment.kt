@@ -9,6 +9,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
+import com.skoumal.teanity.viewevents.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 import io.reactivex.disposables.Disposable
 
@@ -87,5 +88,10 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
     override fun restoreState(savedInstanceState: Bundle?) {
         super.restoreState(savedInstanceState)
         viewModel.restoreState(savedInstanceState)
+    }
+
+    protected fun detachEvents() = delegate.dispose()
+    protected fun ViewEvent.onSelf() {
+        viewModel.apply { publish() }
     }
 }
