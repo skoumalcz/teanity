@@ -9,14 +9,20 @@ import org.koin.core.module.Module
 
 object Teanity {
 
+    @JvmStatic
     fun modules() = genericModule + teanityModule
 
     @JvmStatic
     fun startWith(_context: Context, vararg modules: Module) {
+        startWith(_context, modules.toList())
+    }
+
+    @JvmStatic
+    fun startWith(_context: Context, modules: List<Module>) {
         val context = _context.applicationContext
         startKoin {
             androidContext(context)
-            modules(modules.toList() + modules())
+            modules(modules + modules())
         }
     }
 
