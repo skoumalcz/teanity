@@ -49,7 +49,7 @@ abstract class UseCase<in In, Out> {
     }
 
     /** Overridable method designed to provide result to the business logic. */
-    abstract suspend fun execute(input: In): Out
+    protected abstract suspend fun execute(input: In): Out
 
 }
 
