@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Allows for a testable, isolated business logic to be executed according with a given [dispatcher].
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
  * data designed to hold the last result. The result is however ignored whenever called with _own_
  * [MutableLiveData].
  * */
+@Suppress("MemberVisibilityCanBePrivate")
 abstract class UseCase<in In, Out> {
 
     /** Default dispatcher on which [execute] will be ran on. */
@@ -33,10 +35,16 @@ abstract class UseCase<in In, Out> {
 
     /** Starts execution login defined in [execute] and publishes result to the provided [data]. */
     operator fun invoke(params: In, data: MutableLiveData<Result<Out>>) {
-        GlobalScope.launch(dispatcher) {
-            runCatching { execute(params) }.also {
-                data.postValue(it)
-            }
+        GlobalScope.launch(dispatcher) { now(params, data) }
+    }
+
+    /** Starts execution logic in suspense on provided [dispatcher] */
+    suspend fun now(
+        params: In,
+        data: MutableLiveData<Result<Out>> = this.data
+    ) {
+        withContext(dispatcher) {
+            runCatching { execute(params) }.also { data.postValue(it) }
         }
     }
 
