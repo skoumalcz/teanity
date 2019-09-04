@@ -8,6 +8,8 @@ dependencies {
 
     api(project(":core"))
 
+    api(Lib.androidx.material)
+    api(Lib.androidx.constraint)
     api(Lib.androidx.animation)
     api(Lib.glide)
 

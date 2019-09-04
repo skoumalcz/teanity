@@ -27,8 +27,8 @@ dependencies {
     api(Lib.navigation.ui)
 
     /* === RX === */
-    implementation(Lib.reactive.kotlin)
-    implementation(Lib.reactive.android)
+    api(Lib.reactive.kotlin)
+    api(Lib.reactive.android)
 
     /* === EASING === */
     implementation(Lib.state)

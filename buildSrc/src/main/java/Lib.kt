@@ -19,8 +19,9 @@ object Lib {
         val appcompat = androidx("appcompat", "appcompat", "1.1.0-rc01")
         val core = androidx("core", "core-ktx", "1.2.0-alpha02")
         val room = androidx("room", "room-ktx", "2.1.0")
-        val work = androidx("work", "work-runtime-ktx", "2.1.0-rc01")
         val animation = androidx("dynamicanimation", "dynamicanimation-ktx", "1.0.0-alpha02")
+        val constraint = androidx("constraintlayout", "constraintlayout", "2.0.0-beta2")
+        val material = "com.google.android.material:material:1.1.0-alpha09"
     }
 
     val lifecycle = Lifecycle
