@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="e0_25">1dp</dimen>
+    <dimen name="e0_50">2dp</dimen>
+    <dimen name="e0_75">3dp</dimen>
+    <dimen name="e1">4dp</dimen>
+    <dimen name="e2">8dp</dimen>
+
+</resources>
