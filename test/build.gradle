@@ -4,7 +4,25 @@ plugins {
     id("com.github.dcendents.android-maven")
 }
 
-dependencies {}
+dependencies {
+
+    // Core library
+    api(Lib.test.core)
+
+    // AndroidJUnitRunner and JUnit Rules
+    api(Lib.test.runner)
+    api(Lib.test.rules)
+
+    // Assertions
+    api(Lib.test.junit)
+
+    // Fake data
+    api(Lib.test.lorem)
+
+    // Services
+    api(Lib.test.services)
+
+}
 
 afterEvaluate {
     apply from: "../groovy.gradle"

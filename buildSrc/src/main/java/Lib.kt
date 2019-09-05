@@ -88,6 +88,35 @@ object Lib {
 
     // ---
 
+    val test = Test
+
+    object Test {
+
+        val core = androidx("test", "core", "1.2.0")
+        val runner = androidx("test", "runner", "1.2.0")
+        val rules = androidx("test", "rules", "1.2.0")
+        val junit = androidx("test.ext", "junit", "1.1.1")
+        val services = androidx("test.services", "test-services", "1.2.0")
+        val automator = androidx("test.uiautomator", "uiautomator", "2.2.0")
+        val lorem = "com.thedeanda:lorem:2.1"
+        val espresso = Espresso
+
+        object Espresso {
+
+            private const val version = "3.2.0"
+
+            val core = androidx("test.espresso", "espresso-core", version)
+            val contrib = androidx("test.espresso", "espresso-contrib", version)
+            val intents = androidx("test.espresso", "espresso-intents", version)
+            val web = androidx("test.espresso", "espresso-web", version)
+            val idling = androidx("test.espresso.idling", "idling-concurrent", version)
+
+        }
+
+    }
+
+    // ---
+
     private fun kotlin(module: String, version: String? = null) =
         "org.jetbrains.kotlin:kotlin-$module${version?.let { ":$version" } ?: ""}"
 
