@@ -1,119 +1,133 @@
 @Suppress("ClassName")
 object Lib {
 
+    private object V {
+        const val kotlin = "1.3.50"
+        const val kotlinCoroutines = "1.2.2"
+        const val gradle = "3.5.0"
+
+        object AndroidX {
+            const val appcompat = "1.1.0-rc01"
+            const val core = "1.2.0-alpha02"
+            const val room = "2.1.0"
+            const val animation = "1.0.0-alpha02"
+            const val constraint = "2.0.0-beta2"
+            const val material = "1.1.0-alpha09"
+            const val lifecycle = "2.2.0-alpha02"
+            const val navigation = "2.1.0-alpha06"
+            const val test = "1.2.0"
+            const val junit = "1.1.1"
+            const val services = "1.2.0"
+            const val automator = "2.2.0"
+            const val espresso = "3.2.0"
+        }
+
+        const val lorem = "2.1"
+        const val rxKotlin = "2.3.0"
+        const val rxAndroid = "2.1.1"
+        const val binding = "3.0.0-beta1"
+        const val koin = "2.0.1"
+        const val moshi = "1.8.0"
+        const val retrofit = "2.6.1"
+        const val sanitizer = "0.4"
+        const val glide = "4.9.0"
+        const val dexter = "5.0.0"
+        const val timber = "4.7.1"
+        const val state = "1.4.1"
+        // this is kinda deprecated
+        const val maven = "2.1"
+    }
+
+    //region Access definitions
     val kotlin = Kotlin
+    val androidx = AndroidX
+    val lifecycle = Lifecycle
+    val navigation = Navigation
+    val reactive = ReactiveX
+    val bindingCollection = BindingCollection
+    val koin = Koin
+    val square = Square
+    val test = Test
+    //endregion
 
     object Kotlin {
-        private const val version = "1.3.50"
-        private const val versionCoroutines = "1.2.2"
-
-        val lib = kotlin("stdlib-jdk7", version)
-        val gradle = kotlin("gradle-plugin", version)
-        val coroutines = kotlinx("coroutines-android", versionCoroutines)
+        val lib = kotlin("stdlib-jdk7", V.kotlin)
+        val gradle = kotlin("gradle-plugin", V.kotlin)
+        val coroutines = kotlinx("coroutines-android", V.kotlinCoroutines)
     }
-
-    val androidx = AndroidX
 
     object AndroidX {
-        val build = "com.android.tools.build:gradle:3.5.0"
-        val appcompat = androidx("appcompat", "appcompat", "1.1.0-rc01")
-        val core = androidx("core", "core-ktx", "1.2.0-alpha02")
-        val room = androidx("room", "room-ktx", "2.1.0")
-        val animation = androidx("dynamicanimation", "dynamicanimation-ktx", "1.0.0-alpha02")
-        val constraint = androidx("constraintlayout", "constraintlayout", "2.0.0-beta2")
-        val material = "com.google.android.material:material:1.1.0-alpha09"
+        val build = "com.android.tools.build:gradle:${V.gradle}"
+        val appcompat = androidx("appcompat", "appcompat", V.AndroidX.appcompat)
+        val core = androidx("core", "core-ktx", V.AndroidX.core)
+        val room = androidx("room", "room-ktx", V.AndroidX.room)
+        val animation =
+            androidx("dynamicanimation", "dynamicanimation-ktx", V.AndroidX.animation)
+        val constraint =
+            androidx("constraintlayout", "constraintlayout", V.AndroidX.constraint)
+        val material = "com.google.android.material:material:${V.AndroidX.material}"
     }
-
-    val lifecycle = Lifecycle
 
     object Lifecycle {
-        private const val version = "2.2.0-alpha02"
-
-        val extensions = androidx("lifecycle", "lifecycle-extensions", version)
-        val viewModel = androidx("lifecycle", "lifecycle-viewmodel-ktx", version)
+        val extensions = androidx("lifecycle", "lifecycle-extensions", V.AndroidX.lifecycle)
+        val viewModel = androidx("lifecycle", "lifecycle-viewmodel-ktx", V.AndroidX.lifecycle)
     }
-
-    val navigation = Navigation
 
     object Navigation {
-        private const val version = "2.1.0-alpha06"
-
-        val fragment = androidx("navigation", "navigation-fragment-ktx", version)
-        val ui = androidx("navigation", "navigation-ui-ktx", version)
+        val fragment =
+            androidx("navigation", "navigation-fragment-ktx", V.AndroidX.navigation)
+        val ui = androidx("navigation", "navigation-ui-ktx", V.AndroidX.navigation)
     }
-
-    val reactive = ReactiveX
 
     object ReactiveX {
-        val kotlin = rxjava2("rxkotlin", "2.3.0")
-        val android = rxjava2("rxandroid", "2.1.1")
+        val kotlin = rxjava2("rxkotlin", V.rxKotlin)
+        val android = rxjava2("rxandroid", V.rxAndroid)
     }
-
-    // please do not update; nested binding fails to resolve on newer versions
-    val bindingCollection = BindingCollection
 
     object BindingCollection {
-        private const val version = "3.0.0-beta1"
-
-        val collections = bindingAdapter("bindingcollectionadapter", version)
-        val recycler = bindingAdapter("bindingcollectionadapter-recyclerview", version)
+        val collections = bindingAdapter("bindingcollectionadapter", V.binding)
+        val recycler = bindingAdapter("bindingcollectionadapter-recyclerview", V.binding)
     }
-
-    val koin = Koin
 
     object Koin {
-        private const val version = "2.0.1"
-
-        val core = koin("android", version)
-        val viewModel = koin("android-viewmodel", version)
+        val core = koin("android", V.koin)
+        val viewModel = koin("android-viewmodel", V.koin)
     }
-
-    val square = Square
 
     object Square {
-        private const val version = "2.6.1"
-
-        val moshi = square("moshi", "moshi-kotlin", "1.8.0")
-        val retrofit = square("retrofit2", "retrofit", version)
-        val moshiConverter = square("retrofit2", "converter-moshi", version)
+        val moshi = square("moshi", "moshi-kotlin", V.moshi)
+        val retrofit = square("retrofit2", "retrofit", V.retrofit)
+        val moshiConverter = square("retrofit2", "converter-moshi", V.retrofit)
     }
-
-    val sanitizer = github("diareuse", "response-sanitizer", "0.4")
-    val glide = github("bumptech.glide", "glide", "4.9.0")
-
-    const val dexter = "com.karumi:dexter:5.0.0"
-    const val timber = "com.jakewharton.timber:timber:4.7.1"
-    const val state = "com.evernote:android-state:1.4.1"
-    const val maven = "com.github.dcendents:android-maven-gradle-plugin:2.1"
-
-    // ---
-
-    val test = Test
 
     object Test {
 
-        val core = androidx("test", "core", "1.2.0")
-        val runner = androidx("test", "runner", "1.2.0")
-        val rules = androidx("test", "rules", "1.2.0")
-        val junit = androidx("test.ext", "junit", "1.1.1")
-        val services = androidx("test.services", "test-services", "1.2.0")
-        val automator = androidx("test.uiautomator", "uiautomator", "2.2.0")
-        val lorem = "com.thedeanda:lorem:2.1"
+        val core = androidx("test", "core", V.AndroidX.test)
+        val runner = androidx("test", "runner", V.AndroidX.test)
+        val rules = androidx("test", "rules", V.AndroidX.test)
+        val junit = androidx("test.ext", "junit", V.AndroidX.junit)
+        val services = androidx("test.services", "test-services", V.AndroidX.services)
+        val automator = androidx("test.uiautomator", "uiautomator", V.AndroidX.automator)
+        val lorem = "com.thedeanda:lorem:${V.lorem}"
         val espresso = Espresso
 
         object Espresso {
-
-            private const val version = "3.2.0"
-
-            val core = androidx("test.espresso", "espresso-core", version)
-            val contrib = androidx("test.espresso", "espresso-contrib", version)
-            val intents = androidx("test.espresso", "espresso-intents", version)
-            val web = androidx("test.espresso", "espresso-web", version)
-            val idling = androidx("test.espresso.idling", "idling-concurrent", version)
-
+            val core = espresso("core", V.AndroidX.espresso)
+            val contrib = espresso("contrib", V.AndroidX.espresso)
+            val intents = espresso("intents", V.AndroidX.espresso)
+            val web = espresso("web", V.AndroidX.espresso)
+            val idling = androidx("test.espresso.idling", "idling-concurrent", V.AndroidX.espresso)
         }
 
     }
+
+    val sanitizer = github("diareuse", "response-sanitizer", V.sanitizer)
+    val glide = github("bumptech.glide", "glide", V.glide)
+
+    const val dexter = "com.karumi:dexter:${V.dexter}"
+    const val timber = "com.jakewharton.timber:timber:${V.timber}"
+    const val state = "com.evernote:android-state:${V.state}"
+    const val maven = "com.github.dcendents:android-maven-gradle-plugin:${V.maven}"
 
     // ---
 
@@ -125,6 +139,9 @@ object Lib {
 
     private fun androidx(group: String, module: String, version: String) =
         "androidx.$group:$module:$version"
+
+    private fun espresso(module: String, version: String) =
+        androidx("test.espresso", "espresso-$module", version)
 
     private fun rxjava2(module: String, version: String) =
         "io.reactivex.rxjava2:$module:$version"
