@@ -31,12 +31,14 @@ abstract class UseCase<in In, Out> {
     fun observe(): LiveData<Result<Out>> = data
 
     /** Provides immediate result if cached and starts execution logic defined in [execute]. */
-    operator fun invoke(params: In): LiveData<Result<Out>> = data.apply { invoke(params, this) }
+    operator fun invoke(params: In): LiveData<Result<Out>> = invoke(params, data)
 
-    /** Starts execution login defined in [execute] and publishes result to the provided [data]. */
-    operator fun invoke(params: In, data: MutableLiveData<Result<Out>>) {
-        GlobalScope.launch(dispatcher) { now(params, data) }
-    }
+    /**
+     * Starts execution login defined in [execute] and publishes result to the provided [data]
+     * which it returns with weakened access for convenience.
+     * */
+    operator fun invoke(params: In, data: MutableLiveData<Result<Out>>): LiveData<Result<Out>> =
+        data.also { GlobalScope.launch(dispatcher) { now(params, it) } }
 
     /** Starts execution logic in suspense on provided [dispatcher] */
     suspend fun now(
