@@ -14,23 +14,27 @@ internal class TeanityDelegate(private val view: TeanityView<*>) {
 
     private var subscriber: Disposable? = null
 
-    internal inline fun ensureInsets(view: View, crossinline body: (Insets) -> Unit) =
-        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
-            val left = insets.systemWindowInsetLeft
-            val top = insets.systemWindowInsetTop
-            val right = insets.systemWindowInsetRight
-            val bottom = insets.systemWindowInsetBottom
+    internal inline fun ensureInsets(
+        target: View,
+        crossinline body: (Insets) -> Unit
+    ) = ViewCompat.setOnApplyWindowInsetsListener(target) { _, insets ->
+        val left = insets.systemWindowInsetLeft
+        val top = insets.systemWindowInsetTop
+        val right = insets.systemWindowInsetRight
+        val bottom = insets.systemWindowInsetBottom
 
-            this.view.peekSystemWindowInsets(Insets(left, top, right, bottom))
-            val consumedInsets = this.view.consumeSystemWindowInsets(left, top, right, bottom).also(body)
+        view.peekSystemWindowInsets(Insets(left, top, right, bottom))
+        val consumedInsets = view.consumeSystemWindowInsets(left, top, right, bottom)?.also(body)
 
+        consumedInsets?.let {
             insets.replaceSystemWindowInsets(
-                insets.systemWindowInsetLeft - consumedInsets.left,
-                insets.systemWindowInsetTop - consumedInsets.top,
-                insets.systemWindowInsetRight - consumedInsets.right,
-                insets.systemWindowInsetBottom - consumedInsets.bottom
+                left - it.left,
+                top - it.top,
+                right - it.right,
+                bottom - it.bottom
             )
-        }
+        } ?: insets
+    }
 
     internal fun subscribe(events: Observable<ViewEvent>) {
         subscriber = events.subscribeK(onError = { subscribe(events) }) {

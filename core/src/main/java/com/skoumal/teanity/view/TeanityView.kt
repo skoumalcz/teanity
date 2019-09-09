@@ -41,7 +41,8 @@ internal interface TeanityView<Binding> {
      * You may as well consume the insets only partially, **however beware** of overflowing initial value, always
      * min/max these values.
      * */
-    fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int): Insets
+    fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int): Insets? =
+        Insets.empty
 
     /**
      * Called before [consumeSystemWindowInsets]. This will not consume insets which is beneficial

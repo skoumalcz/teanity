@@ -8,7 +8,7 @@ data class Insets(
 ) {
 
     companion object {
-        val empty get() = Insets()
+        val empty: Insets? = null
     }
 
 }

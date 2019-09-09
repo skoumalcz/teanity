@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.transition.TransitionInflater
 import com.skoumal.teanity.BR
-import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevent.GenericNavDirections
 import com.skoumal.teanity.viewevent.NavigationEvent
 import com.skoumal.teanity.viewevent.SnackbarEvent
@@ -112,8 +111,6 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected fun ViewEvent.onSelf() {
         viewModel.apply { publish() }
     }
-
-    override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) = Insets.empty
 
     private fun NavigationEvent.navigate() {
         navController.navigate(navDirections, navOptions, getExtras(this@TeanityFragment))

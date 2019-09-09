@@ -8,7 +8,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.skoumal.teanity.BR
-import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevent.GenericNavDirections
 import com.skoumal.teanity.viewevent.NavigationEvent
 import com.skoumal.teanity.viewevent.SnackbarEvent
@@ -89,9 +88,6 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
             is SnackbarEvent -> event.consume(this)
         }
     }
-
-    override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) =
-        Insets.empty
 
     protected fun detachEvents() = delegate.dispose()
     protected fun ViewEvent.onSelf() {
