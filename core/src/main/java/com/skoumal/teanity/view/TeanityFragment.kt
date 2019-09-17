@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.transition.TransitionInflater
-import com.skoumal.teanity.BR
 import com.skoumal.teanity.viewevent.GenericNavDirections
 import com.skoumal.teanity.viewevent.NavigationEvent
 import com.skoumal.teanity.viewevent.SnackbarEvent
@@ -19,10 +17,9 @@ import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
 abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
-    Fragment(),
-    TeanityView<Binding> {
+    Fragment(), TeanityView<Binding>, TeanityViewAccessor<ViewModel> {
 
-    protected lateinit var binding: Binding
+    protected val binding: Binding get() = delegate.binding
 
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
@@ -45,48 +42,38 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
             }
         }
 
-        restoreState(savedInstanceState)
-
-        delegate.subscribe(viewModel.viewEvents)
+        delegate.onCreate(this, savedInstanceState)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = DataBindingUtil.inflate<Binding>(inflater, layoutRes, container, false).apply {
-        setVariable(BR.viewModel, this@TeanityFragment.viewModel)
-        lifecycleOwner = this@TeanityFragment
-    }.also { binding = it }.root
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        delegate.ensureInsets(binding.root) {
-            viewModel.insets.value = it
-        }
-    }
+    ): View? = delegate.onCreateView(inflater, container)
 
     override fun onResume() {
         super.onResume()
-
-        viewModel.requestRefresh()
+        delegate.onResume()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-        if (::binding.isInitialized) {
-            binding.unbindViews()
-        }
-
-        delegate.dispose()
+        delegate.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
         saveState(outState)
+    }
+
+    //region TeanityView
+
+    @CallSuper
+    override fun onEventDispatched(event: ViewEvent) {
+        when (event) {
+            is NavigationEvent -> event.navigate()
+            is SnackbarEvent -> event.consume(this)
+        }
     }
 
     override fun saveState(outState: Bundle) {
@@ -99,13 +86,14 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
         viewModel.restoreState(savedInstanceState)
     }
 
-    @CallSuper
-    override fun onEventDispatched(event: ViewEvent) {
-        when (event) {
-            is NavigationEvent -> event.navigate()
-            is SnackbarEvent -> event.consume(this)
-        }
-    }
+    //endregion
+    //region TeanityViewAccessor
+
+    override fun obtainViewModel() = viewModel
+    override fun obtainLayoutRes() = layoutRes
+
+    //endregion
+    //region Helpers
 
     protected fun detachEvents() = delegate.dispose()
     protected fun ViewEvent.onSelf() {
@@ -118,4 +106,6 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
             activity?.finish()
         }
     }
+
+    //endregion
 }

@@ -25,6 +25,7 @@ internal interface TeanityView<Binding> {
      * Both this and [onEventDispatched] methods are called - you can choose
      * the way how you handle them.
      */
+    @Deprecated("Use static objects with sealed classes instead of integers.")
     fun onSimpleEventDispatched(event: Int) {}
 
     fun Binding.unbindViews() {}

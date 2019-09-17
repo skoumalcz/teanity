@@ -4,26 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
-import com.skoumal.teanity.BR
+import com.skoumal.teanity.viewevent.GenericNavDirections
+import com.skoumal.teanity.viewevent.NavigationEvent
+import com.skoumal.teanity.viewevent.SnackbarEvent
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
-import io.reactivex.disposables.Disposable
 
 abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
-    DialogFragment(), TeanityView<Binding> {
+    DialogFragment(), TeanityView<Binding>, TeanityViewAccessor<ViewModel> {
 
-    protected lateinit var binding: Binding
+    protected val binding: Binding get() = delegate.binding
 
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
 
     protected val navController get() = binding.root.findNavController()
     protected val teanityActivity get() = activity as? TeanityActivity<*, *>
-    private lateinit var subscriber: Disposable
 
     private val delegate by lazy { TeanityDelegate(this) }
 
@@ -35,51 +35,38 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
 
         setStyle(dialogStyle, dialogTheme)
 
-        restoreState(savedInstanceState)
-
-        delegate.subscribe(viewModel.viewEvents)
+        delegate.onCreate(this, savedInstanceState)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = DataBindingUtil.inflate<Binding>(inflater, layoutRes, container, false).apply {
-        setVariable(BR.viewModel, this@TeanityDialogFragment.viewModel)
-        lifecycleOwner = this@TeanityDialogFragment
-    }.also { binding = it }.root
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        delegate.ensureInsets(binding.root) {
-            viewModel.insets.value = it
-        }
-    }
+    ): View? = delegate.onCreateView(inflater, container)
 
     override fun onResume() {
         super.onResume()
-
-        viewModel.requestRefresh()
+        delegate.onResume()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-        if (::binding.isInitialized) {
-            binding.unbindViews()
-        }
-        if (::subscriber.isInitialized) {
-            subscriber.dispose()
-        }
-
-        delegate.dispose()
+        delegate.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
         saveState(outState)
+    }
+
+    //region TeanityView
+
+    @CallSuper
+    override fun onEventDispatched(event: ViewEvent) {
+        when (event) {
+            is NavigationEvent -> event.navigate()
+            is SnackbarEvent -> teanityActivity?.run { event.consume(this) }
+        }
     }
 
     override fun saveState(outState: Bundle) {
@@ -92,8 +79,26 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
         viewModel.restoreState(savedInstanceState)
     }
 
+    //endregion
+    //region TeanityViewAccessor
+
+    override fun obtainViewModel() = viewModel
+    override fun obtainLayoutRes() = layoutRes
+
+    //endregion
+    //region Helpers
+
     protected fun detachEvents() = delegate.dispose()
     protected fun ViewEvent.onSelf() {
         viewModel.apply { publish() }
     }
+
+    private fun NavigationEvent.navigate() {
+        navController.navigate(navDirections, navOptions, getExtras(this@TeanityDialogFragment))
+        if (navDirections is GenericNavDirections && navDirections.clearTask) {
+            activity?.finish()
+        }
+    }
+
+    //endregion
 }
