@@ -26,9 +26,16 @@ abstract class UseCase<in In, Out> {
     /** Default dispatcher on which [execute] will be ran on. */
     protected open val dispatcher = Dispatchers.Default
 
-    private val data = MutableLiveData<Result<Out>>()
+    private val data = provide()
 
+    /**
+     * Returns internal immutable [LiveData] to which result is supplied after calling [invoke]
+     * without explicit [data] parameter.
+     * */
     fun observe(): LiveData<Result<Out>> = data
+
+    /** Provides a result-typed [MutableLiveData] */
+    fun provide() = MutableLiveData<Result<Out>>()
 
     /** Provides immediate result if cached and starts execution logic defined in [execute]. */
     operator fun invoke(params: In): LiveData<Result<Out>> = invoke(params, data)

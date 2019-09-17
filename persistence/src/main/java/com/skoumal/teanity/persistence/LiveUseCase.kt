@@ -10,6 +10,13 @@ import androidx.lifecycle.LiveData
 
 /**
  * Allows for a testable, isolated business logic.
+ *
+ * Designed for DAO's LiveData which are refreshed by Room's implementation. Calling [execute]
+ * multiple times results in returning different [LiveData] objects and will not refresh the
+ * initial one.
+ *
+ * Everything in [execute] is called in a synchronous fashion and the result of [execute] is passed
+ * to [invoke] immediately.
  * */
 @Suppress("MemberVisibilityCanBePrivate")
 abstract class LiveUseCase<in In, Out> {
