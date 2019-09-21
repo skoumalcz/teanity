@@ -2,6 +2,7 @@ package com.skoumal.teanity.example.ui.login
 
 import com.skoumal.teanity.example.R
 import com.skoumal.teanity.example.databinding.FragmentLoginEmailBinding
+import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.view.TeanityFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,6 +22,8 @@ class LoginEmailFragment : TeanityFragment<LoginEmailViewModel, FragmentLoginEma
             }
         }
     }
+
+    override fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int) = Insets(top = top)
 
     companion object {
         const val EVENT_NAVIGATE_TO_MAIN_ACTIVITY = 1
