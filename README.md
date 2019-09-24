@@ -53,22 +53,22 @@ allprojects {
 }
 ```
 
-`ext.teanity = ` [![](https://jitpack.io/v/skoumalcz/teanity.svg)](https://jitpack.io/#skoumalcz/teanity)
+`ext.teanity = ` [![](https://jitpack.io/v/com.skoumal/teanity.svg?style=flat-square)](https://jitpack.io/#com.skoumal/teanity)
 
 dependency
 ```groovy
 dependencies {
-    implementation("com.github.skoumalcz.teanity:core:" + ext.teanity)
-    implementation("com.github.skoumalcz.teanity:di:" + ext.teanity)
-    implementation("com.github.skoumalcz.teanity:network:" + ext.teanity)
-    implementation("com.github.skoumalcz.teanity:persistence:" + ext.teanity)
-    implementation("com.github.skoumalcz.teanity:test-ui:" + ext.teanity)
-    implementation("com.github.skoumalcz.teanity:test:" + ext.teanity)
-    implementation("com.github.skoumalcz.teanity:ui:" + ext.teanity)
+    implementation("com.skoumal.teanity:core:" + ext.teanity)
+    implementation("com.skoumal.teanity:di:" + ext.teanity)
+    implementation("com.skoumal.teanity:network:" + ext.teanity)
+    implementation("com.skoumal.teanity:persistence:" + ext.teanity)
+    implementation("com.skoumal.teanity:test-ui:" + ext.teanity)
+    implementation("com.skoumal.teanity:test:" + ext.teanity)
+    implementation("com.skoumal.teanity:ui:" + ext.teanity)
 
     // or get the whole collection
 
-    implementation("com.github.skoumalcz:teanity:" + ext.teanity)
+    implementation("com.skoumal:teanity:" + ext.teanity)
 }
 ```
 
