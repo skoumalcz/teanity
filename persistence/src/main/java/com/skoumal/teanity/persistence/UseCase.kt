@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * Allows for a testable, isolated business logic to be executed according with a given [dispatcher].
@@ -53,7 +54,7 @@ abstract class UseCase<in In, Out> {
         data: MutableLiveData<Result<Out>> = this.data
     ) {
         withContext(dispatcher) {
-            runCatching { execute(params) }.also { data.postValue(it) }
+            runCatching { execute(params) }.also { data.postValue(it) }.onFailure { Timber.e(it) }
         }
     }
 
