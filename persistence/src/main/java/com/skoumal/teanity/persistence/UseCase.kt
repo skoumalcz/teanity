@@ -8,6 +8,8 @@ package com.skoumal.teanity.persistence
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.skoumal.teanity.persistence.extensions.distinctUntilChanged
+import com.skoumal.teanity.persistence.extensions.nextValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,41 +26,88 @@ import timber.log.Timber
 @Suppress("MemberVisibilityCanBePrivate")
 abstract class UseCase<in In, Out> {
 
-    /** Default dispatcher on which [execute] will be ran on. */
+    /**
+     * ## Definition
+     * Default dispatcher on which [execute] will be ran on.
+     * */
     protected open val dispatcher = Dispatchers.Default
 
     private val data = provide()
 
+    private val state = MutableLiveData<UseCaseState>(UseCaseState.IDLE)
+
     /**
+     * ## Definition
      * Returns internal immutable [LiveData] to which result is supplied after calling [invoke]
      * without explicit [data] parameter.
      * */
     fun observe(): LiveData<Result<Out>> = data
 
-    /** Provides a result-typed [MutableLiveData] */
+    /**
+     * ## Definition
+     * Returns internal immutable [LiveData] with current state of this UseCase. By default the
+     * state is defined as [UseCaseState.IDLE]. For all states and its descriptions see
+     * [UseCaseState].
+     *
+     * ### Important notes
+     * State is broadcasted in a distinct fashion - meaning it's impossible to receive two identical
+     * consecutive values. For more information see [distinctUntilChanged].
+     *
+     * @see [UseCaseState]
+     * @see [distinctUntilChanged]
+     * */
+    open fun observeState() = state.distinctUntilChanged()
+
+    /**
+     * ## Definition
+     * Provides a result-typed [MutableLiveData].
+     *
+     * ### Notes
+     * This might be useful when calling [invoke] with intent not to reuse preexisting [data].
+     * The intended use might be as such:
+     * ```
+     * val exampleUseCase = ExampleUseCase(...)
+     * val resultLiveData = exampleUseCase(..., exampleUseCase.provide())
+     * ```
+     * */
     fun provide() = MutableLiveData<Result<Out>>()
 
-    /** Provides immediate result if cached and starts execution logic defined in [execute]. */
+    /**
+     * ## Definition
+     * Provides immediate result if cached and starts execution logic defined in [execute].
+     * */
     operator fun invoke(params: In): LiveData<Result<Out>> = invoke(params, data)
 
     /**
+     * ## Definition
      * Starts execution login defined in [execute] and publishes result to the provided [data]
      * which it returns with weakened access for convenience.
      * */
     operator fun invoke(params: In, data: MutableLiveData<Result<Out>>): LiveData<Result<Out>> =
         data.also { GlobalScope.launch(dispatcher) { now(params, it) } }
 
-    /** Starts execution logic in suspense on provided [dispatcher] */
+    /**
+     * ## Definition
+     * Starts execution logic in suspense on provided [dispatcher]
+     * */
+    @Synchronized
     suspend fun now(
         params: In,
         data: MutableLiveData<Result<Out>> = this.data
     ) {
         withContext(dispatcher) {
-            runCatching { execute(params) }.also { data.postValue(it) }.onFailure { Timber.e(it) }
+            state.nextValue = UseCaseState.LOADING
+            state.nextValue = runCatching { execute(params) }
+                .also { data.postValue(it) }
+                .onFailure { Timber.e(it) }
+                .fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })
         }
     }
 
-    /** Overridable method designed to provide result to the business logic. */
+    /**
+     * ## Definition
+     * Overridable method designed to provide result to the business logic.
+     * */
     protected abstract suspend fun execute(input: In): Out
 
 }
