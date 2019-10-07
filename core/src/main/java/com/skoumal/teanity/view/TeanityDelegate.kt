@@ -14,6 +14,9 @@ import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.subscribeK
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevent.SimpleViewEvent
+import com.skoumal.teanity.viewevent.base.ActivityExecutor
+import com.skoumal.teanity.viewevent.base.ContextExecutor
+import com.skoumal.teanity.viewevent.base.FragmentExecutor
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 import io.reactivex.Observable
@@ -59,7 +62,21 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
                     Timber.e("SimpleViewEvent is deprecated. See documentation for suggested solution.")
                     view.onSimpleEventDispatched(it.event)
                 }
-                else -> view.onEventDispatched(it)
+                else -> {
+                    if (it is ContextExecutor) {
+                        runCatching { it(view.obtainContext()) }
+                            .onFailure { t -> it.onFailure(t) }
+                    }
+                    if (it is FragmentExecutor) {
+                        runCatching { it(view as Fragment) }
+                            .onFailure { t -> it.onFailure(t) }
+                    }
+                    if (it is ActivityExecutor) {
+                        runCatching { it(view as AppCompatActivity) }
+                            .onFailure { t -> it.onFailure(t) }
+                    }
+                    view.onEventDispatched(it)
+                }
             }
         }
     }

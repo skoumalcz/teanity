@@ -78,6 +78,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
 
     override fun obtainViewModel() = viewModel
     override fun obtainLayoutRes() = layoutRes
+    override fun obtainContext() = this
 
     //endregion
     //region Helpers

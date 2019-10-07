@@ -91,6 +91,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
 
     override fun obtainViewModel() = viewModel
     override fun obtainLayoutRes() = layoutRes
+    override fun obtainContext() = requireContext()
 
     //endregion
     //region Helpers

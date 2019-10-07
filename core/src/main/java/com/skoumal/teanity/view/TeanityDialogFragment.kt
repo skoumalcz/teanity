@@ -84,6 +84,7 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
 
     override fun obtainViewModel() = viewModel
     override fun obtainLayoutRes() = layoutRes
+    override fun obtainContext() = requireContext()
 
     //endregion
     //region Helpers
