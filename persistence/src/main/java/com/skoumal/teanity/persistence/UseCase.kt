@@ -88,20 +88,35 @@ abstract class UseCase<in In, Out> {
 
     /**
      * ## Definition
-     * Starts execution logic in suspense on provided [dispatcher]
+     * Starts execution logic in suspense on provided [dispatcher]. Sets up state of this use-case
+     * (see [UseCaseState],[observeState]) and returns full result of the operation.
+     *
+     * ### Notes
+     * Intended use-case for this method would be:
+     *
+     * 1) Requiring immediate result without waiting for [LiveData] to regain the result
+     *
+     * In particular:
+     *
+     * 1) Chaining use-cases
+     * 2) Merging use-cases
+     *
+     * *This method needn't to be called explicitly.* Make sure you know what you're doing.
      * */
     @Synchronized
     suspend fun now(
         params: In,
         data: MutableLiveData<Result<Out>> = this.data
-    ) {
-        withContext(dispatcher) {
-            state.nextValue = UseCaseState.LOADING
-            state.nextValue = runCatching { execute(params) }
+    ): Result<Out> {
+        state.nextValue = UseCaseState.LOADING
+        return withContext(dispatcher) {
+            val result = runCatching { execute(params) }
                 .also { data.postValue(it) }
                 .onFailure { Timber.e(it) }
+            val state = result
                 .fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })
-        }
+            state to result
+        }.also { state.nextValue = it.first }.second
     }
 
     /**
