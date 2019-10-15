@@ -1,0 +1,12 @@
+[submodule "preview"]
+	path = preview
+	url = git@github.com:skoumalcz/teanity-app.git
+[submodule "version"]
+	path = version
+	url = git@github.com:skoumalcz/gradle-git-android-version.git
+[submodule "ext/preview"]
+	path = ext/preview
+	url = git@github.com:skoumalcz/teanity-app.git
+[submodule "ext/version"]
+	path = ext/version
+	url = git@github.com:skoumalcz/gradle-git-android-version.git
