@@ -11,8 +11,9 @@ import java.io.Serializable
  */
 class KObservableField<T> : ObservableField<T>, Serializable {
 
+    @Volatile
     var value: T
-        set(value) {
+        @Synchronized set(value) {
             if (field != value) {
                 field = value
                 notifyChange()
