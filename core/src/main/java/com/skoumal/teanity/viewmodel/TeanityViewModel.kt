@@ -30,7 +30,7 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
     private val _viewEvents = PublishSubject.create<ViewEvent>()
     val viewEvents: Observable<ViewEvent> get() = _viewEvents
 
-    val insets = KObservableField(Insets.empty)
+    val insets = KObservableField(Insets())
 
     internal var lastRefresh = 0L
     private var currentJob: Job? = null

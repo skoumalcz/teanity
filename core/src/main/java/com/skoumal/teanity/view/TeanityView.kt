@@ -2,12 +2,12 @@ package com.skoumal.teanity.view
 
 import android.os.Bundle
 import androidx.annotation.CallSuper
+import androidx.core.graphics.Insets
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigator
 import com.evernote.android.state.StateSaver
-import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevent.SimpleViewEvent
 import com.skoumal.teanity.viewevent.base.ViewEvent
 
@@ -26,7 +26,8 @@ internal interface TeanityView<Binding> {
      * the way how you handle them.
      */
     @Deprecated("Use static objects with sealed classes instead of integers.")
-    fun onSimpleEventDispatched(event: Int) {}
+    fun onSimpleEventDispatched(event: Int) {
+    }
 
     fun Binding.unbindViews() {}
 
@@ -36,14 +37,13 @@ internal interface TeanityView<Binding> {
      *
      * You might want to consume bottom insets only for this view and leave the rest for the children.
      * ```
-     * override fun consumeSystemWindowInsets(..., bottom: Int) = Insets(bottom = bottom)
+     * override fun consumeSystemWindowInsets(insets: Insets) = Insets(bottom = bottom)
      * ```
      *
      * You may as well consume the insets only partially, **however beware** of overflowing initial value, always
      * min/max these values.
      * */
-    fun consumeSystemWindowInsets(left: Int, top: Int, right: Int, bottom: Int): Insets? =
-        Insets.empty
+    fun consumeSystemWindowInsets(insets: Insets): Insets? = null
 
     /**
      * Called before [consumeSystemWindowInsets]. This will not consume insets which is beneficial

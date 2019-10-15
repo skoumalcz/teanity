@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.subscribeK
-import com.skoumal.teanity.util.Insets
+import com.skoumal.teanity.extensions.toInternal
 import com.skoumal.teanity.viewevent.SimpleViewEvent
 import com.skoumal.teanity.viewevent.base.ActivityExecutor
 import com.skoumal.teanity.viewevent.base.ContextExecutor
@@ -35,22 +35,19 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     private fun ensureInsets(
         target: View
     ) = ViewCompat.setOnApplyWindowInsetsListener(target) { _, insets ->
-        val left = insets.systemWindowInsetLeft
-        val top = insets.systemWindowInsetTop
-        val right = insets.systemWindowInsetRight
-        val bottom = insets.systemWindowInsetBottom
+        val ourInsets = insets.toInternal()
 
-        view.peekSystemWindowInsets(Insets(left, top, right, bottom))
-        val consumedInsets = view.consumeSystemWindowInsets(left, top, right, bottom)?.also {
+        view.peekSystemWindowInsets(ourInsets)
+        val consumedInsets = view.consumeSystemWindowInsets(ourInsets)?.also {
             view.obtainViewModel().insets.value = it
         }
 
         consumedInsets?.let {
             insets.replaceSystemWindowInsets(
-                left - it.left,
-                top - it.top,
-                right - it.right,
-                bottom - it.bottom
+                ourInsets.left - it.left,
+                ourInsets.top - it.top,
+                ourInsets.right - it.right,
+                ourInsets.bottom - it.bottom
             )
         } ?: insets
     }

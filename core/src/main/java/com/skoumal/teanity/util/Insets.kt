@@ -1,14 +1,11 @@
 package com.skoumal.teanity.util
 
-data class Insets(
-    val left: Int = 0,
-    val top: Int = 0,
-    val right: Int = 0,
-    val bottom: Int = 0
-) {
+import androidx.core.graphics.Insets as AndroidInsets
 
-    companion object {
-        val empty: Insets? = null
-    }
-
-}
+@Suppress("FunctionName")
+fun Insets(
+    left: Int = 0,
+    top: Int = 0,
+    right: Int = 0,
+    bottom: Int = 0
+) = AndroidInsets.of(left, top, right, bottom)
