@@ -65,12 +65,19 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
                             .onFailure { t -> it.onFailure(t) }
                     }
                     if (it is FragmentExecutor) {
-                        runCatching { it(view as Fragment) }
-                            .onFailure { t -> it.onFailure(t) }
+                        runCatching {
+                            when (val v = view) {
+                                is Fragment -> it(v)
+                            }
+                        }.onFailure { t -> it.onFailure(t) }
                     }
                     if (it is ActivityExecutor) {
-                        runCatching { it(view as AppCompatActivity) }
-                            .onFailure { t -> it.onFailure(t) }
+                        runCatching {
+                            when (val v = view) {
+                                is AppCompatActivity -> it(v)
+                                is Fragment -> it(v.requireActivity() as AppCompatActivity)
+                            }
+                        }.onFailure { t -> it.onFailure(t) }
                     }
                     view.onEventDispatched(it)
                 }
