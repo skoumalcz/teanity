@@ -1,4 +1,4 @@
-package com.skoumal.teanity.persistence.extensions
+package com.skoumal.teanity.component.extensions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

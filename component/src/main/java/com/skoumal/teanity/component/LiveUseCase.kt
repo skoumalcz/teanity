@@ -4,7 +4,7 @@
 * Copyright 2018 Google LLC, 2019 Skoumal sro
 * */
 
-package com.skoumal.teanity.persistence
+package com.skoumal.teanity.component
 
 import androidx.lifecycle.LiveData
 

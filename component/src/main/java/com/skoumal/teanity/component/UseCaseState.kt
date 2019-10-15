@@ -1,4 +1,4 @@
-package com.skoumal.teanity.persistence
+package com.skoumal.teanity.component
 
 enum class UseCaseState {
     LOADING, IDLE, FAILED

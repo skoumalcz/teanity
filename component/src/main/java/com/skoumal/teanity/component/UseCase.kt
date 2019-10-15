@@ -4,12 +4,12 @@
 * Copyright 2018 Google LLC, 2019 Skoumal sro
 * */
 
-package com.skoumal.teanity.persistence
+package com.skoumal.teanity.component
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.skoumal.teanity.persistence.extensions.distinctUntilChanged
-import com.skoumal.teanity.persistence.extensions.nextValue
+import com.skoumal.teanity.component.extensions.distinctUntilChanged
+import com.skoumal.teanity.component.extensions.nextValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
