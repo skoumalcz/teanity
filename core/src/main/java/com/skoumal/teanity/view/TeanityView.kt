@@ -8,7 +8,6 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigator
 import com.evernote.android.state.StateSaver
-import com.skoumal.teanity.viewevent.SimpleViewEvent
 import com.skoumal.teanity.viewevent.base.ViewEvent
 
 internal interface TeanityView<Binding> {
@@ -19,15 +18,6 @@ internal interface TeanityView<Binding> {
      * methods are called - you can choose the way how you handle them.
      */
     fun onEventDispatched(event: ViewEvent) {}
-
-    /**
-     * Called for all [SimpleViewEvent]s published by associated viewModel.
-     * Both this and [onEventDispatched] methods are called - you can choose
-     * the way how you handle them.
-     */
-    @Deprecated("Use static objects with sealed classes instead of integers.")
-    fun onSimpleEventDispatched(event: Int) {
-    }
 
     fun Binding.unbindViews() {}
 

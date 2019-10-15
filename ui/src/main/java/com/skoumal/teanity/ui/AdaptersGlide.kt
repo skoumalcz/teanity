@@ -3,26 +3,6 @@ package com.skoumal.teanity.ui
 import android.widget.ImageView
 import com.bumptech.glide.request.RequestOptions
 
-@Deprecated("")
-object Transformations {
-    const val NONE = 0
-    const val CENTER_CROP = 1
-    const val CENTER_INSIDE = 2
-    const val FIT_CENTER = 3
-    const val CIRCLE_CROP = 4
-}
-
-@Deprecated("Use transformation by ImageView.ScaleType, ScaleType or String")
-@Suppress("DEPRECATION")
-fun RequestOptions.applyTransformation(transform: Int): RequestOptions = when (transform) {
-    Transformations.NONE -> this
-    Transformations.CENTER_CROP -> centerCrop()
-    Transformations.CENTER_INSIDE -> centerInside()
-    Transformations.FIT_CENTER -> fitCenter()
-    Transformations.CIRCLE_CROP -> circleCrop()
-    else -> throw IllegalArgumentException("Unsupported transformation")
-}
-
 enum class ScaleType(val text: String) {
     CIRCLE_CROP("circleCrop"),
     CENTER_CROP("centerCrop"),
@@ -60,6 +40,7 @@ fun RequestOptions.applyTransformation(scaleType: String): RequestOptions = when
     else -> throw IllegalArgumentException("Scale type \"$scaleType\" is not supported.")
 }
 
+@Suppress("DEPRECATION")
 private fun ImageView.ScaleType.asInternal() = when (this) {
     ImageView.ScaleType.MATRIX -> ScaleType.MATRIX
     ImageView.ScaleType.FIT_XY -> ScaleType.FIT_XY

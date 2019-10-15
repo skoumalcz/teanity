@@ -1,11 +1,6 @@
 package com.skoumal.teanity.extensions
 
 import android.app.Activity
-import android.content.Intent
-import android.provider.Settings
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -13,57 +8,6 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.skoumal.teanity.util.Text
-import com.skoumal.teanity.viewevent.SnackbarEvent
-
-@Deprecated("Method has way too much arguments, use builder instead. This method will be removed in future versions.")
-fun AppCompatActivity.requestPermission(
-    permission: String,
-    explanation: String,
-    actionTitle: String,
-    view: View,
-    onGranted: () -> Unit,
-    onDenied: () -> Unit
-) = requestPermissions {
-    permissions(permission)
-
-    onGranted { onGranted() }
-    onDenied { onDenied() }
-
-    onPermissionRationaleRequested { _, token -> token.continuePermissionRequest() }
-    onPermanentlyDenied {
-        SnackbarEvent {
-            message = Text.Sequence(explanation)
-
-            action {
-                text = Text.Sequence(actionTitle)
-                onClicked {
-                    val appSettings = Intent(
-                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                        "package:$packageName".toUri()
-                    ).apply {
-                        addCategory(Intent.CATEGORY_DEFAULT)
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    }
-
-                    startActivity(appSettings)
-                }
-            }
-        }.consume(view, this@requestPermission)
-    }
-}
-
-@Deprecated("Method lacks abstraction since it only copies [requestPermission]. This method will be removed in future versions.")
-fun AppCompatActivity.requestPermissionSoft(
-    permission: String,
-    onGranted: () -> Unit,
-    onDenied: () -> Unit
-) = requestPermissions {
-    permissions(permission)
-
-    onGranted { onGranted() }
-    onDenied { onDenied() }
-}
 
 inline fun Activity.requestPermissions(body: RequestPermissionBuilder.() -> Unit) =
     RequestPermissionBuilder(this, body)

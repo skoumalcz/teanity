@@ -2,14 +2,12 @@ package com.skoumal.teanity.viewmodel
 
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.util.KObservableField
-import com.skoumal.teanity.viewevent.SimpleViewEvent
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -19,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 abstract class TeanityViewModel : ViewModel(), CoroutineScope {
@@ -86,18 +85,12 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
     @Synchronized
     fun requestRefresh(): Boolean {
         if (currentJob?.isActive == true) {
-            Log.i(
-                javaClass.simpleName,
-                "Data cannot be refreshed concurrently. Request to refresh is denied."
-            )
+            Timber.i("Data cannot be refreshed concurrently. Request to refresh is denied.")
             return false
         }
 
         if (SystemClock.uptimeMillis() - lastRefresh < minRefreshDelay) {
-            Log.i(
-                javaClass.simpleName,
-                "Data cannot be refreshed at this time, minimal refresh delay haven't expired yet. Request to refresh is denied."
-            )
+            Timber.i("Data cannot be refreshed at this time, minimal refresh delay haven't expired yet. Request to refresh is denied.")
             return false
         }
 
@@ -118,11 +111,6 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
 
     fun <Event : ViewEvent> Event.publish() {
         _viewEvents.onNext(this)
-    }
-
-    @Deprecated("Use static objects instead of integers.")
-    fun Int.publish() {
-        _viewEvents.onNext(SimpleViewEvent(this))
     }
 
     fun Disposable.add() {

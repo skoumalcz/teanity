@@ -1,4 +1,4 @@
-package com.skoumal.teanity.list
+package com.skoumal.teanity.util
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -71,7 +71,8 @@ class EndlessRecyclerScrollListener(
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state
         if (totalItemCount < previousTotalItemCount) {
-            currentPage = STARTING_PAGE_INDEX
+            currentPage =
+                STARTING_PAGE_INDEX
             previousTotalItemCount = totalItemCount
             if (totalItemCount == 0) {
                 loading = true
@@ -104,7 +105,8 @@ class EndlessRecyclerScrollListener(
 
     // Call this method whenever performing new searches
     fun resetState() {
-        currentPage = STARTING_PAGE_INDEX
+        currentPage =
+            STARTING_PAGE_INDEX
         previousTotalItemCount = 0
         loading = true
     }

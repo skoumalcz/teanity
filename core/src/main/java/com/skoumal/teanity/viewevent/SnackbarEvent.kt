@@ -3,6 +3,7 @@ package com.skoumal.teanity.viewevent
 import android.content.Context
 import android.view.View
 import androidx.annotation.IntDef
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.skoumal.teanity.extensions.backgroundColor
 import com.skoumal.teanity.extensions.textColor
@@ -10,12 +11,17 @@ import com.skoumal.teanity.util.Color
 import com.skoumal.teanity.util.Text
 import com.skoumal.teanity.view.TeanityActivity
 import com.skoumal.teanity.view.TeanityFragment
+import com.skoumal.teanity.viewevent.base.ActivityExecutor
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import android.graphics.Color as AColor
 
 class SnackbarEvent private constructor(
     private val builder: Builder
-) : ViewEvent() {
+) : ViewEvent(), ActivityExecutor {
+
+    override fun invoke(activity: AppCompatActivity) {
+        TODO()
+    }
 
     fun consume(fragment: TeanityFragment<*, *>) {
         consume(fragment.snackbarView, fragment.requireContext())

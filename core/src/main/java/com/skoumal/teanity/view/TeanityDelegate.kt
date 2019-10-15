@@ -13,7 +13,6 @@ import androidx.lifecycle.LifecycleOwner
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.subscribeK
 import com.skoumal.teanity.extensions.toInternal
-import com.skoumal.teanity.viewevent.SimpleViewEvent
 import com.skoumal.teanity.viewevent.base.ActivityExecutor
 import com.skoumal.teanity.viewevent.base.ContextExecutor
 import com.skoumal.teanity.viewevent.base.FragmentExecutor
@@ -21,7 +20,6 @@ import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
-import timber.log.Timber
 
 internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     private val view: V
@@ -53,35 +51,27 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     }
 
     private fun subscribe(events: Observable<ViewEvent>) {
-        subscriber = events.subscribeK(onError = { subscribe(events) }) {
-            when (it) {
-                is SimpleViewEvent -> {
-                    Timber.e("SimpleViewEvent is deprecated. See documentation for suggested solution.")
-                    view.onSimpleEventDispatched(it.event)
-                }
-                else -> {
-                    if (it is ContextExecutor) {
-                        runCatching { it(view.obtainContext()) }
-                            .onFailure { t -> it.onFailure(t) }
-                    }
-                    if (it is FragmentExecutor) {
-                        runCatching {
-                            when (val v = view) {
-                                is Fragment -> it(v)
-                            }
-                        }.onFailure { t -> it.onFailure(t) }
-                    }
-                    if (it is ActivityExecutor) {
-                        runCatching {
-                            when (val v = view) {
-                                is AppCompatActivity -> it(v)
-                                is Fragment -> it(v.requireActivity() as AppCompatActivity)
-                            }
-                        }.onFailure { t -> it.onFailure(t) }
-                    }
-                    view.onEventDispatched(it)
-                }
+        subscriber = events.subscribeK(onError = { subscribe(events) }) { it ->
+            if (it is ContextExecutor) {
+                runCatching { it(view.obtainContext()) }
+                    .onFailure { t -> it.onFailure(t) }
             }
+            if (it is FragmentExecutor) {
+                runCatching {
+                    when (val v = view) {
+                        is Fragment -> it(v)
+                    }
+                }.onFailure { t -> it.onFailure(t) }
+            }
+            if (it is ActivityExecutor) {
+                runCatching {
+                    when (val v = view) {
+                        is AppCompatActivity -> it(v)
+                        is Fragment -> it(v.requireActivity() as AppCompatActivity)
+                    }
+                }.onFailure { t -> it.onFailure(t) }
+            }
+            view.onEventDispatched(it)
         }
     }
 

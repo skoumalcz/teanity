@@ -4,12 +4,14 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import com.skoumal.teanity.viewevent.base.ActivityExecutor
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import androidx.navigation.navOptions as xNavOptions
 
@@ -26,7 +28,11 @@ class NavigationEvent(
     val navOptions: NavOptions? = null,
     private val extras: FragmentNavigator.Extras? = null,
     private val pendingExtras: Array<out Pair<Int, String>>? = null
-) : ViewEvent() {
+) : ViewEvent(), ActivityExecutor {
+
+    override fun invoke(activity: AppCompatActivity) {
+        TODO()
+    }
 
     fun getExtras(activity: Activity) = activity.run {
         extras ?: pendingExtras
