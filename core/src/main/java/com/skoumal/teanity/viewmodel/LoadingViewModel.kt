@@ -32,31 +32,4 @@ abstract class LoadingViewModel(defaultState: State = State.LOADING) :
         LOADED, LOADING, LOADING_FAILED
     }
 
-    //region Rx
-    protected fun <T> Observable<T>.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-        doOnSubscribe { viewModel.state = State.LOADING }
-            .doOnError { viewModel.state = State.LOADING_FAILED }
-            .doOnNext { if (allowFinishing) viewModel.state = State.LOADED }
-
-    protected fun <T> Single<T>.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-        doOnSubscribe { viewModel.state = State.LOADING }
-            .doOnError { viewModel.state = State.LOADING_FAILED }
-            .doOnSuccess { if (allowFinishing) viewModel.state = State.LOADED }
-
-    protected fun <T> Maybe<T>.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-        doOnSubscribe { viewModel.state = State.LOADING }
-            .doOnError { viewModel.state = State.LOADING_FAILED }
-            .doOnComplete { if (allowFinishing) viewModel.state = State.LOADED }
-            .doOnSuccess { if (allowFinishing) viewModel.state = State.LOADED }
-
-    protected fun <T> Flowable<T>.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-        doOnSubscribe { viewModel.state = State.LOADING }
-            .doOnError { viewModel.state = State.LOADING_FAILED }
-            .doOnNext { if (allowFinishing) viewModel.state = State.LOADED }
-
-    protected fun Completable.applyViewModel(viewModel: LoadingViewModel, allowFinishing: Boolean = true) =
-        doOnSubscribe { viewModel.state = State.LOADING }
-            .doOnError { viewModel.state = State.LOADING_FAILED }
-            .doOnComplete { if (allowFinishing) viewModel.state = State.LOADED }
-    //endregion
 }
