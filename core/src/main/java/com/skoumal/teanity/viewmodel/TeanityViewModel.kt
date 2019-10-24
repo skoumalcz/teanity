@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.SystemClock
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.util.KObservableField
@@ -14,17 +13,14 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 
-abstract class TeanityViewModel : ViewModel(), CoroutineScope {
+abstract class TeanityViewModel : ViewModel(), CoroutineScope by MainScope() {
 
     private val disposables = CompositeDisposable()
-
-    override val coroutineContext: CoroutineContext get() = viewModelScope.coroutineContext
 
     private val _viewEvents = PublishSubject.create<ViewEvent>()
     val viewEvents: Observable<ViewEvent> get() = _viewEvents
@@ -117,9 +113,4 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope {
         disposables.add(this)
     }
 
-    protected fun launch(
-        context: CoroutineContext = coroutineContext,
-        start: CoroutineStart = CoroutineStart.DEFAULT,
-        block: suspend CoroutineScope.() -> Unit
-    ) = (this as CoroutineScope).launch(context, start, block)
 }
