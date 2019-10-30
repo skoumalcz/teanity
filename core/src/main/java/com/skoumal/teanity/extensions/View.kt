@@ -56,7 +56,7 @@ private val Context.inputMethodManager
 
 internal fun WindowInsetsCompat.toInternal() = Insets(
     systemWindowInsetLeft,
-    systemWindowInsetRight,
     systemWindowInsetTop,
+    systemWindowInsetRight,
     systemWindowInsetBottom
 )
