@@ -3,7 +3,7 @@ object Lib {
 
     private object V {
         const val kotlin = "1.3.50"
-        const val kotlinCoroutines = "1.2.2"
+        const val kotlinCoroutines = "1.3.2"
         const val gradle = "3.5.0"
 
         object AndroidX {
