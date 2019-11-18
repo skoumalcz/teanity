@@ -37,7 +37,7 @@ object Config {
         const val fabric = "1.+"
         const val kotpref = "2.8.0"
         const val timber = "4.7.1"
-        const val sanitizer = "0.4"
+        const val sanitizer = "0.5"
         const val teanity = "0.+"
     }
 

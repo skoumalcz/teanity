@@ -66,7 +66,7 @@ dependencies {
     api("com.karumi", "dexter", Config.Dependency.dexter)
     api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter", Config.Dependency.bca)
     api("me.tatarka.bindingcollectionadapter2", "bindingcollectionadapter-recyclerview", Config.Dependency.bca)
-    api("com.github.diareuse", "response-sanitizer", Config.Dependency.sanitizer)
+    api("wiki.depasquale", "response-sanitizer", Config.Dependency.sanitizer)
 
     /* === UI === */
     api("com.github.bumptech.glide", "glide", Config.Dependency.glide)
