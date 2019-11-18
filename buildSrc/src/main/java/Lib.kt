@@ -121,8 +121,8 @@ object Lib {
 
     }
 
-    val sanitizer = github("diareuse", "response-sanitizer", V.sanitizer)
     val glide = github("bumptech.glide", "glide", V.glide)
+    const val sanitizer = "wiki.depasquale:response-sanitizer:${V.sanitizer}"
 
     const val dexter = "com.karumi:dexter:${V.dexter}"
     const val timber = "com.jakewharton.timber:timber:${V.timber}"
