@@ -29,7 +29,7 @@ object Lib {
         const val koin = "2.0.1"
         const val moshi = "1.8.0"
         const val retrofit = "2.6.1"
-        const val sanitizer = "0.4"
+        const val sanitizer = "0.6"
         const val glide = "4.9.0"
         const val dexter = "5.0.0"
         const val timber = "4.7.1"
