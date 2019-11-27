@@ -2,19 +2,19 @@
 object Lib {
 
     private object V {
-        const val kotlin = "1.3.50"
-        const val kotlinCoroutines = "1.2.2"
-        const val gradle = "3.5.0"
+        const val kotlin = "1.3.61"
+        const val kotlinCoroutines = "1.3.2"
+        const val gradle = "3.6.0-beta04"
 
         object AndroidX {
-            const val appcompat = "1.1.0-rc01"
-            const val core = "1.2.0-alpha02"
-            const val room = "2.1.0"
+            const val appcompat = "1.1.0"
+            const val core = "1.2.0-rc01"
+            const val room = "2.2.2"
             const val animation = "1.0.0-alpha02"
-            const val constraint = "2.0.0-beta2"
-            const val material = "1.1.0-alpha09"
-            const val lifecycle = "2.2.0-alpha02"
-            const val navigation = "2.1.0-alpha06"
+            const val constraint = "2.0.0-beta3"
+            const val material = "1.1.0-beta02"
+            const val lifecycle = "2.2.0-rc02"
+            const val navigation = "2.2.0-rc02"
             const val test = "1.2.0"
             const val junit = "1.1.1"
             const val services = "1.2.0"
@@ -23,15 +23,15 @@ object Lib {
         }
 
         const val lorem = "2.1"
-        const val rxKotlin = "2.3.0"
+        const val rxKotlin = "2.4.0"
         const val rxAndroid = "2.1.1"
-        const val binding = "3.0.0-beta1"
+        const val binding = "3.1.1"
         const val koin = "2.0.1"
-        const val moshi = "1.8.0"
-        const val retrofit = "2.6.1"
+        const val moshi = "1.9.2"
+        const val retrofit = "2.6.2"
         const val sanitizer = "0.6"
-        const val glide = "4.9.0"
-        const val dexter = "5.0.0"
+        const val glide = "4.10.0"
+        const val dexter = "6.0.0"
         const val timber = "4.7.1"
         const val state = "1.4.1"
         // this is kinda deprecated
