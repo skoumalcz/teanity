@@ -1,4 +1,4 @@
-allprojects {
+subprojects {
     afterEvaluate {
         if (!plugins.hasPlugin("com.android.library")) return
 
@@ -21,9 +21,28 @@ allprojects {
                 release {
                     useProguard false
                     minifyEnabled false
-                    proguardFiles getDefaultProguardFile('proguard-android.txt')
+                    proguardFiles getDefaultProguardFile("proguard-android.txt")
                 }
             }
+
+            testOptions {
+                animationsDisabled = false
+                unitTests {
+                    includeAndroidResources = true
+                    returnDefaultValues = true
+                }
+            }
+        }
+
+        dependencies {
+            testImplementation("junit:junit:4.12")
+            testImplementation("androidx.test:core:1.2.0")
+            testImplementation("org.mockito:mockito-core:3.0.0")
+
+            testImplementation("androidx.arch.core:core-testing:2.1.0")
+            testImplementation("androidx.test.ext:junit:1.1.1")
+            testImplementation("androidx.test.ext:truth:1.2.0")
+            testImplementation("com.google.truth:truth:1.0")
         }
     }
 }

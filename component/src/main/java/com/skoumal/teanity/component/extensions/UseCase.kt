@@ -9,12 +9,12 @@ import com.skoumal.teanity.component.UseCaseState
  * whether the current state matches the required one.
  * */
 fun UseCase<*, *>.isLoading() =
-    observeState().map { it == UseCaseState.LOADING }
+    observeState().map { it == UseCaseState.LOADING }.distinctUntilChanged()
 
 /** @see [isLoading] */
 fun UseCase<*, *>.isIdle() =
-    observeState().map { it == UseCaseState.IDLE }
+    observeState().map { it == UseCaseState.IDLE }.distinctUntilChanged()
 
 /** @see [isLoading] */
 fun UseCase<*, *>.isFailed() =
-    observeState().map { it == UseCaseState.FAILED }
+    observeState().map { it == UseCaseState.FAILED }.distinctUntilChanged()

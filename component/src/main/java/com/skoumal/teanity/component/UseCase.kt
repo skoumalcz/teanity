@@ -9,7 +9,6 @@ package com.skoumal.teanity.component
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.skoumal.teanity.component.extensions.distinctUntilChanged
-import com.skoumal.teanity.component.extensions.nextValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -108,15 +107,13 @@ abstract class UseCase<in In, Out> {
         params: In,
         data: MutableLiveData<Result<Out>> = this.data
     ): Result<Out> {
-        state.nextValue = UseCaseState.LOADING
+        state.postValue(UseCaseState.LOADING)
         return withContext(dispatcher) {
-            val result = runCatching { execute(params) }
+            runCatching { execute(params) }
                 .also { data.postValue(it) }
                 .onFailure { Timber.e(it) }
-            val state = result
-                .fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })
-            state to result
-        }.also { state.nextValue = it.first }.second
+                .also { state.postValue(it.fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })) }
+        }
     }
 
     /**
