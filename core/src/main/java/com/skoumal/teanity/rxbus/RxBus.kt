@@ -3,6 +3,12 @@ package com.skoumal.teanity.rxbus
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
+@Deprecated(
+    """
+       RxBus is deprecated by superior Channels (or Flows) contained in the coroutines library. 
+       It will reach EOL in 1.1. Vessel is a successor.  
+    """, level = DeprecationLevel.ERROR
+)
 class RxBus {
 
     private val _bus = PublishSubject.create<Event>()
