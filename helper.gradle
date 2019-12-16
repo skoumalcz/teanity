@@ -6,7 +6,11 @@ subprojects {
             compileSdkVersion(Sdk.compileSdk)
 
             defaultConfig {
-                minSdkVersion(Sdk.minSdk)
+                if (project.name == "test-ui") {
+                    minSdkVersion = 18
+                } else {
+                    minSdkVersion(Sdk.minSdk)
+                }
                 targetSdkVersion(Sdk.targetSdk)
                 versionCode = 1
                 versionName = "1.0"
