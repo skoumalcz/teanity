@@ -14,6 +14,7 @@ fun <T : Any> Response<T>.toResult(): Result<T?> {
     return Result.failure(NetworkException(errorBody()))
 }
 
+@Deprecated("Retrofit no longer requires Deferred implementation and supports suspend by default")
 suspend fun <T : Any> Deferred<Response<T>>.awaitResult(): Result<T?> {
     return try {
         await().toResult()
