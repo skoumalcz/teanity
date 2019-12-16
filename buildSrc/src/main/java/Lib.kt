@@ -20,6 +20,7 @@ object Lib {
             const val services = "1.2.0"
             const val automator = "2.2.0"
             const val espresso = "3.2.0"
+            const val multidex = "2.0.1"
         }
 
         const val lorem = "2.1"
@@ -66,6 +67,7 @@ object Lib {
         val constraint =
             androidx("constraintlayout", "constraintlayout", V.AndroidX.constraint)
         val material = "com.google.android.material:material:${V.AndroidX.material}"
+        val multidex = androidx("multidex", "multidex", V.AndroidX.multidex)
     }
 
     object Lifecycle {

@@ -14,10 +14,14 @@ subprojects {
                 targetSdkVersion(Sdk.targetSdk)
                 versionCode = 1
                 versionName = "1.0"
+                multiDexEnabled true
             }
 
             kotlinOptions {
-                freeCompilerArgs = ["-Xallow-result-return-type", "-Xuse-experimental=kotlin.Experimental"]
+                freeCompilerArgs = [
+                        "-Xallow-result-return-type",
+                        "-Xuse-experimental=kotlin.Experimental"
+                ]
                 jvmTarget = "1.8"
             }
 
