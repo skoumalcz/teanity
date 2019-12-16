@@ -19,9 +19,8 @@ subprojects {
 
             buildTypes {
                 release {
-                    useProguard false
                     minifyEnabled false
-                    proguardFiles getDefaultProguardFile("proguard-android.txt")
+                    shrinkResources false
                 }
             }
 
