@@ -14,8 +14,6 @@ internal interface TeanityView<Binding> {
 
     /**
      * Called for all [ViewEvent]s published by associated viewModel.
-     * For [SimpleViewEvent]s, both this and [onSimpleEventDispatched]
-     * methods are called - you can choose the way how you handle them.
      */
     fun onEventDispatched(event: ViewEvent) {}
 
