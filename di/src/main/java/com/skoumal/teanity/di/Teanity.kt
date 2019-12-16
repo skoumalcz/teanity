@@ -2,7 +2,6 @@ package com.skoumal.teanity.di
 
 import android.content.Context
 import com.skoumal.teanity.di.module.genericModule
-import com.skoumal.teanity.di.module.teanityModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -10,7 +9,7 @@ import org.koin.core.module.Module
 object Teanity {
 
     @JvmStatic
-    fun modules() = genericModule + teanityModule
+    fun modules() = listOf(genericModule)
 
     @JvmStatic
     fun startWith(_context: Context, vararg modules: Module) {
