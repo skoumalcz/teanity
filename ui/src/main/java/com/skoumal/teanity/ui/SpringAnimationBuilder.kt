@@ -1,13 +1,15 @@
 package com.skoumal.teanity.ui
 
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 
 class SpringAnimationBuilder(private val view: View) {
 
-    private val animations = mutableMapOf<DynamicAnimation.ViewProperty, SpringAnimation>()
+    @VisibleForTesting
+    internal val animations = mutableMapOf<DynamicAnimation.ViewProperty, SpringAnimation>()
 
     fun alpha(position: Float, force: AnimationBuilder? = null) =
         by(DynamicAnimation.ALPHA, position, force)

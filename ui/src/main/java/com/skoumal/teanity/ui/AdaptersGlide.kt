@@ -35,10 +35,13 @@ fun RequestOptions.applyTransformation(scaleType: String): RequestOptions = when
     ScaleType.FIT_CENTER.text -> fitCenter()
 
     ScaleType.FIT_END.text, ScaleType.FIT_START.text, ScaleType.FIT_XY.text, ScaleType.MATRIX.text,
-    ScaleType.CENTER.text -> throw IllegalArgumentException("Scale type \"$scaleType\" is not supported.")
+    ScaleType.CENTER.text -> throwUnsupportedException(scaleType)
 
-    else -> throw IllegalArgumentException("Scale type \"$scaleType\" is not supported.")
+    else -> throwUnsupportedException(scaleType)
 }
+
+private fun throwUnsupportedException(type: String): Nothing =
+    throw IllegalArgumentException("Scale type \"$type\" is not supported.")
 
 @Suppress("DEPRECATION")
 private fun ImageView.ScaleType.asInternal() = when (this) {
