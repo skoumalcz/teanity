@@ -42,7 +42,6 @@ fun RecyclerView.setLoadMoreListener(listener: OnBottomReachedListener) {
     clearOnScrollListeners()
     val scrollListener = EndlessRecyclerScrollListener(
         layoutManager ?: return,
-
         listener::onLoadMore
     )
     addOnScrollListener(scrollListener)
