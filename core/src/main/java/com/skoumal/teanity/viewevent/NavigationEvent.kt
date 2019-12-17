@@ -11,6 +11,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import com.skoumal.teanity.view.TeanityActivity
 import com.skoumal.teanity.viewevent.base.ActivityExecutor
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import androidx.navigation.navOptions as xNavOptions
@@ -31,7 +32,8 @@ class NavigationEvent(
 ) : ViewEvent(), ActivityExecutor {
 
     override fun invoke(activity: AppCompatActivity) {
-        TODO()
+        if (activity !is TeanityActivity<*, *>) return
+        activity.apply { navigate() }
     }
 
     fun getExtras(activity: Activity) = activity.run {

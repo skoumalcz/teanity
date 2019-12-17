@@ -89,7 +89,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     //endregion
     //region Navigation
 
-    protected open fun NavigationEvent.navigate() {
+    open fun NavigationEvent.navigate() {
         navController.navigate(navDirections, navOptions, getExtras(this@TeanityActivity))
         if (navDirections is GenericNavDirections && navDirections.clearTask) {
             finish()

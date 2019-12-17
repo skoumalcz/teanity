@@ -20,7 +20,8 @@ class SnackbarEvent private constructor(
 ) : ViewEvent(), ActivityExecutor {
 
     override fun invoke(activity: AppCompatActivity) {
-        TODO()
+        if (activity !is TeanityActivity<*, *>) return
+        consume(activity)
     }
 
     fun consume(fragment: TeanityFragment<*, *>) {
