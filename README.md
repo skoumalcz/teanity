@@ -63,9 +63,9 @@ dependencies {
 
 ### Starting a new project? ###
 
-* [Windows / MAC / Linux](https://github.com/skoumalcz/teanity-quickstart/releases)
-    
-#### Usage
+[Windows / MAC / Linux](https://github.com/skoumalcz/teanity-quickstart/releases)
+
+#### Usage ####
 
 ```
 # Just call the script like so in your target directory (ie. ~/projects) :
