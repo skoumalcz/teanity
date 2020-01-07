@@ -24,6 +24,7 @@ annotation class NavigationDslMarker
  *
  * ### There is no actual need to create actions or arguments within navigation map. Since they *will not* be used.
  * */
+@Deprecated("Use generated directions from the navigation library. It currently provides equivalent functionality and duplicating the feature like this no longer makes any sense.")
 class NavigationEvent(
     val navDirections: NavDirections,
     val navOptions: NavOptions? = null,
@@ -36,12 +37,14 @@ class NavigationEvent(
         activity.apply { navigate() }
     }
 
+    @Deprecated("")
     fun getExtras(activity: Activity) = activity.run {
         extras ?: pendingExtras
             ?.map { findViewById<View>(it.first) to it.second }
             ?.let { FragmentNavigatorExtras(*it.toTypedArray()) }
     }
 
+    @Deprecated("")
     fun getExtras(fragment: Fragment) = fragment.run {
         extras ?: view?.let { view ->
             pendingExtras
@@ -51,11 +54,13 @@ class NavigationEvent(
     }
 
     companion object {
+        @Deprecated("")
         operator fun invoke(builder: Builder.() -> Unit): NavigationEvent =
             Builder().apply(builder).build()
     }
 
     @NavigationDslMarker
+    @Deprecated("")
     class Builder {
 
         private var navOptions: NavOptions? = null
@@ -68,11 +73,13 @@ class NavigationEvent(
          *
          * @see [NavDirectionsBuilder.args]
          * */
+        @Deprecated("")
         fun args(builder: Bundle.() -> Unit) = directionsBuilder.args(builder)
 
         /**
          * @see [androidx.navigation.navOptions]
          * */
+        @Deprecated("")
         fun navOptions(builder: NavOptionsBuilder.() -> Unit) {
             navOptions = xNavOptions(builder)
         }
@@ -80,6 +87,7 @@ class NavigationEvent(
         /**
          * Updates internal [directionsBuilder]. Builder is not cleared within instance.
          * */
+        @Deprecated("")
         fun navDirections(builder: NavDirectionsBuilder.() -> Unit) {
             directionsBuilder.apply(builder)
         }
@@ -87,14 +95,17 @@ class NavigationEvent(
         /**
          * Builds extras for view transitions
          * */
+        @Deprecated("")
         fun extras(vararg transitions: Pair<View, String>) {
             extras = FragmentNavigatorExtras(*transitions)
         }
 
+        @Deprecated("")
         fun extrasIds(vararg transitions: Pair<Int, String>) {
             pendingExtras = transitions
         }
 
+        @Deprecated("")
         internal fun build() = NavigationEvent(
             directionsBuilder.build(),
             navOptions,
@@ -105,6 +116,7 @@ class NavigationEvent(
 }
 
 @NavigationDslMarker
+@Deprecated("")
 class NavDirectionsBuilder {
 
     /**
@@ -113,6 +125,7 @@ class NavDirectionsBuilder {
      * Defaults to -1.
      * */
     @IdRes
+    @Deprecated("")
     var destination: Int = -1
 
     /**
@@ -121,6 +134,7 @@ class NavDirectionsBuilder {
      *
      * Defaults to false.
      * */
+    @Deprecated("")
     var clearTask: Boolean = false
     private val args: Bundle = Bundle()
 
@@ -139,14 +153,17 @@ class NavDirectionsBuilder {
      * }
      * ```
      * */
+    @Deprecated("")
     fun args(builder: Bundle.() -> Unit) = args.apply(builder)
 
+    @Deprecated("")
     internal fun build() = GenericNavDirections(destination, args).apply {
         clearTask = this@NavDirectionsBuilder.clearTask
     }
 
 }
 
+@Deprecated("")
 class GenericNavDirections(private val target: Int, private val args: Bundle) : NavDirections {
 
     var clearTask: Boolean = false

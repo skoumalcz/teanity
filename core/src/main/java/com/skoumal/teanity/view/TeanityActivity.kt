@@ -5,6 +5,7 @@ import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.skoumal.teanity.viewevent.GenericNavDirections
 import com.skoumal.teanity.viewevent.NavigationEvent
@@ -89,11 +90,16 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     //endregion
     //region Navigation
 
+    @Deprecated("Use NavDirections.navigate() instead. Duplicating NavigationEvent is no longer necessary.")
     open fun NavigationEvent.navigate() {
         navController.navigate(navDirections, navOptions, getExtras(this@TeanityActivity))
         if (navDirections is GenericNavDirections && navDirections.clearTask) {
             finish()
         }
+    }
+
+    open fun NavDirections.navigate() {
+        navController.navigate(this)
     }
 
     //endregion

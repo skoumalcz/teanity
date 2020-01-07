@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.os.SystemClock
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavDirections
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.util.KObservableField
+import com.skoumal.teanity.viewevent.NavigationEventHelper
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -104,6 +106,8 @@ abstract class TeanityViewModel : ViewModel(), CoroutineScope by MainScope() {
     fun saveState(outState: Bundle) {
         StateSaver.saveInstanceState(this, outState)
     }
+
+    fun NavDirections.publish() = NavigationEventHelper(this).publish()
 
     fun <Event : ViewEvent> Event.publish() {
         _viewEvents.onNext(this)
