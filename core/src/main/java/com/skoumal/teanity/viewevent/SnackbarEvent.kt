@@ -82,7 +82,7 @@ class SnackbarEvent private constructor(
 
     class ActionBuilder {
         var color: Color = Color.ColorInt(AColor.WHITE)
-        var text = Text.Sequence("")
+        var text: Text = Text.Sequence("")
 
         internal var onClickListener: (View) -> Unit = {}
 
