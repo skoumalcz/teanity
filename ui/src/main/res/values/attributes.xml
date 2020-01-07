@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Color extensions for theming-->
+    <attr name="colorSurfaceVariant" format="color" />
+    <attr name="colorOnSurfaceVariant" format="color" />
+    <attr name="colorOnPrimaryVariant" format="color" />
+    <attr name="colorOnSecondaryVariant" format="color" />
+
+</resources>
