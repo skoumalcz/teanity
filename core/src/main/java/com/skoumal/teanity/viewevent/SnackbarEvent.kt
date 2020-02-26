@@ -10,7 +10,6 @@ import com.skoumal.teanity.extensions.textColor
 import com.skoumal.teanity.util.Color
 import com.skoumal.teanity.util.Text
 import com.skoumal.teanity.view.TeanityActivity
-import com.skoumal.teanity.view.TeanityFragment
 import com.skoumal.teanity.viewevent.base.ActivityExecutor
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import android.graphics.Color as AColor
@@ -24,15 +23,11 @@ class SnackbarEvent private constructor(
         consume(activity)
     }
 
-    fun consume(fragment: TeanityFragment<*, *>) {
-        consume(fragment.snackbarView, fragment.requireContext())
-    }
-
-    fun consume(activity: TeanityActivity<*, *>) {
+    private fun consume(activity: TeanityActivity<*, *>) {
         consume(activity.snackbarView, activity)
     }
 
-    fun consume(view: View, context: Context) {
+    private fun consume(view: View, context: Context) {
         val res = context.resources
         Snackbar.make(
             view,

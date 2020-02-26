@@ -4,13 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
-import com.skoumal.teanity.viewevent.GenericNavDirections
-import com.skoumal.teanity.viewevent.NavigationEvent
-import com.skoumal.teanity.viewevent.SnackbarEvent
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
@@ -61,13 +57,7 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
 
     //region TeanityView
 
-    @CallSuper
-    override fun onEventDispatched(event: ViewEvent) {
-        when (event) {
-            is NavigationEvent -> event.navigate()
-            is SnackbarEvent -> teanityActivity?.run { event.consume(this) }
-        }
-    }
+    override fun onEventDispatched(event: ViewEvent) {}
 
     override fun saveState(outState: Bundle) {
         super.saveState(outState)
@@ -92,13 +82,6 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
     protected fun detachEvents() = delegate.detachEvents()
     protected fun ViewEvent.onSelf() {
         viewModel.apply { publish() }
-    }
-
-    private fun NavigationEvent.navigate() {
-        navController.navigate(navDirections, navOptions, getExtras(this@TeanityDialogFragment))
-        if (navDirections is GenericNavDirections && navDirections.clearTask) {
-            activity?.finish()
-        }
     }
 
     //endregion

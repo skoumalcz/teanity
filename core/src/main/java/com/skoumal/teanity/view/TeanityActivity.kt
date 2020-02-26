@@ -1,15 +1,11 @@
 package com.skoumal.teanity.view
 
 import android.os.Bundle
-import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
-import com.skoumal.teanity.viewevent.GenericNavDirections
-import com.skoumal.teanity.viewevent.NavigationEvent
-import com.skoumal.teanity.viewevent.SnackbarEvent
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
@@ -56,13 +52,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
 
     //region TeanityView
 
-    @CallSuper
-    override fun onEventDispatched(event: ViewEvent) {
-        when (event) {
-            is NavigationEvent -> event.navigate()
-            is SnackbarEvent -> event.consume(this)
-        }
-    }
+    override fun onEventDispatched(event: ViewEvent) {}
 
     override fun saveState(outState: Bundle) {
         super.saveState(outState)
@@ -89,14 +79,6 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
 
     //endregion
     //region Navigation
-
-    @Deprecated("Use NavDirections.navigate() instead. Duplicating NavigationEvent is no longer necessary.")
-    open fun NavigationEvent.navigate() {
-        navController.navigate(navDirections, navOptions, getExtras(this@TeanityActivity))
-        if (navDirections is GenericNavDirections && navDirections.clearTask) {
-            finish()
-        }
-    }
 
     open fun NavDirections.navigate() {
         navController.navigate(this)
