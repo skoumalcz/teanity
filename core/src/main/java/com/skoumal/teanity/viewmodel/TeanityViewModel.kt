@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.BR
+import com.skoumal.teanity.lifecycle.LiveDataObserverHost
 import com.skoumal.teanity.observable.Notifyable
 import com.skoumal.teanity.observable.observable
 import com.skoumal.teanity.util.Insets
@@ -20,7 +21,8 @@ import timber.log.Timber
 
 abstract class TeanityViewModel : ViewModel(),
     CoroutineScope by MainScope(),
-    Notifyable by Notifyable.impl {
+    Notifyable by Notifyable.impl,
+    LiveDataObserverHost by LiveDataObserverHost.impl {
 
     private val _viewEvents = Channel<ViewEvent>(Channel.UNLIMITED)
 
