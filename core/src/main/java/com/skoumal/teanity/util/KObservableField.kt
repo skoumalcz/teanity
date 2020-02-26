@@ -8,7 +8,11 @@ import java.io.Serializable
  * Kotlin version of [ObservableField].
  * You can define if wrapped type is Nullable or not.
  * You can use kotlin get/set syntax for value
+ *
+ * @deprecated
+ * @see [com.skoumal.teanity.observable.observable]
  */
+@Deprecated("This is deprecated in the favor of the observable delegate.")
 class KObservableField<T> : ObservableField<T>, Serializable {
 
     @Volatile
