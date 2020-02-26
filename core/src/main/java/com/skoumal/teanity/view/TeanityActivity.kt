@@ -84,7 +84,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
     //endregion
     //region Helpers
 
-    protected fun detachEvents() = delegate.dispose()
+    protected fun detachEvents() = delegate.onDestroy()
     protected fun ViewEvent.onSelf() = viewModel.run { publish() }
 
     //endregion

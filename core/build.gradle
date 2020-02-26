@@ -26,10 +26,6 @@ dependencies {
     api(Lib.navigation.fragment)
     api(Lib.navigation.ui)
 
-    /* === RX === */
-    api(Lib.reactive.kotlin)
-    api(Lib.reactive.android)
-
     /* === EASING === */
     implementation(Lib.state)
     implementation(Lib.dexter)

@@ -96,7 +96,7 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     //endregion
     //region Helpers
 
-    protected fun detachEvents() = delegate.dispose()
+    protected fun detachEvents() = delegate.detachEvents()
     protected fun ViewEvent.onSelf() {
         viewModel.apply { publish() }
     }

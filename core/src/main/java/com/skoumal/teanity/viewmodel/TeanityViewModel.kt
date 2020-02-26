@@ -13,24 +13,20 @@ import com.skoumal.teanity.observable.observable
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevent.NavigationEventHelper
 import com.skoumal.teanity.viewevent.base.ViewEvent
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.consumeAsFlow
 import timber.log.Timber
 
 abstract class TeanityViewModel : ViewModel(),
     CoroutineScope by MainScope(),
     Notifyable by Notifyable.impl {
 
-    private val disposables = CompositeDisposable()
+    private val _viewEvents = Channel<ViewEvent>(Channel.UNLIMITED)
 
-    private val _viewEvents = PublishSubject.create<ViewEvent>()
-    val viewEvents: Observable<ViewEvent> get() = _viewEvents
+    @UseExperimental(FlowPreview::class)
+    val viewEvents
+        get() = _viewEvents.consumeAsFlow()
 
     var insets by observable(Insets(), BR.insets)
         @Bindable get
@@ -41,8 +37,8 @@ abstract class TeanityViewModel : ViewModel(),
     protected open val minRefreshDelay = 0
 
     override fun onCleared() {
+        _viewEvents.close()
         super.onCleared()
-        disposables.clear()
     }
 
     /**
@@ -116,11 +112,7 @@ abstract class TeanityViewModel : ViewModel(),
     fun NavDirections.publish() = NavigationEventHelper(this).publish()
 
     fun <Event : ViewEvent> Event.publish() {
-        _viewEvents.onNext(this)
-    }
-
-    fun Disposable.add() {
-        disposables.add(this)
+        _viewEvents.offer(this)
     }
 
 }

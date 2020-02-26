@@ -4,12 +4,10 @@ import android.util.Log
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.recyclerview.widget.DiffUtil
-import com.skoumal.teanity.extensions.applySchedulers
-import com.skoumal.teanity.extensions.subscribeK
 import com.skoumal.teanity.viewmodel.TeanityViewModel
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
@@ -50,26 +48,14 @@ open class DiffObservableList<T>(
      * */
     @AnyThread
     fun updateAsync(newItems: List<T>) {
-        updateRx(newItems).subscribeK()
-    }
+        GlobalScope.launch(Dispatchers.Main) {
+            val diff = withContext(Dispatchers.Default) {
+                computeDiff(newItems)
+            }
+            update(newItems, diff)
 
-    /**
-     * Updates the contents asynchronously with feedback loop.
-     *
-     * @param newItems   The items to set this list to.
-     * @return [Single] that automatically calculates diff and applies it to internal list. [Single] is subscribed to
-     * on [Schedulers.computation] thread and switched back to [Schedulers.io] when done
-     * */
-    @AnyThread
-    fun updateRx(newItems: List<T>) = Single
-        .fromCallable {
-            val oldItems = synchronized(listLock) { list.toList() }
-            newItems to doCalculateDiff(oldItems, newItems)
         }
-        .applySchedulers(subscribeOn = Schedulers.computation())
-        .doOnSuccess { update(it.first, it.second) }
-        .applySchedulers(observeOn = Schedulers.io())
-        .map { it.first }
+    }
 
     /**
      * Computes list diff on [Dispatchers.Default]. Requires call from [TeanityViewModel.launch] or similar.

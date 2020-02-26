@@ -89,7 +89,7 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
     //endregion
     //region Helpers
 
-    protected fun detachEvents() = delegate.dispose()
+    protected fun detachEvents() = delegate.detachEvents()
     protected fun ViewEvent.onSelf() {
         viewModel.apply { publish() }
     }
