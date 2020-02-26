@@ -37,7 +37,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
 
         view.peekSystemWindowInsets(ourInsets)
         val consumedInsets = view.consumeSystemWindowInsets(ourInsets)?.also {
-            view.obtainViewModel().insets.value = it
+            view.obtainViewModel().insets = it
         }
 
         consumedInsets?.let {

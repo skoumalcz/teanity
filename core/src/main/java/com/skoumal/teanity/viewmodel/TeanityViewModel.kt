@@ -3,11 +3,14 @@ package com.skoumal.teanity.viewmodel
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.annotation.CallSuper
+import androidx.databinding.Bindable
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.evernote.android.state.StateSaver
+import com.skoumal.teanity.BR
+import com.skoumal.teanity.observable.Notifyable
+import com.skoumal.teanity.observable.observable
 import com.skoumal.teanity.util.Insets
-import com.skoumal.teanity.util.KObservableField
 import com.skoumal.teanity.viewevent.NavigationEventHelper
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import io.reactivex.Observable
@@ -20,14 +23,17 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-abstract class TeanityViewModel : ViewModel(), CoroutineScope by MainScope() {
+abstract class TeanityViewModel : ViewModel(),
+    CoroutineScope by MainScope(),
+    Notifyable by Notifyable.impl {
 
     private val disposables = CompositeDisposable()
 
     private val _viewEvents = PublishSubject.create<ViewEvent>()
     val viewEvents: Observable<ViewEvent> get() = _viewEvents
 
-    val insets = KObservableField(Insets())
+    var insets by observable(Insets(), BR.insets)
+        @Bindable get
 
     internal var lastRefresh = 0L
     private var currentJob: Job? = null
