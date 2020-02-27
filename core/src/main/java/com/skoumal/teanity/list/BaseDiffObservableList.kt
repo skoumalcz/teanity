@@ -5,12 +5,15 @@ import androidx.databinding.ListChangeRegistry
 import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
+import com.skoumal.teanity.tools.annotation.RemoveOnDeprecation
 import java.util.*
 
 /**
  * @param callback    The callback that controls the behavior of the DiffObservableList.
  * @param detectMoves True if DiffUtil should try to detect moved items, false otherwise.
  */
+@Deprecated("Use first party DiffObservableList")
+@RemoveOnDeprecation("1.2")
 abstract class BaseDiffObservableList<T>(
     private val callback: Callback<T>,
     private val detectMoves: Boolean = true

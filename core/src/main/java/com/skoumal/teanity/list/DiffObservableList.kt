@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.recyclerview.widget.DiffUtil
+import com.skoumal.teanity.tools.annotation.RemoveOnDeprecation
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -21,6 +22,8 @@ import kotlinx.coroutines.withContext
  * @see BaseDiffObservableList
  * @inherit [BaseDiffObservableList]
  * */
+@Deprecated("Use first party DiffObservableList")
+@RemoveOnDeprecation("1.2")
 open class DiffObservableList<T>(
     callback: Callback<T>,
     detectMoves: Boolean = true
