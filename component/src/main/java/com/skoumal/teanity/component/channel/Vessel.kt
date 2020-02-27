@@ -1,6 +1,6 @@
 package com.skoumal.teanity.component.channel
 
-import com.skoumal.teanity.util.SubjectsToChange
+import com.skoumal.teanity.tools.annotation.SubjectsToChange
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel

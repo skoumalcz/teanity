@@ -3,7 +3,7 @@ package com.skoumal.teanity.viewmodel
 import androidx.annotation.AnyThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.skoumal.teanity.util.SubjectsToChange
+import com.skoumal.teanity.tools.annotation.SubjectsToChange
 
 /**
  * ## Definition

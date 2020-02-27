@@ -1,7 +1,7 @@
 package com.skoumal.teanity.component.channel
 
 import com.google.common.truth.Truth.assertThat
-import com.skoumal.teanity.util.SubjectsToChange
+import com.skoumal.teanity.tools.annotation.SubjectsToChange
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach

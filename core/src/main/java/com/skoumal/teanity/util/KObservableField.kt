@@ -2,6 +2,7 @@ package com.skoumal.teanity.util
 
 import androidx.databinding.Observable
 import androidx.databinding.ObservableField
+import com.skoumal.teanity.tools.annotation.RemoveOnDeprecation
 import java.io.Serializable
 
 /**
@@ -13,6 +14,7 @@ import java.io.Serializable
  * @see [com.skoumal.teanity.observable.observable]
  */
 @Deprecated("This is deprecated in the favor of the observable delegate.")
+@RemoveOnDeprecation("1.2")
 class KObservableField<T> : ObservableField<T>, Serializable {
 
     @Volatile

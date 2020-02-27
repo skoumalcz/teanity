@@ -13,6 +13,8 @@ android {
 
 dependencies {
 
+    api(project(":tools"))
+
     implementation(Lib.kotlin.lib)
     implementation(Lib.kotlin.coroutines)
 
