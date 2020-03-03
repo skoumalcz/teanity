@@ -19,14 +19,14 @@ interface Notifyable : Observable {
      * synchronous, hence observers will never be notified in undefined order. Observers might
      * choose to refresh the view completely, which is beyond the scope of this function.
      * */
-    fun notifyChange()
+    fun notifyChange(sender: Observable)
 
     /**
      * Notifies all observers about field with [fieldId] has been changed. This will happen
      * synchronously before or after [notifyChange] has been called. It will never be called during
      * the execution of aforementioned method.
      * */
-    fun notifyPropertyChanged(fieldId: Int)
+    fun notifyPropertyChanged(sender: Observable, fieldId: Int)
 
     companion object {
 
@@ -55,13 +55,13 @@ private class NotifyableImpl : Notifyable {
     }
 
     @Synchronized
-    override fun notifyChange() {
-        callbacks?.notifyCallbacks(this, 0, null)
+    override fun notifyChange(sender: Observable) {
+        callbacks?.notifyCallbacks(sender, 0, null)
     }
 
     @Synchronized
-    override fun notifyPropertyChanged(fieldId: Int) {
-        callbacks?.notifyCallbacks(this, fieldId, null)
+    override fun notifyPropertyChanged(sender: Observable, fieldId: Int) {
+        callbacks?.notifyCallbacks(sender, fieldId, null)
     }
 
 }
@@ -116,13 +116,15 @@ fun <T> Notifyable.observable(
     initialValue: T,
     vararg fieldIds: Int,
     afterChanged: ((T) -> Unit)? = null
-) = Delegates.observable(initialValue) { _, _, value ->
-    if (fieldIds.isEmpty()) {
-        notifyChange()
-    } else {
-        fieldIds.forEach { notifyPropertyChanged(it) }
+) = Delegates.observable(initialValue) { _, old, value ->
+    if (old != value) {
+        if (fieldIds.isEmpty()) {
+            notifyChange(this)
+        } else {
+            fieldIds.forEach { notifyPropertyChanged(this, it) }
+        }
+        afterChanged?.invoke(value)
     }
-    afterChanged?.invoke(value)
 }
 
 // endregion
