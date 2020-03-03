@@ -14,11 +14,9 @@ import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.toInternal
 import com.skoumal.teanity.viewevent.base.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     private val view: V
@@ -52,18 +50,20 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     private fun subscribe(events: Flow<ViewEvent>) {
         job = GlobalScope.launch {
             events.collect {
-                it.consumeIfInstanceCatching<FragmentExecutor> {
-                    it(view as Fragment)
-                }.consumeIfInstanceCatching<ActivityExecutor> {
-                    when (val v = view) {
-                        is AppCompatActivity -> it(v)
-                        is Fragment -> it(v.requireActivity() as AppCompatActivity)
-                        else -> throw IllegalStateException()
+                withContext(Dispatchers.Main) {
+                    it.consumeIfInstanceCatching<FragmentExecutor> {
+                        it(view as Fragment)
+                    }.consumeIfInstanceCatching<ActivityExecutor> {
+                        when (val v = view) {
+                            is AppCompatActivity -> it(v)
+                            is Fragment -> it(v.requireActivity() as AppCompatActivity)
+                            else -> throw IllegalStateException()
+                        }
+                    }.consumeIfInstanceCatching<ContextExecutor> {
+                        it(view.obtainContext())
+                    }.consumeIfInstanceCatching<ViewEvent> { _ ->
+                        view.onEventDispatched(it)
                     }
-                }.consumeIfInstanceCatching<ContextExecutor> {
-                    it(view.obtainContext())
-                }.consumeIfInstanceCatching<ViewEvent> { _ ->
-                    view.onEventDispatched(it)
                 }
             }
         }
