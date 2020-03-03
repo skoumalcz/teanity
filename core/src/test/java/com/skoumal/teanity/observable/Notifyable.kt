@@ -54,6 +54,8 @@ class NotifyableTest {
                 ranListener = true
                 assertThat(it).isAnyOf(BR_testField, BR_mappedField)
             }
+            testField = false
+
             addOnPropertyChangedCallback(listener)
 
             testField = true
