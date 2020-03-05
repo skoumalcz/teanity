@@ -88,7 +88,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     fun onCreate(dialog: Fragment, savedInstanceState: Bundle?) {
         view.restoreState(savedInstanceState)
 
-        subscribe(view.obtainViewModel().viewEvents.openSubscription())
+        subscribe(view.obtainViewModel().openSubscription())
     }
 
     fun onCreateView(
@@ -107,7 +107,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
             lifecycleOwner = activity
         }
 
-        subscribe(view.obtainViewModel().viewEvents.openSubscription())
+        subscribe(view.obtainViewModel().openSubscription())
         ensureInsets(binding.root)
     }
 
@@ -121,6 +121,8 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
                 binding.unbindViews()
             }
         }
+
+        detachEvents()
     }
 
 }

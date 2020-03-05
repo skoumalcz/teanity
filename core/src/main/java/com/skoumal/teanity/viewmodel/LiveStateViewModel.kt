@@ -81,6 +81,7 @@ abstract class LiveStateViewModel<State>(
      * pushed to [internalState], and in-turn [state].
      * */
     @AnyThread
+    @JvmName(name = "publishState")
     protected fun State.publish() = mutateState(internalState.value ?: this, this)
         .let { internalState.postValue(it) }
 

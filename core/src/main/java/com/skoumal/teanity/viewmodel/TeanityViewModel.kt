@@ -9,25 +9,23 @@ import androidx.navigation.NavDirections
 import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.lifecycle.LiveDataObserverHost
+import com.skoumal.teanity.observable.Broadcastable
 import com.skoumal.teanity.observable.Notifyable
 import com.skoumal.teanity.observable.observable
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevent.NavigationEventHelper
 import com.skoumal.teanity.viewevent.base.ViewEvent
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 abstract class TeanityViewModel : ViewModel(),
     CoroutineScope by MainScope(),
     Notifyable by Notifyable.impl,
-    LiveDataObserverHost by LiveDataObserverHost.impl {
-
-    private val _viewEvents = BroadcastChannel<ViewEvent>(Channel.UNLIMITED)
-
-    @UseExperimental(FlowPreview::class)
-    val viewEvents = _viewEvents
+    LiveDataObserverHost by LiveDataObserverHost.impl,
+    Broadcastable<ViewEvent> by Broadcastable.impl() {
 
     var insets by observable(Insets(), BR.insets)
         @Bindable get
@@ -38,7 +36,7 @@ abstract class TeanityViewModel : ViewModel(),
     protected open val minRefreshDelay = 0
 
     override fun onCleared() {
-        _viewEvents.close()
+        disposeBroadcastChannel()
         super.onCleared()
     }
 
@@ -111,19 +109,5 @@ abstract class TeanityViewModel : ViewModel(),
     }
 
     fun NavDirections.publish() = NavigationEventHelper(this).publish()
-
-    fun <Event : ViewEvent> Event.publish() {
-        if (_viewEvents.isClosedForSend) {
-            Timber.i("Channel has been disposed, no further events will be sent")
-            return
-        }
-        try {
-            if (!_viewEvents.offer(this)) {
-                Timber.i("Event $this has been rejected by broadcast queue")
-            }
-        } catch (e: CancellationException) {
-            Timber.e("The channel $_viewEvents has been disposed and can receive no additional events")
-        }
-    }
 
 }
