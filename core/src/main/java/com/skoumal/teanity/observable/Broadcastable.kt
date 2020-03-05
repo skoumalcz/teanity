@@ -44,7 +44,7 @@ private class BroadcastableImpl<E> : Broadcastable<E> {
             Timber.i("Channel has been disposed, no further events will be sent")
             return
         }
-        if (!viewEvents.offer(this)) {
+        if (!offer(this)) {
             Timber.i("Event $this has been rejected by broadcast queue")
         }
     }
