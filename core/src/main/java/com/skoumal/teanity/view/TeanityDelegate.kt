@@ -14,9 +14,13 @@ import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.toInternal
 import com.skoumal.teanity.viewevent.base.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     private val view: V
@@ -25,7 +29,11 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     lateinit var binding: B
         private set
 
-    private var job: Job? = null
+    private var events: ReceiveChannel<ViewEvent>? = null
+        set(value) {
+            field?.cancel()
+            field = value
+        }
 
     private fun ensureInsets(
         target: View
@@ -47,9 +55,10 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
         } ?: insets
     }
 
-    private fun subscribe(events: Flow<ViewEvent>) {
-        job = GlobalScope.launch {
-            events.collect {
+    private fun subscribe(events: ReceiveChannel<ViewEvent>) {
+        this.events = events
+        GlobalScope.launch {
+            events.consumeAsFlow().collect {
                 withContext(Dispatchers.Main) {
                     it.consumeIfInstanceCatching<FragmentExecutor> {
                         it(view as Fragment)
@@ -70,7 +79,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     }
 
     internal fun detachEvents() {
-        job?.cancel()
+        events = null
     }
 
     // ---
@@ -79,7 +88,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     fun onCreate(dialog: Fragment, savedInstanceState: Bundle?) {
         view.restoreState(savedInstanceState)
 
-        subscribe(view.obtainViewModel().viewEvents)
+        subscribe(view.obtainViewModel().viewEvents.openSubscription())
     }
 
     fun onCreateView(
@@ -98,7 +107,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
             lifecycleOwner = activity
         }
 
-        subscribe(view.obtainViewModel().viewEvents)
+        subscribe(view.obtainViewModel().viewEvents.openSubscription())
         ensureInsets(binding.root)
     }
 
@@ -112,8 +121,6 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
                 binding.unbindViews()
             }
         }
-
-        detachEvents()
     }
 
 }

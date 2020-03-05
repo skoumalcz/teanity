@@ -15,8 +15,8 @@ import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevent.NavigationEventHelper
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.consumeAsFlow
 import timber.log.Timber
 
 abstract class TeanityViewModel : ViewModel(),
@@ -24,11 +24,10 @@ abstract class TeanityViewModel : ViewModel(),
     Notifyable by Notifyable.impl,
     LiveDataObserverHost by LiveDataObserverHost.impl {
 
-    private val _viewEvents = Channel<ViewEvent>(Channel.UNLIMITED)
+    private val _viewEvents = BroadcastChannel<ViewEvent>(Channel.UNLIMITED)
 
     @UseExperimental(FlowPreview::class)
-    val viewEvents
-        get() = _viewEvents.consumeAsFlow()
+    val viewEvents = _viewEvents
 
     var insets by observable(Insets(), BR.insets)
         @Bindable get
@@ -114,7 +113,17 @@ abstract class TeanityViewModel : ViewModel(),
     fun NavDirections.publish() = NavigationEventHelper(this).publish()
 
     fun <Event : ViewEvent> Event.publish() {
-        _viewEvents.offer(this)
+        if (_viewEvents.isClosedForSend) {
+            Timber.i("Channel has been disposed, no further events will be sent")
+            return
+        }
+        try {
+            if (!_viewEvents.offer(this)) {
+                Timber.i("Event $this has been rejected by broadcast queue")
+            }
+        } catch (e: CancellationException) {
+            Timber.e("The channel $_viewEvents has been disposed and can receive no additional events")
+        }
     }
 
 }
