@@ -9,6 +9,7 @@ import android.media.MediaRouter
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.BatteryManager
+import android.os.Build
 import android.os.Vibrator
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
@@ -38,11 +39,17 @@ internal val genericModule = module {
     single { androidContext().getSystemService<AudioManager>() }
     single { androidContext().getSystemService<MediaRouter>() }
     single { androidContext().getSystemService<TelephonyManager>() }
-    single { androidContext().getSystemService<SubscriptionManager>() }
     single { androidContext().getSystemService<InputMethodManager>() }
     single { androidContext().getSystemService<UiModeManager>() }
     single { androidContext().getSystemService<DownloadManager>() }
     single { androidContext().getSystemService<BatteryManager>() }
-    single { androidContext().getSystemService<JobScheduler>() }
-    single { androidContext().getSystemService<NetworkStatsManager>() }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        single { androidContext().getSystemService<JobScheduler>() }
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+        single { androidContext().getSystemService<SubscriptionManager>() }
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        single { androidContext().getSystemService<NetworkStatsManager>() }
+    }
 }
