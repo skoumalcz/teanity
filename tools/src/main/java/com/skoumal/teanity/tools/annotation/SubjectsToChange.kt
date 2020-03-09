@@ -1,5 +1,5 @@
 package com.skoumal.teanity.tools.annotation
 
-@Experimental
+@RequiresOptIn
 @Retention(AnnotationRetention.BINARY)
 annotation class SubjectsToChange

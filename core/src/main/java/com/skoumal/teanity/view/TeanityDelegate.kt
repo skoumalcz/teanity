@@ -5,22 +5,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.toInternal
+import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.viewevent.base.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
+@ExperimentalCoroutinesApi
 internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     private val view: V
 ) where V : TeanityView<B>, V : TeanityViewAccessor<VM>, V : LifecycleOwner {
@@ -45,12 +45,16 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
         }
 
         consumedInsets?.let {
-            insets.replaceSystemWindowInsets(
+            Insets(
                 ourInsets.left - it.left,
                 ourInsets.top - it.top,
                 ourInsets.right - it.right,
                 ourInsets.bottom - it.bottom
-            )
+            ).let { newInsets ->
+                WindowInsetsCompat.Builder()
+                    .setSystemWindowInsets(newInsets)
+                    .build()
+            }
         } ?: insets
     }
 

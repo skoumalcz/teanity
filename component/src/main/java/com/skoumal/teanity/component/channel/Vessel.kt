@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.consumeAsFlow
  * and is automatically disposed of once all elements are received. See [Channel.close] for
  * reference.
  * */
+@ExperimentalCoroutinesApi
 @FlowPreview
 @SubjectsToChange
 class Vessel<Sailor : Vessel.Sailor> {
@@ -24,7 +25,7 @@ class Vessel<Sailor : Vessel.Sailor> {
     @Volatile
     private lateinit var channel: Channel<Sailor>
 
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun getChannel(
         requireImplicitlyNew: Boolean = ::channel.isInitialized && channel.isClosedForSend
     ): Channel<Sailor> {

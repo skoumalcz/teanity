@@ -2,19 +2,19 @@
 object Lib {
 
     private object V {
-        const val kotlin = "1.3.61"
-        const val kotlinCoroutines = "1.3.2"
-        const val gradle = "3.6.0-beta04"
+        const val kotlin = "1.3.70"
+        const val kotlinCoroutines = "1.3.4"
+        const val gradle = "3.6.0"
 
         object AndroidX {
-            const val appcompat = "1.1.0"
-            const val core = "1.2.0-rc01"
-            const val room = "2.2.2"
-            const val animation = "1.0.0-alpha02"
-            const val constraint = "2.0.0-beta3"
-            const val material = "1.1.0-beta02"
-            const val lifecycle = "2.2.0-rc02"
-            const val navigation = "2.2.0-rc02"
+            const val appcompat = "1.2.0-alpha03"
+            const val core = "1.3.0-alpha02"
+            const val room = "2.2.4"
+            const val animation = "1.0.0-alpha03"
+            const val constraint = "2.0.0-beta4"
+            const val material = "1.2.0-alpha05"
+            const val lifecycle = "2.2.0"
+            const val navigation = "2.3.0-alpha03"
             const val test = "1.2.0"
             const val junit = "1.1.1"
             const val services = "1.2.0"
@@ -24,15 +24,13 @@ object Lib {
         }
 
         const val lorem = "2.1"
-        const val rxKotlin = "2.4.0"
-        const val rxAndroid = "2.1.1"
-        const val binding = "3.1.1"
-        const val koin = "2.0.1"
+        const val binding = "4.0.0"
+        const val koin = "2.1.3"
         const val moshi = "1.9.2"
-        const val retrofit = "2.6.2"
+        const val retrofit = "2.7.2"
         const val sanitizer = "0.6"
-        const val glide = "4.10.0"
-        const val dexter = "6.0.0"
+        const val glide = "4.11.0"
+        const val dexter = "6.0.2"
         const val timber = "4.7.1"
         // this is kinda deprecated
         const val maven = "2.1"
@@ -43,7 +41,6 @@ object Lib {
     val androidx = AndroidX
     val lifecycle = Lifecycle
     val navigation = Navigation
-    val reactive = ReactiveX
     val bindingCollection = BindingCollection
     val koin = Koin
     val square = Square
@@ -78,11 +75,6 @@ object Lib {
         val fragment =
             androidx("navigation", "navigation-fragment-ktx", V.AndroidX.navigation)
         val ui = androidx("navigation", "navigation-ui-ktx", V.AndroidX.navigation)
-    }
-
-    object ReactiveX {
-        val kotlin = rxjava2("rxkotlin", V.rxKotlin)
-        val android = rxjava2("rxandroid", V.rxAndroid)
     }
 
     object BindingCollection {

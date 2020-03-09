@@ -6,7 +6,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import timber.log.Timber
 
-@UseExperimental(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 interface Broadcastable<E> {
 
     fun openSubscription(): ReceiveChannel<E>
@@ -22,7 +22,7 @@ interface Broadcastable<E> {
 
 }
 
-@UseExperimental(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 private class BroadcastableImpl<E> : Broadcastable<E> {
 
     private val viewEvents = BroadcastChannel<E>(Channel.BUFFERED)

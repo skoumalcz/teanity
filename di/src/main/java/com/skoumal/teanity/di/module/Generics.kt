@@ -22,34 +22,34 @@ import org.koin.dsl.module
 
 internal val genericModule = module {
     /* Resources */
-    single { androidContext().resources }
-    single { androidContext().assets }
+    factory { androidContext().resources }
+    factory { androidContext().assets }
 
     /* All available system services */
-    single { androidContext().getSystemService<WindowManager>() }
-    single { androidContext().getSystemService<LayoutInflater>() }
-    single { androidContext().getSystemService<ActivityManager>() }
-    single { androidContext().getSystemService<NotificationManager>() }
-    single { androidContext().getSystemService<KeyguardManager>() }
-    single { androidContext().getSystemService<LocationManager>() }
-    single { androidContext().getSystemService<SearchManager>() }
-    single { androidContext().getSystemService<Vibrator>() }
-    single { androidContext().getSystemService<ConnectivityManager>() }
-    single { androidContext().getSystemService<WifiManager>() }
-    single { androidContext().getSystemService<AudioManager>() }
-    single { androidContext().getSystemService<MediaRouter>() }
-    single { androidContext().getSystemService<TelephonyManager>() }
-    single { androidContext().getSystemService<InputMethodManager>() }
-    single { androidContext().getSystemService<UiModeManager>() }
-    single { androidContext().getSystemService<DownloadManager>() }
-    single { androidContext().getSystemService<BatteryManager>() }
+    factory { androidContext().getSystemService<WindowManager>() }
+    factory { androidContext().getSystemService<LayoutInflater>() }
+    factory { androidContext().getSystemService<ActivityManager>() }
+    factory { androidContext().getSystemService<NotificationManager>() }
+    factory { androidContext().getSystemService<KeyguardManager>() }
+    factory { androidContext().getSystemService<LocationManager>() }
+    factory { androidContext().getSystemService<SearchManager>() }
+    factory { androidContext().getSystemService<Vibrator>() }
+    factory { androidContext().getSystemService<ConnectivityManager>() }
+    factory { androidContext().getSystemService<WifiManager>() }
+    factory { androidContext().getSystemService<AudioManager>() }
+    factory { androidContext().getSystemService<MediaRouter>() }
+    factory { androidContext().getSystemService<TelephonyManager>() }
+    factory { androidContext().getSystemService<InputMethodManager>() }
+    factory { androidContext().getSystemService<UiModeManager>() }
+    factory { androidContext().getSystemService<DownloadManager>() }
+    factory { androidContext().getSystemService<BatteryManager>() }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        single { androidContext().getSystemService<JobScheduler>() }
+        factory { androidContext().getSystemService<JobScheduler>() }
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-        single { androidContext().getSystemService<SubscriptionManager>() }
+        factory { androidContext().getSystemService<SubscriptionManager>() }
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        single { androidContext().getSystemService<NetworkStatsManager>() }
+        factory { androidContext().getSystemService<NetworkStatsManager>() }
     }
 }

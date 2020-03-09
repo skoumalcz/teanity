@@ -21,7 +21,7 @@ object Teanity {
         val context = _context.applicationContext
         startKoin {
             androidContext(context)
-            modules(modules + modules())
+            modules(modules + this@Teanity.modules())
         }
     }
 
