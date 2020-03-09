@@ -7,4 +7,16 @@
     <attr name="colorOnPrimaryVariant" format="color" />
     <attr name="colorOnSecondaryVariant" format="color" />
 
+    <declare-styleable name="CornerLayout">
+        <attr name="cornerRadius" format="dimension" />
+        <attr name="corners" format="flags">
+            <flag name="topEnd" value="1" />
+            <flag name="topStart" value="2" />
+            <flag name="bottomEnd" value="4" />
+            <flag name="bottomStart" value="8" />
+            <flag name="all" value="15" />
+        </attr>
+        <attr name="includePadding" format="boolean" />
+    </declare-styleable>
+
 </resources>
