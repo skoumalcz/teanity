@@ -31,7 +31,7 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
 
         setStyle(dialogStyle, dialogTheme)
 
-        delegate.onCreate(this, savedInstanceState)
+        delegate.onCreate(this)
     }
 
     override fun onCreateView(
@@ -50,24 +50,9 @@ abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : Vie
         delegate.onDestroy()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        saveState(outState)
-    }
-
     //region TeanityView
 
     override fun onEventDispatched(event: ViewEvent) {}
-
-    override fun saveState(outState: Bundle) {
-        super.saveState(outState)
-        viewModel.saveState(outState)
-    }
-
-    override fun restoreState(savedInstanceState: Bundle?) {
-        super.restoreState(savedInstanceState)
-        viewModel.restoreState(savedInstanceState)
-    }
 
     //endregion
     //region TeanityViewAccessor

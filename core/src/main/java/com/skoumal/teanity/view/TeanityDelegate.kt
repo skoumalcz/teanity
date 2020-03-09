@@ -1,6 +1,5 @@
 package com.skoumal.teanity.view
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,9 +84,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     // ---
 
     @Suppress("UNUSED_PARAMETER")
-    fun onCreate(dialog: Fragment, savedInstanceState: Bundle?) {
-        view.restoreState(savedInstanceState)
-
+    fun onCreate(dialog: Fragment) {
         subscribe(view.obtainViewModel().openSubscription())
     }
 
@@ -99,9 +96,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
         lifecycleOwner = view
     }.also { binding = it }.root.also { ensureInsets(it) }
 
-    fun onCreate(activity: AppCompatActivity, savedInstanceState: Bundle?) {
-        view.restoreState(savedInstanceState)
-
+    fun onCreate(activity: AppCompatActivity) {
         binding = DataBindingUtil.setContentView<B>(activity, view.obtainLayoutRes()).apply {
             setVariable(BR.viewModel, view.obtainViewModel())
             lifecycleOwner = activity

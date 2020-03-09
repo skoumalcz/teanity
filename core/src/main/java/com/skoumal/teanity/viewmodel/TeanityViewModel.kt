@@ -1,12 +1,10 @@
 package com.skoumal.teanity.viewmodel
 
-import android.os.Bundle
 import android.os.SystemClock
 import androidx.annotation.CallSuper
 import androidx.databinding.Bindable
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
-import com.evernote.android.state.StateSaver
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.lifecycle.LiveDataObserverHost
 import com.skoumal.teanity.observable.Broadcastable
@@ -98,14 +96,6 @@ abstract class TeanityViewModel : ViewModel(),
             induceRefresh()
         }
         return true
-    }
-
-    fun restoreState(savedInstanceState: Bundle?) {
-        StateSaver.restoreInstanceState(this, savedInstanceState)
-    }
-
-    fun saveState(outState: Bundle) {
-        StateSaver.saveInstanceState(this, outState)
     }
 
     fun NavDirections.publish() = NavigationEventHelper(this).publish()

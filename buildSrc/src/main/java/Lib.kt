@@ -34,7 +34,6 @@ object Lib {
         const val glide = "4.10.0"
         const val dexter = "6.0.0"
         const val timber = "4.7.1"
-        const val state = "1.4.1"
         // this is kinda deprecated
         const val maven = "2.1"
     }
@@ -128,7 +127,6 @@ object Lib {
 
     const val dexter = "com.karumi:dexter:${V.dexter}"
     const val timber = "com.jakewharton.timber:timber:${V.timber}"
-    const val state = "com.evernote:android-state:${V.state}"
     const val maven = "com.github.dcendents:android-maven-gradle-plugin:${V.maven}"
 
     // ---

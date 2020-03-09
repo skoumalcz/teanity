@@ -32,7 +32,7 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        delegate.onCreate(this, savedInstanceState)
+        delegate.onCreate(this)
     }
 
     override fun onResume() {
@@ -45,24 +45,9 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
         delegate.onDestroy()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        saveState(outState)
-    }
-
     //region TeanityView
 
     override fun onEventDispatched(event: ViewEvent) {}
-
-    override fun saveState(outState: Bundle) {
-        super.saveState(outState)
-        viewModel.saveState(outState)
-    }
-
-    override fun restoreState(savedInstanceState: Bundle?) {
-        super.restoreState(savedInstanceState)
-        viewModel.restoreState(savedInstanceState)
-    }
 
     //endregion
     //region TeanityViewAccessor
