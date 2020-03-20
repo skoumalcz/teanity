@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.google.common.truth.Truth.assertThat
 import com.skoumal.teanity.component.UseCase
 import com.skoumal.teanity.component.invoke
+import com.skoumal.teanity.tools.annotation.SubjectsToFutureChange
 import kotlinx.coroutines.Dispatchers
 import org.junit.Rule
 import org.junit.Test
@@ -62,6 +63,7 @@ class UseCaseTest {
         }
     }
 
+    @OptIn(SubjectsToFutureChange::class)
     private fun createUseCase(
         executor: (Unit) -> Unit
     ) = object : UseCase<Unit?, Unit>() {

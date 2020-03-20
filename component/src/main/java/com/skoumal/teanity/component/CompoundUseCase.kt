@@ -9,7 +9,7 @@ package com.skoumal.teanity.component
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.skoumal.teanity.component.extensions.distinctUntilChanged
-import com.skoumal.teanity.tools.annotation.SubjectsToFutureChange
+import com.skoumal.teanity.component.extensions.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -22,25 +22,9 @@ import timber.log.Timber
  * In order to save time and resources when using UseCases in different screens, it gained internal
  * data designed to hold the last result. The result is however ignored whenever called with _own_
  * [MutableLiveData].
- *
- * # Important note:
- * [UseCase] will be transformed in [CompoundUseCase] in future versions specified by
- * [SubjectsToFutureChange].
- *
- * This will change behavior and return types of these methods:
- *
- * - [observe]
- * - [invoke]
- *
- * It will also remove following methods:
- *
- * - [now]
- *
- * Migrate to [CompoundUseCase] now, refactor optionally back to [UseCase] later.
  * */
 @Suppress("MemberVisibilityCanBePrivate")
-@SubjectsToFutureChange("2.0")
-abstract class UseCase<in In, Out> {
+abstract class CompoundUseCase<in In, Out> {
 
     /**
      * ## Definition
@@ -54,10 +38,22 @@ abstract class UseCase<in In, Out> {
 
     /**
      * ## Definition
+     * By default returns internal [LiveData] which is updated on every [invoke] call.
+     *
+     * It can be overridden and it's functionality might replaced with fetching data from Room or
+     * other observable source.
+     * */
+    open fun observe(params: In): LiveData<Out?> {
+        GlobalScope.launch(Dispatchers.Unconfined) { invoke(params) }
+        return data.map { it.getOrNull() }
+    }
+
+    /**
+     * ## Definition
      * Returns internal immutable [LiveData] to which result is supplied after calling [invoke]
      * without explicit [data] parameter.
      * */
-    fun observe(): LiveData<Result<Out>> = data
+    fun observeData(): LiveData<Result<Out>> = data
 
     /**
      * ## Definition
@@ -92,38 +88,15 @@ abstract class UseCase<in In, Out> {
      * ## Definition
      * Provides immediate result if cached and starts execution logic defined in [execute].
      * */
-    operator fun invoke(params: In): LiveData<Result<Out>> = invoke(params, data)
+    suspend operator fun invoke(params: In): Result<Out> = invoke(params, data)
 
     /**
      * ## Definition
      * Starts execution login defined in [execute] and publishes result to the provided [data]
      * which it returns with weakened access for convenience.
      * */
-    operator fun invoke(params: In, data: MutableLiveData<Result<Out>>): LiveData<Result<Out>> =
-        data.also { GlobalScope.launch(dispatcher) { now(params, it) } }
-
-    /**
-     * ## Definition
-     * Starts execution logic in suspense on provided [dispatcher]. Sets up state of this use-case
-     * (see [UseCaseState],[observeState]) and returns full result of the operation.
-     *
-     * ### Notes
-     * Intended use-case for this method would be:
-     *
-     * 1) Requiring immediate result without waiting for [LiveData] to regain the result
-     *
-     * In particular:
-     *
-     * 1) Chaining use-cases
-     * 2) Merging use-cases
-     *
-     * *This method needn't to be called explicitly.* Make sure you know what you're doing.
-     * */
     @Synchronized
-    suspend fun now(
-        params: In,
-        data: MutableLiveData<Result<Out>> = this.data
-    ): Result<Out> {
+    suspend operator fun invoke(params: In, data: MutableLiveData<Result<Out>>): Result<Out> {
         state.postValue(UseCaseState.LOADING)
         return withContext(dispatcher) {
             runCatching { execute(params) }
@@ -137,12 +110,11 @@ abstract class UseCase<in In, Out> {
      * ## Definition
      * Overridable method designed to provide result to the business logic.
      * */
+    @Throws(Throwable::class)
     protected abstract suspend fun execute(input: In): Out
 
 }
 
-@OptIn(SubjectsToFutureChange::class)
-operator fun <R> UseCase<Unit, R>.invoke(): LiveData<Result<R>> = this(Unit)
-
-@OptIn(SubjectsToFutureChange::class)
-operator fun <R> UseCase<Unit, R>.invoke(result: MutableLiveData<Result<R>>) = this(Unit, result)
+suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(): Result<R> = this(Unit)
+suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(result: MutableLiveData<Result<R>>) =
+    this(Unit, result)

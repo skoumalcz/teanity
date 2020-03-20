@@ -4,12 +4,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
+import com.skoumal.teanity.tools.annotation.SubjectsToFutureChange
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import kotlin.random.Random.Default.nextInt
 
+@OptIn(SubjectsToFutureChange::class)
 class UseCaseTest {
 
     @get:Rule
