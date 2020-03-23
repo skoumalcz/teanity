@@ -6,6 +6,7 @@ import android.os.Build
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 
 fun Context.colorCompat(@ColorRes id: Int) = try {
@@ -15,12 +16,12 @@ fun Context.colorCompat(@ColorRes id: Int) = try {
 }
 
 fun Context.colorStateListCompat(@ColorRes id: Int) = try {
-    ContextCompat.getColorStateList(this, id)
+    AppCompatResources.getColorStateList(this, id)
 } catch (e: Resources.NotFoundException) {
     null
 }
 
-fun Context.drawableCompat(@DrawableRes id: Int) = ContextCompat.getDrawable(this, id)
+fun Context.drawableCompat(@DrawableRes id: Int) = AppCompatResources.getDrawable(this, id)
 
 /**
  * Pass [start] and [end] dimensions, function will return left and right
