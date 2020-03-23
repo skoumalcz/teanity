@@ -8,6 +8,7 @@ object Lib {
 
         object AndroidX {
             const val appcompat = "1.2.0-alpha03"
+            const val activity = "1.2.0-alpha02"
             const val core = "1.3.0-alpha02"
             const val room = "2.2.4"
             const val animation = "1.0.0-alpha03"
@@ -56,6 +57,7 @@ object Lib {
     object AndroidX {
         val build = "com.android.tools.build:gradle:${V.gradle}"
         val appcompat = androidx("appcompat", "appcompat", V.AndroidX.appcompat)
+        val activity = androidx("activity", "activity", V.AndroidX.activity)
         val core = androidx("core", "core-ktx", V.AndroidX.core)
         val room = androidx("room", "room-ktx", V.AndroidX.room)
         val animation =

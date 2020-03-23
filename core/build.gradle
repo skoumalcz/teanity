@@ -20,6 +20,7 @@ dependencies {
 
     /* === SUPPORT === */
     api(Lib.androidx.appcompat)
+    api(Lib.androidx.activity)
 
     /* === CORE === */
     api(Lib.androidx.core)

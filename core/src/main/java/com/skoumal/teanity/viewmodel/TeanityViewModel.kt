@@ -1,6 +1,7 @@
 package com.skoumal.teanity.viewmodel
 
 import android.os.SystemClock
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.CallSuper
 import androidx.databinding.Bindable
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,9 @@ import com.skoumal.teanity.observable.Broadcastable
 import com.skoumal.teanity.observable.Notifyable
 import com.skoumal.teanity.observable.observable
 import com.skoumal.teanity.util.Insets
+import com.skoumal.teanity.view.TeanityActivity
+import com.skoumal.teanity.view.TeanityFragment
+import com.skoumal.teanity.viewevent.ActivityContractHelper
 import com.skoumal.teanity.viewevent.NavigationEventHelper
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import kotlinx.coroutines.CoroutineScope
@@ -18,6 +22,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 abstract class TeanityViewModel : ViewModel(),
     CoroutineScope by MainScope(),
@@ -98,6 +104,25 @@ abstract class TeanityViewModel : ViewModel(),
         return true
     }
 
+    /**
+     * Wraps nav directions in [NavigationEventHelper] allowing navigation to be broadcasted from
+     * viewModels. Owner activity **must be** child of [TeanityActivity] otherwise the event will
+     * not be executed.
+     *
+     * @see TeanityActivity
+     * @see NavigationEventHelper
+     * */
     fun NavDirections.publish() = NavigationEventHelper(this).publish()
+
+    /**
+     * Wraps contract with [ActivityContractHelper] and suspends the execution whilst awaiting the
+     * contract to be executed. Owner activity **must be** child of [TeanityActivity] (or fragment
+     * [TeanityFragment]), otherwise you are required to execute the event manually.
+     *
+     * This allows you to request permissions >in place< bypassing the usual flows of requesting
+     * and then catching the result in the activity itself.
+     * */
+    suspend fun <In, Out> ActivityResultContract<In, Out>.await(input: In) =
+        suspendCoroutine<Out> { cont -> ActivityContractHelper(this, input, cont::resume) }
 
 }

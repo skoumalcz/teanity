@@ -8,10 +8,15 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.skoumal.teanity.tools.annotation.RemoveOnDeprecation
 
+@Deprecated("Requesting permissions is discouraged through permissions builder, use appcompat contract instead.")
+@RemoveOnDeprecation("1.2")
 inline fun Activity.requestPermissions(body: RequestPermissionBuilder.() -> Unit) =
     RequestPermissionBuilder(this, body)
 
+@Deprecated("Requesting permissions is discouraged through permissions builder, use appcompat contract instead.")
+@RemoveOnDeprecation("1.2")
 class RequestPermissionBuilder(private val activity: Activity) {
 
     private var onGrantedListener: OnPermissionGrantedListener = {}
@@ -81,6 +86,12 @@ class RequestPermissionBuilder(private val activity: Activity) {
 
 }
 
+@Deprecated("Requesting permissions is discouraged through permissions builder, use appcompat contract instead.")
+@RemoveOnDeprecation("1.2")
 typealias OnPermissionGrantedListener = (List<PermissionGrantedResponse>) -> Unit
+@Deprecated("Requesting permissions is discouraged through permissions builder, use appcompat contract instead.")
+@RemoveOnDeprecation("1.2")
 typealias OnPermissionDeniedListener = (List<PermissionDeniedResponse>) -> Unit
+@Deprecated("Requesting permissions is discouraged through permissions builder, use appcompat contract instead.")
+@RemoveOnDeprecation("1.2")
 typealias OnPermissionsRationaleRequest = (List<PermissionRequest>, PermissionToken) -> Unit
