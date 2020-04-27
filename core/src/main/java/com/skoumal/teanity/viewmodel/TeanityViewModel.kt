@@ -122,7 +122,10 @@ abstract class TeanityViewModel : ViewModel(),
      * This allows you to request permissions >in place< bypassing the usual flows of requesting
      * and then catching the result in the activity itself.
      * */
-    suspend fun <In, Out> ActivityResultContract<In, Out>.await(input: In) =
-        suspendCoroutine<Out> { cont -> ActivityContractHelper(this, input, cont::resume) }
+    suspend fun <In, Out> ActivityResultContract<In, Out>.await(
+        input: In
+    ) = suspendCoroutine<Out> { cont ->
+        ActivityContractHelper(this, input, cont::resume).publish()
+    }
 
 }
