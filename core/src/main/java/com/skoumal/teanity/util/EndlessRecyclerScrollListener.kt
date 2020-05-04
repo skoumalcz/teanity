@@ -4,7 +4,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.skoumal.teanity.tools.annotation.RemoveOnDeprecation
 
+@Deprecated("Use paging library instead")
+@RemoveOnDeprecation("1.2")
 class EndlessRecyclerScrollListener(
     private val layoutManager: RecyclerView.LayoutManager,
     private val loadMore: (page: Int, totalItemsCount: Int, view: RecyclerView?) -> Unit,
@@ -39,8 +42,10 @@ class EndlessRecyclerScrollListener(
 
     // The current offset index of data you have loaded
     private var currentPage = 0
+
     // The total number of items in the dataset after the last load
     private var previousTotalItemCount = 0
+
     // True if we are still waiting for the last set of data to load.
     private var loading = true
 
@@ -53,7 +58,7 @@ class EndlessRecyclerScrollListener(
         val visibleItemPosition = if (direction == Direction.BOTTOM) {
             when (layoutManager) {
                 is StaggeredGridLayoutManager -> layoutManager.findLastVisibleItemPositions(null).max()
-                        ?: 0
+                    ?: 0
                 is GridLayoutManager -> layoutManager.findLastVisibleItemPosition()
                 is LinearLayoutManager -> layoutManager.findLastVisibleItemPosition()
                 else -> throw IllegalArgumentException("Only LinearLayoutManager, GridLayoutManager and StaggeredGridLayoutManager are supported")
@@ -61,7 +66,7 @@ class EndlessRecyclerScrollListener(
         } else {
             when (layoutManager) {
                 is StaggeredGridLayoutManager -> layoutManager.findFirstVisibleItemPositions(null).min()
-                        ?: 0
+                    ?: 0
                 is GridLayoutManager -> layoutManager.findFirstVisibleItemPosition()
                 is LinearLayoutManager -> layoutManager.findFirstVisibleItemPosition()
                 else -> throw IllegalArgumentException("Only LinearLayoutManager, GridLayoutManager and StaggeredGridLayoutManager are supported")
