@@ -14,9 +14,7 @@ class ActivityContractHelper<In, Out>(
 ) : ViewEvent(), ActivityExecutor {
 
     override fun invoke(activity: AppCompatActivity) {
-        activity.prepareCall(contract) {
-            listener(it)
-        }.launch(input)
+        activity.registerForActivityResult(contract) { listener(it) }.launch(input)
     }
 
 }

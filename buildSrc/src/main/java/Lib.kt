@@ -11,7 +11,7 @@ object Lib {
             const val activity = "1.2.0-alpha04"
             const val core = "1.3.0-rc01"
             const val room = "2.2.5"
-            const val animation = "1.1.0-alpha03"
+            const val animation = "1.0.0-alpha03"
             const val constraint = "2.0.0-beta4"
             const val material = "1.2.0-alpha06"
             const val lifecycle = "2.2.0"
