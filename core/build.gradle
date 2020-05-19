@@ -24,6 +24,7 @@ dependencies {
 
     /* === CORE === */
     api(Lib.androidx.core)
+    api(Lib.androidx.paging)
     api(Lib.lifecycle.extensions)
     api(Lib.lifecycle.viewModel)
     api(Lib.navigation.fragment)
@@ -34,6 +35,7 @@ dependencies {
     api(Lib.timber)
     api(Lib.bindingCollection.collections)
     api(Lib.bindingCollection.recycler)
+    api(Lib.bindingCollection.recyclerPaging)
 
 }
 

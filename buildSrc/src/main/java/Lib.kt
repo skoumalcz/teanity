@@ -4,12 +4,13 @@ object Lib {
     private object V {
         const val kotlin = "1.3.72"
         const val kotlinCoroutines = "1.3.5"
-        const val gradle = "4.0.0-beta05"
+        const val gradle = "4.0.0-rc01"
 
         object AndroidX {
             const val appcompat = "1.2.0-beta01"
             const val activity = "1.2.0-alpha04"
             const val core = "1.3.0-rc01"
+            const val paging = "2.1.2"
             const val room = "2.2.5"
             const val animation = "1.0.0-alpha03"
             const val constraint = "2.0.0-beta4"
@@ -59,6 +60,7 @@ object Lib {
         val appcompat = androidx("appcompat", "appcompat", V.AndroidX.appcompat)
         val activity = androidx("activity", "activity", V.AndroidX.activity)
         val core = androidx("core", "core-ktx", V.AndroidX.core)
+        val paging = androidx("paging", "paging-runtime-ktx", V.AndroidX.paging)
         val room = androidx("room", "room-ktx", V.AndroidX.room)
         val animation =
             androidx("dynamicanimation", "dynamicanimation-ktx", V.AndroidX.animation)
@@ -82,6 +84,7 @@ object Lib {
     object BindingCollection {
         val collections = bindingAdapter("bindingcollectionadapter", V.binding)
         val recycler = bindingAdapter("bindingcollectionadapter-recyclerview", V.binding)
+        val recyclerPaging = bindingAdapter("bindingcollectionadapter-paging", V.binding)
     }
 
     object Koin {
