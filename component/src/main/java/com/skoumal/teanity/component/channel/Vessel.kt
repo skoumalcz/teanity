@@ -1,8 +1,6 @@
 package com.skoumal.teanity.component.channel
 
-import com.skoumal.teanity.tools.annotation.SubjectsToChange
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 
@@ -17,15 +15,12 @@ import kotlinx.coroutines.flow.consumeAsFlow
  * and is automatically disposed of once all elements are received. See [Channel.close] for
  * reference.
  * */
-@ExperimentalCoroutinesApi
-@FlowPreview
-@SubjectsToChange
+@OptIn(ExperimentalCoroutinesApi::class)
 class Vessel<Sailor : Vessel.Sailor> {
 
     @Volatile
     private lateinit var channel: Channel<Sailor>
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private fun getChannel(
         requireImplicitlyNew: Boolean = ::channel.isInitialized && channel.isClosedForSend
     ): Channel<Sailor> {

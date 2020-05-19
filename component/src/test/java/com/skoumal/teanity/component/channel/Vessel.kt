@@ -1,15 +1,12 @@
 package com.skoumal.teanity.component.channel
 
 import com.google.common.truth.Truth.assertThat
-import com.skoumal.teanity.tools.annotation.SubjectsToChange
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-@UseExperimental(SubjectsToChange::class, FlowPreview::class)
 class VesselTest {
 
     private lateinit var vessel: Vessel<Vessel.Sailor>
