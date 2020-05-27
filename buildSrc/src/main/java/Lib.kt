@@ -62,6 +62,7 @@ object Lib {
         val core = androidx("core", "core-ktx", V.AndroidX.core)
         val paging = androidx("paging", "paging-runtime-ktx", V.AndroidX.paging)
         val room = androidx("room", "room-ktx", V.AndroidX.room)
+        val roomCompiler = androidx("room", "room-compiler", V.AndroidX.room)
         val animation =
             androidx("dynamicanimation", "dynamicanimation-ktx", V.AndroidX.animation)
         val constraint =
@@ -72,6 +73,7 @@ object Lib {
 
     object Lifecycle {
         val extensions = androidx("lifecycle", "lifecycle-extensions", V.AndroidX.lifecycle)
+        val compiler = androidx("lifecycle", "lifecycle-compiler", V.AndroidX.lifecycle)
         val viewModel = androidx("lifecycle", "lifecycle-viewmodel-ktx", V.AndroidX.lifecycle)
     }
 
@@ -94,6 +96,7 @@ object Lib {
 
     object Square {
         val moshi = square("moshi", "moshi-kotlin", V.moshi)
+        val moshiCodegen = square("moshi", "moshi-kotlin-codegen", V.moshi)
         val retrofit = square("retrofit2", "retrofit", V.retrofit)
         val moshiConverter = square("retrofit2", "converter-moshi", V.retrofit)
     }
