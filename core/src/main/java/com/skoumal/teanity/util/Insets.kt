@@ -9,3 +9,17 @@ fun Insets(
     right: Int = 0,
     bottom: Int = 0
 ) = AndroidInsets.of(left, top, right, bottom)
+
+object InsetsResources {
+
+    @Volatile
+    var isSpeculativeInsetsEnabled = true
+
+    var insets: AndroidInsets? = null
+        set(value) {
+            if (isSpeculativeInsetsEnabled) {
+                field = value
+            }
+        }
+
+}

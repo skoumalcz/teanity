@@ -13,6 +13,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.extensions.toInternal
 import com.skoumal.teanity.util.Insets
+import com.skoumal.teanity.util.InsetsResources
 import com.skoumal.teanity.viewevent.base.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 import kotlinx.coroutines.*
@@ -36,26 +37,34 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
 
     private fun ensureInsets(
         target: View
-    ) = ViewCompat.setOnApplyWindowInsetsListener(target) { _, insets ->
-        val ourInsets = insets.toInternal()
-
-        view.peekSystemWindowInsets(ourInsets)
-        val consumedInsets = view.consumeSystemWindowInsets(ourInsets)?.also {
-            view.obtainViewModel().insets = it
+    ) {
+        val speculativeInsets = InsetsResources.insets
+        if (speculativeInsets != null) {
+            view.obtainViewModel().insets = speculativeInsets
         }
 
-        consumedInsets?.let {
-            Insets(
-                ourInsets.left - it.left,
-                ourInsets.top - it.top,
-                ourInsets.right - it.right,
-                ourInsets.bottom - it.bottom
-            ).let { newInsets ->
-                WindowInsetsCompat.Builder()
-                    .setSystemWindowInsets(newInsets)
-                    .build()
+        ViewCompat.setOnApplyWindowInsetsListener(target) { _, insets ->
+            val ourInsets = insets.toInternal()
+
+            view.peekSystemWindowInsets(ourInsets)
+            val consumedInsets = view.consumeSystemWindowInsets(ourInsets)?.also {
+                view.obtainViewModel().insets = it
+                InsetsResources.insets = it
             }
-        } ?: insets
+
+            consumedInsets?.let {
+                Insets(
+                    ourInsets.left - it.left,
+                    ourInsets.top - it.top,
+                    ourInsets.right - it.right,
+                    ourInsets.bottom - it.bottom
+                ).let { newInsets ->
+                    WindowInsetsCompat.Builder()
+                        .setSystemWindowInsets(newInsets)
+                        .build()
+                }
+            } ?: insets
+        }
     }
 
     private fun subscribe(events: ReceiveChannel<ViewEvent>) {
