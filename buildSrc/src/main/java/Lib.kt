@@ -19,7 +19,7 @@ object Lib {
             const val navigation = "2.3.0-alpha06"
             const val test = "1.3.0-beta01"
             const val junit = "1.1.2-beta01"
-            const val services = "1.3.0-beta01"
+            const val services = "1.3.0-rc01"
             const val automator = "2.2.0"
             const val espresso = "3.3.0-beta01"
             const val multidex = "2.0.1"
@@ -34,6 +34,8 @@ object Lib {
         const val glide = "4.11.0"
         const val dexter = "6.1.0"
         const val timber = "4.7.1"
+        const val plugin = "1.0.7"
+
         // this is kinda deprecated
         const val maven = "2.1"
     }
@@ -128,6 +130,7 @@ object Lib {
     const val dexter = "com.karumi:dexter:${V.dexter}"
     const val timber = "com.jakewharton.timber:timber:${V.timber}"
     const val maven = "com.github.dcendents:android-maven-gradle-plugin:${V.maven}"
+    const val teanity = "com.skoumal:teanity-plugin:${V.plugin}"
 
     // ---
 

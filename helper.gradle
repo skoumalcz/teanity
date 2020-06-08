@@ -17,14 +17,6 @@ subprojects {
                 multiDexEnabled true
             }
 
-            kotlinOptions {
-                freeCompilerArgs = [
-                        "-Xallow-result-return-type",
-                        "-Xuse-experimental=kotlin.Experimental"
-                ]
-                jvmTarget = "1.8"
-            }
-
             buildTypes {
                 release {
                     minifyEnabled false
@@ -38,6 +30,10 @@ subprojects {
                     includeAndroidResources = true
                     returnDefaultValues = true
                 }
+            }
+
+            packagingOptions {
+                exclude "META-INF/*"
             }
         }
 

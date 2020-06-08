@@ -5,6 +5,7 @@ buildscript {
         classpath(Lib.androidx.build)
         classpath(Lib.kotlin.gradle)
         classpath(Lib.maven)
+        classpath(Lib.teanity)
     }
 }
 
