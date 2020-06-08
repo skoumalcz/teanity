@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.skoumal.teanity.extensions.drawableCompat
-import com.skoumal.teanity.tools.annotation.RemoveOnDeprecation
-import com.skoumal.teanity.util.EndlessRecyclerScrollListener
 
 @BindingAdapter("dividerVertical", "dividerHorizontal", requireAll = false)
 fun RecyclerView.setDividers(dividerVertical: Int, dividerHorizontal: Int) {
@@ -36,22 +34,4 @@ fun RecyclerView.setDividers(dividerVertical: Drawable?, dividerHorizontal: Draw
             setDrawable(dividerVertical)
         }.let { addItemDecoration(it) }
     }
-}
-
-@Deprecated("Use paging library instead")
-@RemoveOnDeprecation("1.2")
-@BindingAdapter("onLoadMore")
-fun RecyclerView.setLoadMoreListener(listener: OnBottomReachedListener) {
-    clearOnScrollListeners()
-    val scrollListener = EndlessRecyclerScrollListener(
-        layoutManager ?: return,
-        listener::onLoadMore
-    )
-    addOnScrollListener(scrollListener)
-}
-
-@Deprecated("Use paging library instead")
-@RemoveOnDeprecation("1.2")
-interface OnBottomReachedListener {
-    fun onLoadMore()
 }
