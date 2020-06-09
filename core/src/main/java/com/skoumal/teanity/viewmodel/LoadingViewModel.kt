@@ -1,9 +1,10 @@
 package com.skoumal.teanity.viewmodel
 
 import androidx.databinding.Bindable
+import androidx.lifecycle.viewModelScope
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.observable.observable
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 abstract class LoadingViewModel(defaultState: State = State.LOADING) : TeanityViewModel() {
 
@@ -25,8 +26,10 @@ abstract class LoadingViewModel(defaultState: State = State.LOADING) : TeanityVi
 
     /** Represents value of [state] that equals to [State.LOADING] */
     val loading @Bindable get() = state == State.LOADING
+
     /** Represents value of [state] that equals to [State.LOADED] */
     val loaded @Bindable get() = state == State.LOADED
+
     /** Represents value of [state] that equals to [State.LOADING_FAILED] */
     val loadingFailed @Bindable get() = state == State.LOADING_FAILED
 
@@ -49,7 +52,7 @@ abstract class LoadingViewModel(defaultState: State = State.LOADING) : TeanityVi
      * overwrite your changes.
      * */
     inline fun loading(crossinline body: suspend () -> Unit) {
-        async {
+        viewModelScope.launch {
             state = State.LOADING
             body()
         }.invokeOnCompletion {
