@@ -25,10 +25,6 @@ abstract class LiveStateViewModel<State : Any>(
             field = value
         }
 
-    init {
-        initialValue?.publish()
-    }
-
     private val internalState = MutableLiveData<State?>(null)
     private val internalIsLoading = MutableLiveData(false)
 
@@ -80,6 +76,10 @@ abstract class LiveStateViewModel<State : Any>(
      * Provides information about whether the state is being loaded or is already loaded.
      * */
     val isLoading: LiveData<Boolean> = internalIsLoading
+
+    init {
+        initialValue?.publish()
+    }
 
     /**
      * ## Definition
