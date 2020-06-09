@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.CallSuper
 import androidx.databinding.Bindable
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import com.skoumal.teanity.BR
 import com.skoumal.teanity.lifecycle.LiveDataObserverHost
@@ -17,16 +18,13 @@ import com.skoumal.teanity.view.TeanityFragment
 import com.skoumal.teanity.viewevent.ActivityContractHelper
 import com.skoumal.teanity.viewevent.NavigationEventHelper
 import com.skoumal.teanity.viewevent.base.ViewEvent
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 abstract class TeanityViewModel : ViewModel(),
-    CoroutineScope by MainScope(),
     Notifyable by Notifyable.impl,
     LiveDataObserverHost by LiveDataObserverHost.impl,
     Broadcastable<ViewEvent> by Broadcastable.impl() {
@@ -98,7 +96,7 @@ abstract class TeanityViewModel : ViewModel(),
         }
 
         lastRefresh = SystemClock.uptimeMillis()
-        currentJob = launch {
+        currentJob = viewModelScope.launch {
             induceRefresh()
         }
         return true
