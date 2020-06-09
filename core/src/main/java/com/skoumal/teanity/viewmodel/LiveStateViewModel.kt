@@ -3,7 +3,9 @@ package com.skoumal.teanity.viewmodel
 import androidx.annotation.AnyThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.skoumal.teanity.tools.annotation.SubjectsToChange
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * ## Definition
@@ -11,12 +13,25 @@ import com.skoumal.teanity.tools.annotation.SubjectsToChange
  * [LiveStateViewModel] aims to reduce callbacks and endless UI pings by owning its [state] in one
  * central place. State is completely disconnected and should not contain callbacks of any kind.
  * */
-@SubjectsToChange
-abstract class LiveStateViewModel<State>(
+abstract class LiveStateViewModel<State : Any>(
     initialValue: State? = null
 ) : TeanityViewModel() {
 
-    private val internalState = MutableLiveData<State>()
+    private var pendingRefreshJob: Job? = null
+        set(value) {
+            if (field?.isActive == true) {
+                field?.cancel()
+            }
+            field = value
+        }
+
+    init {
+        initialValue?.publish()
+    }
+
+    private val internalState = MutableLiveData<State?>(null)
+    private val internalIsLoading = MutableLiveData(false)
+
     /**
      * ## Definition
      *
@@ -57,11 +72,14 @@ abstract class LiveStateViewModel<State>(
      * ```
      * */
     @Suppress("MemberVisibilityCanBePrivate")
-    val state: LiveData<State> = internalState
+    val state: LiveData<State?> = internalState
 
-    init {
-        internalState.value = initialValue
-    }
+    /**
+     * ## Definition
+     *
+     * Provides information about whether the state is being loaded or is already loaded.
+     * */
+    val isLoading: LiveData<Boolean> = internalIsLoading
 
     /**
      * ## Definition
@@ -70,9 +88,27 @@ abstract class LiveStateViewModel<State>(
      * based on current external state.
      *
      * Common use-case would be preventing switching to "loaded" state whilst at the same time
-     * having job running in the background.
+     * having job running in the background. Other possibility is to prepare new list's diff
+     * callback.
+     *
+     * To throttle submissions of states and frequent UI updates you can simply delay the initial
+     * execution of [mutateState] like so:
+     *
+     * ```
+     * override fun mutateState(...) {
+     *    delay(1000)
+     *    ...
+     * }
+     * ```
+     *
+     * The viewModel will cancel current execution, as it's already running, and it will attempt to
+     * start a new one. This process will repeat until the [publish] stops sending new states and
+     * the state can be assigned to viewModel's [internalState].
      * */
-    protected open fun mutateState(oldState: State, newState: State) = newState
+    protected open suspend fun mutateState(
+        oldState: State?,
+        newState: State
+    ) = newState
 
     /**
      * ## Definition
@@ -82,7 +118,14 @@ abstract class LiveStateViewModel<State>(
      * */
     @AnyThread
     @JvmName(name = "publishState")
-    protected fun State.publish() = mutateState(internalState.value ?: this, this)
-        .let { internalState.postValue(it) }
+    protected fun State.publish() {
+        pendingRefreshJob = viewModelScope.launch {
+            internalIsLoading.postValue(true)
+            mutateState(internalState.value, this@publish).also {
+                internalState.postValue(it)
+            }
+            internalIsLoading.postValue(false)
+        }
+    }
 
 }
