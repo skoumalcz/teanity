@@ -1,17 +1,23 @@
 package com.skoumal.teanity.list
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.skoumal.teanity.databinding.RecyclerViewItem
+import java.lang.ref.WeakReference
 import java.util.*
 
 open class BindingAdapter<Item : RecyclerViewItem>(
+    lifecycleOwner: LifecycleOwner? = null,
     private val extrasBinder: OnBindExtrasCallback? = null
 ) : RecyclerView.Adapter<BindingAdapter<Item>.ViewHolder>() {
+
+    private var lifecycleOwner = lifecycleOwner?.let { WeakReference(it) }
 
     protected var internalItems = mutableListOf<Item>()
     val items get() = internalItems.toImmutableList()
@@ -32,7 +38,16 @@ open class BindingAdapter<Item : RecyclerViewItem>(
 
     override fun getItemCount() = internalItems.size
 
-    open fun callbackFrom(items: List<Item>) = object : DiffUtil.Callback() {
+    fun setLifecycleOwner(owner: LifecycleOwner?) {
+        lifecycleOwner = if (owner == null) {
+            lifecycleOwner?.clear()
+            null
+        } else {
+            WeakReference(owner)
+        }
+    }
+
+    open fun getCallbackFrom(items: List<Item>) = object : DiffUtil.Callback() {
 
         private val oldList = internalItems.toImmutableList()
         private val newList = items.toImmutableList()
@@ -63,12 +78,10 @@ open class BindingAdapter<Item : RecyclerViewItem>(
         parent: ViewGroup,
         layoutRes: Int
     ) : RecyclerView.ViewHolder(
-        DataBindingUtil.inflate<ViewDataBinding>(
-            LayoutInflater.from(parent.context),
-            layoutRes,
-            parent,
-            false
-        ).root
+        DataBindingUtil
+            .inflate<ViewDataBinding>(parent.layoutInflater, layoutRes, parent, false)
+            .also { it.lifecycleOwner = lifecycleOwner?.get() }
+            .root
     ) {
 
         open fun bind(item: Item) {
@@ -79,6 +92,11 @@ open class BindingAdapter<Item : RecyclerViewItem>(
         }
 
     }
+
+    companion object {
+        protected val View.layoutInflater get() = LayoutInflater.from(context)!!
+    }
+
 
 }
 

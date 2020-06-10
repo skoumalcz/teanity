@@ -2,6 +2,9 @@ package com.skoumal.teanity.databinding
 
 import android.graphics.drawable.Drawable
 import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,4 +37,17 @@ fun RecyclerView.setDividers(dividerVertical: Drawable?, dividerHorizontal: Draw
             setDrawable(dividerVertical)
         }.let { addItemDecoration(it) }
     }
+}
+
+@BindingAdapter("adapter")
+fun RecyclerView.setAdapterWithLifecycleOwner(
+    adapter: com.skoumal.teanity.list.BindingAdapter<*>
+) {
+    fun findLifecycleOwner() = DataBindingUtil
+        .findBinding<ViewDataBinding>(this)
+        ?.lifecycleOwner ?: context as? LifecycleOwner
+
+    adapter.setLifecycleOwner(findLifecycleOwner())
+
+    this.adapter = adapter
 }
