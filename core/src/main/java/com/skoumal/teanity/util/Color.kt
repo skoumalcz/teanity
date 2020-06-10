@@ -2,29 +2,51 @@ package com.skoumal.teanity.util
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
+import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
-import com.skoumal.teanity.extensions.colorCompat
-import com.skoumal.teanity.extensions.colorStateListCompat
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import android.graphics.Color as AColor
 
-sealed class Color {
-    abstract fun getColor(context: Context): ColorStateList
+sealed class Color<ColorType> {
+    abstract fun getColor(context: Context): ColorType
 
-    data class StateList(@ColorRes private val res: Int) : Color() {
+    data class StateList(@ColorRes private val res: Int) : Color<ColorStateList>() {
         override fun getColor(context: Context): ColorStateList {
-            return context.colorStateListCompat(res) ?: ColorStateList.valueOf(AColor.BLACK)
+            return colorStateListCompat(context) ?: ColorStateList.valueOf(AColor.BLACK)
+        }
+
+        private fun colorStateListCompat(context: Context) = try {
+            AppCompatResources.getColorStateList(context, res)
+        } catch (e: Resources.NotFoundException) {
+            null
         }
     }
 
-    data class ColorInt(private val color: Int) : Color() {
-        override fun getColor(context: Context): ColorStateList {
-            return ColorStateList.valueOf(color)
+    data class ColorInt(private val color: Int) : Color<Int>() {
+        override fun getColor(context: Context): Int {
+            return color
         }
     }
 
-    data class Resource(@ColorRes private val res: Int) : Color() {
+    data class Resource(@ColorRes private val res: Int) : Color<Int>() {
+        override fun getColor(context: Context): Int {
+            return colorCompat(context) ?: AColor.BLACK
+        }
+
+        private fun colorCompat(context: Context) = try {
+            ContextCompat.getColor(context, res)
+        } catch (e: Resources.NotFoundException) {
+            null
+        }
+    }
+
+    data class Attribute(@AttrRes private val res: Int) : Color<ColorStateList>() {
         override fun getColor(context: Context): ColorStateList {
-            return ColorStateList.valueOf(context.colorCompat(res) ?: AColor.BLACK)
+            return with(context.theme.obtainStyledAttributes(intArrayOf(res))) {
+                getColorStateList(0) ?: ColorStateList.valueOf(getColor(0, AColor.BLACK))
+            }
         }
     }
 
