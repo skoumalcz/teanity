@@ -9,10 +9,10 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import android.graphics.Color as AColor
 
-sealed class Color<ColorType> {
-    abstract fun getColor(context: Context): ColorType
+sealed class Color {
+    abstract fun getColor(context: Context): ColorStateList
 
-    data class StateList(@ColorRes private val res: Int) : Color<ColorStateList>() {
+    data class StateList(@ColorRes private val res: Int) : Color() {
         override fun getColor(context: Context): ColorStateList {
             return colorStateListCompat(context) ?: ColorStateList.valueOf(AColor.BLACK)
         }
@@ -24,15 +24,15 @@ sealed class Color<ColorType> {
         }
     }
 
-    data class ColorInt(private val color: Int) : Color<Int>() {
-        override fun getColor(context: Context): Int {
-            return color
+    data class ColorInt(private val color: Int) : Color() {
+        override fun getColor(context: Context): ColorStateList {
+            return ColorStateList.valueOf(color)
         }
     }
 
-    data class Resource(@ColorRes private val res: Int) : Color<Int>() {
-        override fun getColor(context: Context): Int {
-            return colorCompat(context) ?: AColor.BLACK
+    data class Resource(@ColorRes private val res: Int) : Color() {
+        override fun getColor(context: Context): ColorStateList {
+            return ColorStateList.valueOf(colorCompat(context) ?: AColor.BLACK)
         }
 
         private fun colorCompat(context: Context) = try {
@@ -42,7 +42,7 @@ sealed class Color<ColorType> {
         }
     }
 
-    data class Attribute(@AttrRes private val res: Int) : Color<ColorStateList>() {
+    data class Attribute(@AttrRes private val res: Int) : Color() {
         override fun getColor(context: Context): ColorStateList {
             return with(context.theme.obtainStyledAttributes(intArrayOf(res))) {
                 getColorStateList(0) ?: ColorStateList.valueOf(getColor(0, AColor.BLACK))
