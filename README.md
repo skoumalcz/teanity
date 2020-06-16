@@ -1,6 +1,9 @@
-![Teanity](art/logo.png)
-
-[![](https://jitpack.io/v/com.skoumal/teanity.svg?style=flat-square)](https://jitpack.io/#com.skoumal/teanity)
+<p align="center">
+  <img src="art/logo.png" width="128px" />
+</p>
+<p align="center">
+    <a href="https://jitpack.io/#com.skoumal/teanity"><img src="https://jitpack.io/v/com.skoumal/teanity.svg?style=flat-square" width="128px" /></a>
+</p>
 
 Central backbone of your project. Why choose _teanity_?
 
