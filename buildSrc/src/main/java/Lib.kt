@@ -31,7 +31,7 @@ object Lib {
         const val moshi = "1.9.2"
         const val retrofit = "2.8.1"
         const val sanitizer = "0.6"
-        const val glide = "4.11.0"
+        const val coil = "0.11.0"
         const val dexter = "6.1.0"
         const val timber = "4.7.1"
         const val plugin = "1.0.7"
@@ -125,7 +125,7 @@ object Lib {
 
     }
 
-    val glide = github("bumptech.glide", "glide", V.glide)
+    const val coil = "io.coil-kt:coil:${V.coil}"
     const val sanitizer = "wiki.depasquale:response-sanitizer:${V.sanitizer}"
 
     const val dexter = "com.karumi:dexter:${V.dexter}"
