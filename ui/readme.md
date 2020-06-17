@@ -16,9 +16,9 @@ Learn how to use attributes here:
 
 - [Attributes](src/main/res/values/attributes.xml)
 - Dimensions
-  - [Elevation](src/main/res/values/elevation.xml)
-  - [Layout](src/main/res/values/layout.xml)
-  - [Radius](src/main/res/values/radius.xml)
+  - [Elevation](src/main/res/values/elevation_dimens.xml)
+  - [Layout](src/main/res/values/layout_dimens.xml)
+  - [Radius](src/main/res/values/radius_dimens.xml)
 
 ## Spring animations
 
