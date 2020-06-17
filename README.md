@@ -28,8 +28,6 @@ Read additional info for all modules:
 - [DI module](di/readme.md)
 - [Network module](network/readme.md)
 - [Persistence module](persistence/readme.md)
-- [Test module](test/readme.md)
-- [UI Test module](test-ui/readme.md)
 - [UI module](ui/readme.md)
 
 ### Where to start?
