@@ -10,7 +10,7 @@
 Component module is our effort to provide arch tools for cleaner and more importantly testable,
 isolated code of your applications.
 
-## [Use-Case](component/src/main/java/com/skoumal/teanity/component/CompoundUseCase.kt)
+## [Use-Case](src/main/java/com/skoumal/teanity/component/CompoundUseCase.kt)
 
 We isolate our execution logic into UseCases with singular purpose. That way you get amazing
 modularity but at expense of generating (a small amount*) of boilerplate. These UseCases can be
