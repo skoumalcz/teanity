@@ -1,13 +1,12 @@
 plugins {
     id("com.android.library")
-    id("com.getkeepsafe.dexcount")
     id("teanity")
     id("com.github.dcendents.android-maven")
 }
 
 dependencies {
 
-    api(project(":core"))
+    compileOnly(project(":core"))
 
     implementation(Lib.kotlin.lib)
     implementation(Lib.kotlin.coroutines)

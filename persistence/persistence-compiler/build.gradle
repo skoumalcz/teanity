@@ -1,6 +1,5 @@
 plugins {
     id("com.android.library")
-    id("com.getkeepsafe.dexcount")
     id("teanity")
     id("com.github.dcendents.android-maven")
 }

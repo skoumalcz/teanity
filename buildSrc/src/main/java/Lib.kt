@@ -34,8 +34,7 @@ object Lib {
         const val coil = "0.11.0"
         const val dexter = "6.1.0"
         const val timber = "4.7.1"
-        const val plugin = "1.0.7"
-        const val dexCount = "1.0.2"
+        const val plugin = "1.0.8"
 
         // this is kinda deprecated
         const val maven = "2.1"
@@ -132,7 +131,6 @@ object Lib {
     const val timber = "com.jakewharton.timber:timber:${V.timber}"
     const val maven = "com.github.dcendents:android-maven-gradle-plugin:${V.maven}"
     const val teanity = "com.skoumal:teanity-plugin:${V.plugin}"
-    const val dexCount = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:${V.dexCount}"
 
     // ---
 

@@ -6,7 +6,6 @@ buildscript {
         classpath(Lib.kotlin.gradle)
         classpath(Lib.maven)
         classpath(Lib.teanity)
-        classpath(Lib.dexCount)
     }
 }
 
