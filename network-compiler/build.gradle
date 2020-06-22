@@ -6,10 +6,10 @@ plugins {
 
 dependencies {
 
-    api(Lib.androidx.roomCompiler)
+    api(Lib.square.moshiCodegen)
 
 }
 
 afterEvaluate {
-    apply from: "../../groovy.gradle"
+    apply from: "../groovy.gradle"
 }

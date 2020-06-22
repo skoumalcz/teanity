@@ -1,10 +1,10 @@
 rootProject.buildFileName = "build.gradle.kts"
 
 include ":component",
-        ":core", ':core:core-compiler',
+        ":core", ':core-compiler',
         ":ui",
-        ":persistence", ':persistence:persistence-compiler',
-        ":network", ':network:network-compiler',
+        ":persistence", ':persistence-compiler',
+        ":network", ':network-compiler',
         ":test", ":test-ui",
         ":di",
         ":tools"

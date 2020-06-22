@@ -6,10 +6,10 @@ plugins {
 
 dependencies {
 
-    api(Lib.lifecycle.compiler)
+    api(Lib.androidx.roomCompiler)
 
 }
 
 afterEvaluate {
-    apply from: "../../groovy.gradle"
+    apply from: "../groovy.gradle"
 }
