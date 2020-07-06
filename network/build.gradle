@@ -10,7 +10,6 @@ dependencies {
 
     implementation(Lib.kotlin.lib)
     implementation(Lib.kotlin.coroutines)
-    implementation(Lib.androidx.multidex)
 
     api(Lib.square.moshi)
     api(Lib.square.moshiConverter)

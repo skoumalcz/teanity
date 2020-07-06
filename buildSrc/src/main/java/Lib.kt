@@ -4,32 +4,31 @@ object Lib {
     private object V {
         const val kotlin = "1.3.72"
         const val kotlinCoroutines = "1.3.5"
-        const val gradle = "4.0.0"
+        const val gradle = "4.1.0-beta02"
 
         object AndroidX {
-            const val appcompat = "1.2.0-beta01"
-            const val activity = "1.2.0-alpha04"
-            const val core = "1.3.0-rc01"
-            const val paging = "2.1.2"
-            const val room = "2.2.5"
+            const val appcompat = "1.3.0-alpha01"
+            const val activity = "1.2.0-alpha06"
+            const val core = "1.5.0-alpha01"
+            const val paging = "3.0.0-alpha02"
+            const val room = "2.3.0-alpha01"
             const val animation = "1.0.0-alpha03"
-            const val constraint = "2.0.0-beta4"
-            const val material = "1.2.0-alpha06"
+            const val constraint = "2.0.0-beta7"
+            const val material = "1.3.0-alpha01"
             const val lifecycle = "2.2.0"
-            const val navigation = "2.3.0-alpha06"
-            const val test = "1.3.0-beta01"
-            const val junit = "1.1.2-beta01"
+            const val navigation = "2.3.0"
+            const val test = "1.3.0-rc01"
+            const val junit = "1.1.2-rc01"
             const val services = "1.3.0-rc01"
             const val automator = "2.2.0"
-            const val espresso = "3.3.0-beta01"
-            const val multidex = "2.0.1"
+            const val espresso = "3.3.0-rc01"
         }
 
         const val lorem = "2.1"
         const val binding = "4.0.0"
         const val koin = "2.1.5"
-        const val moshi = "1.9.2"
-        const val retrofit = "2.8.1"
+        const val moshi = "1.9.3"
+        const val retrofit = "2.9.0"
         const val sanitizer = "0.6"
         const val coil = "0.11.0"
         const val dexter = "6.1.0"
@@ -60,7 +59,7 @@ object Lib {
     object AndroidX {
         val build = "com.android.tools.build:gradle:${V.gradle}"
         val appcompat = androidx("appcompat", "appcompat", V.AndroidX.appcompat)
-        val activity = androidx("activity", "activity", V.AndroidX.activity)
+        val activity = androidx("activity", "activity-ktx", V.AndroidX.activity)
         val core = androidx("core", "core-ktx", V.AndroidX.core)
         val paging = androidx("paging", "paging-runtime-ktx", V.AndroidX.paging)
         val room = androidx("room", "room-ktx", V.AndroidX.room)
@@ -70,7 +69,6 @@ object Lib {
         val constraint =
             androidx("constraintlayout", "constraintlayout", V.AndroidX.constraint)
         val material = "com.google.android.material:material:${V.AndroidX.material}"
-        val multidex = androidx("multidex", "multidex", V.AndroidX.multidex)
     }
 
     object Lifecycle {
