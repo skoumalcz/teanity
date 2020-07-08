@@ -17,12 +17,6 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 //region Binding
 
-@Deprecated(
-    "It's no longer suggested to use 3rd party libraries for binding to lists",
-    ReplaceWith("BindingAdapter", "com.skoumal.teanity.list.BindingAdapter"),
-    level = DeprecationLevel.WARNING
-)
-@RemoveOnDeprecation("1.3")
 inline fun <T : RecyclerViewItem> bindingOf(
     noinline errorItem: (() -> Int)? = null,
     crossinline init: (ItemBinding<*>) -> Unit
@@ -36,20 +30,7 @@ inline fun <T : RecyclerViewItem> bindingOf(
 //endregion
 //region DiffList
 
-@Suppress("DeprecatedCallableAddReplaceWith")
-@Deprecated(
-    "It's no longer suggested to use 3rd party libraries for binding to lists. See com.skoumal.teanity.list.BindingAdapter and com.skoumal.teanity.viewmodel.LiveStateViewModel",
-    level = DeprecationLevel.WARNING
-)
-@RemoveOnDeprecation("1.3")
 fun <T : ComparableEntity<T>> diffListOf() = DiffObservableList<T>(comparableCallback())
-
-@Suppress("DeprecatedCallableAddReplaceWith")
-@Deprecated(
-    "It's no longer suggested to use 3rd party libraries for binding to lists. See com.skoumal.teanity.list.BindingAdapter and com.skoumal.teanity.viewmodel.LiveStateViewModel",
-    level = DeprecationLevel.WARNING
-)
-@RemoveOnDeprecation("1.3")
 fun <T : ComparableEntity<T>> comparableCallback() = object : DiffUtil.ItemCallback<T>() {
     override fun areContentsTheSame(oldItem: T, newItem: T) = oldItem.contentSameAs(newItem)
     override fun areItemsTheSame(oldItem: T, newItem: T) = oldItem.sameAs(newItem)
@@ -61,7 +42,7 @@ fun <T : ComparableEntity<T>> comparableCallback() = object : DiffUtil.ItemCallb
 @Deprecated(
     "Use language native compareTo",
     ReplaceWith("compareTo"),
-    level = DeprecationLevel.ERROR
+    level = DeprecationLevel.WARNING
 )
 @RemoveOnDeprecation("1.3")
 inline fun <reified T> Any.compareToSafe(eval: (T) -> Boolean) = compareTo(eval)
@@ -71,12 +52,6 @@ inline fun <reified T> Any.compareTo(eval: (T) -> Boolean) = (this as? T)?.let(e
  * Uses coroutines to wrap calculating diff asynchronously. It uses [Dispatchers.Default] context
  * by default, but can be changed as per your choosing
  * */
-@Suppress("DeprecatedCallableAddReplaceWith")
-@Deprecated(
-    "It's no longer suggested to use 3rd party libraries for binding to lists.",
-    level = DeprecationLevel.ERROR
-)
-@RemoveOnDeprecation("1.3")
 suspend fun <T> DiffObservableList<T>.calculateDiffAsync(
     newList: List<T>,
     context: CoroutineContext = Dispatchers.Default
