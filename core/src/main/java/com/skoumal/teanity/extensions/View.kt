@@ -6,8 +6,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.skoumal.teanity.util.Insets
 
 fun Activity.showKeyboard(view: View) {
@@ -45,10 +43,6 @@ fun Activity.hideKeyboard() {
 
 fun Fragment.hideKeyboard() {
     activity?.hideKeyboard()
-}
-
-fun FragmentManager.fragmentTransaction(actions: FragmentTransaction.() -> Unit) {
-    beginTransaction().apply(actions).commit()
 }
 
 private val Context.inputMethodManager
