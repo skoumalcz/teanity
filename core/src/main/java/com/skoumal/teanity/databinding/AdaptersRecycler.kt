@@ -39,7 +39,7 @@ fun RecyclerView.setDividers(dividerVertical: Drawable?, dividerHorizontal: Draw
     }
 }
 
-@BindingAdapter("adapter")
+@BindingAdapter("bindingAdapter")
 fun RecyclerView.setAdapterWithLifecycleOwner(
     adapter: com.skoumal.teanity.list.BindingAdapter<*>
 ) {
