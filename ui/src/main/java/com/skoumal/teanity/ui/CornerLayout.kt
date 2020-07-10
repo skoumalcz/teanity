@@ -16,13 +16,13 @@ import androidx.core.content.res.use
 
 @Suppress("MemberVisibilityCanBePrivate")
 @SuppressLint("Recycle")
-class CornerLayout @JvmOverloads constructor(
+open class CornerLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     style: Int = 0
 ) : FrameLayout(context, attrs, style) {
 
-    private val clipPath = Path()
+    protected open val clipPath = Path()
         get() {
             if (field.isEmpty) {
                 val rectf = if (includePadding) RectF(
