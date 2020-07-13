@@ -4,7 +4,7 @@ object Lib {
     private object V {
         const val kotlin = "1.3.72"
         const val kotlinCoroutines = "1.3.5"
-        const val gradle = "4.1.0-beta02"
+        const val gradle = "4.1.0-beta03"
 
         object AndroidX {
             const val appcompat = "1.3.0-alpha01"
@@ -34,9 +34,6 @@ object Lib {
         const val dexter = "6.1.0"
         const val timber = "4.7.1"
         const val plugin = "1.0.8"
-
-        // this is kinda deprecated
-        const val maven = "2.1"
     }
 
     //region Access definitions
@@ -127,7 +124,6 @@ object Lib {
 
     const val dexter = "com.karumi:dexter:${V.dexter}"
     const val timber = "com.jakewharton.timber:timber:${V.timber}"
-    const val maven = "com.github.dcendents:android-maven-gradle-plugin:${V.maven}"
     const val teanity = "com.skoumal:teanity-plugin:${V.plugin}"
 
     // ---

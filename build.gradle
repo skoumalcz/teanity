@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url = "https://jitpack.io" }
+    }
+
+    dependencies {
+        classpath(Lib.androidx.build)
+        classpath(Lib.kotlin.gradle)
+        classpath(Lib.teanity)
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url = "https://jitpack.io" }
+    }
+}
+
+subprojects {
+    afterEvaluate {
+        publishing {
+            afterEvaluate {
+                publications {
+                    release(MavenPublication) {
+                        from components.release
+
+                        groupId = Publishing.groupId
+                        artifactId = project.name
+                        version = Publishing.version
+                    }
+                }
+            }
+        }
+    }
+}
+
+apply from: "helper.gradle"
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
