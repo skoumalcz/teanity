@@ -72,7 +72,7 @@ open class BindingAdapter<Item : RecyclerViewItem>(
     open fun getCallbackFrom(source: List<Item>) = object : DiffUtil.Callback() {
 
         private val oldList = internalItems.toImmutableList()
-        private val newList = items.toImmutableList()
+        private val newList = source.toImmutableList()
 
         override fun getOldListSize(): Int = oldList.size
         override fun getNewListSize(): Int = newList.size
