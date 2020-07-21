@@ -4,11 +4,12 @@ object Lib {
     private object V {
         const val kotlin = "1.3.72"
         const val kotlinCoroutines = "1.3.5"
-        const val gradle = "4.1.0-beta03"
+        const val gradle = "4.1.0-beta04"
 
         object AndroidX {
             const val appcompat = "1.3.0-alpha01"
             const val activity = "1.2.0-alpha06"
+            const val fragment = "1.3.0-alpha06"
             const val core = "1.5.0-alpha01"
             const val paging = "3.0.0-alpha02"
             const val room = "2.3.0-alpha01"
@@ -57,6 +58,7 @@ object Lib {
         val build = "com.android.tools.build:gradle:${V.gradle}"
         val appcompat = androidx("appcompat", "appcompat", V.AndroidX.appcompat)
         val activity = androidx("activity", "activity-ktx", V.AndroidX.activity)
+        val fragment = androidx("fragment", "fragment-ktx", V.AndroidX.fragment)
         val core = androidx("core", "core-ktx", V.AndroidX.core)
         val paging = androidx("paging", "paging-runtime-ktx", V.AndroidX.paging)
         val room = androidx("room", "room-ktx", V.AndroidX.room)
