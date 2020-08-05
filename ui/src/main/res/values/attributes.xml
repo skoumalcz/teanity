@@ -7,7 +7,7 @@
     <attr name="colorOnPrimaryVariant" format="color" />
     <attr name="colorOnSecondaryVariant" format="color" />
 
-    <declare-styleable name="CornerLayout">
+    <declare-styleable name="CardShapeFrameLayout">
         <attr name="cornerRadius" format="dimension" />
         <attr name="corners" format="flags">
             <flag name="topEnd" value="1" />
@@ -16,7 +16,7 @@
             <flag name="bottomStart" value="8" />
             <flag name="all" value="15" />
         </attr>
-        <attr name="includePadding" format="boolean" />
+        <attr name="android:clipToPadding" />
     </declare-styleable>
 
 </resources>
