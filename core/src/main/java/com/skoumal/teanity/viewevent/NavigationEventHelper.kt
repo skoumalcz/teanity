@@ -11,7 +11,7 @@ class NavigationEventHelper(
 ) : ViewEvent(), ActivityExecutor {
 
     override fun invoke(activity: AppCompatActivity) {
-        if (activity !is TeanityActivity<*, *>) return
+        if (activity !is TeanityActivity<*>) return
         activity.apply { directions.navigate() }
     }
 
