@@ -9,7 +9,6 @@ import com.skoumal.teanity.extensions.backgroundColor
 import com.skoumal.teanity.extensions.textColor
 import com.skoumal.teanity.util.Color
 import com.skoumal.teanity.util.Text
-import com.skoumal.teanity.view.TeanityActivity
 import com.skoumal.teanity.viewevent.base.ActivityExecutor
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import android.graphics.Color as AColor
@@ -19,11 +18,6 @@ class SnackbarEvent private constructor(
 ) : ViewEvent(), ActivityExecutor {
 
     override fun invoke(activity: AppCompatActivity) {
-        if (activity !is TeanityActivity<*, *>) return
-        consume(activity)
-    }
-
-    private fun consume(activity: TeanityActivity<*, *>) {
         consume(activity.findViewById(builder.viewId), activity)
     }
 
