@@ -7,26 +7,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.transition.TransitionInflater
-import com.skoumal.teanity.viewevent.base.ViewEvent
-import com.skoumal.teanity.viewmodel.TeanityViewModel
+import com.skoumal.teanity.view.manager.TeanityViewManager
 
-abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
-    Fragment(), TeanityView<Binding>, TeanityViewAccessor<ViewModel> {
+abstract class TeanityFragment<Binding : ViewDataBinding> :
+    Fragment(),
+    TeanityViewManager.ViewCreator
+    by TeanityViewManager.ViewCreator.delegate,
+    TeanityViewManager.Props,
+    TeanityViewManager.InsetConsumer,
+    TeanityViewManager<TeanityFragment<Binding>, Binding>
+    by TeanityViewManager.fragment<TeanityFragment<Binding>, Binding>() {
 
-    protected val binding: Binding get() = delegate.binding
+    protected val navController: NavController
+        get() = NavHostRetriever.findNavController(this)
 
-    protected abstract val layoutRes: Int
-    protected abstract val viewModel: ViewModel
+    protected val teanityActivity: TeanityActivity<*>
+        get() = requireActivity() as TeanityActivity<*>
 
-    open val snackbarView get() = binding.root
     protected open val isTransitionsEnabled = false
 
-    protected val navController get() = binding.root.findNavController()
-    protected val teanityActivity get() = activity as? TeanityActivity<*, *>
-
-    private val delegate by lazy { TeanityDelegate(this) }
+    init {
+        @Suppress("LeakingThis")
+        attach(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,44 +43,17 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
                     .inflateTransition(android.R.transition.move)
             }
         }
-
-        delegate.onCreate(this)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = delegate.onCreateView(inflater, container)
+    ): View? = createView(inflater, container!!)
 
-    override fun onResume() {
-        super.onResume()
-        delegate.onResume()
+
+    open fun NavDirections.navigate() {
+        navController.navigate(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        delegate.onDestroy()
-    }
-
-    //region TeanityView
-
-    override fun onEventDispatched(event: ViewEvent) {}
-
-    //endregion
-    //region TeanityViewAccessor
-
-    override fun obtainViewModel() = viewModel
-    override fun obtainLayoutRes() = layoutRes
-    override fun obtainContext() = requireContext()
-
-    //endregion
-    //region Helpers
-
-    protected fun detachEvents() = delegate.detachEvents()
-    protected fun ViewEvent.onSelf() {
-        viewModel.apply { publish() }
-    }
-
-    //endregion
 }

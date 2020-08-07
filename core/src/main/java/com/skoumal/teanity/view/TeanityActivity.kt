@@ -1,73 +1,28 @@
 package com.skoumal.teanity.view
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
-import com.skoumal.teanity.viewevent.base.ViewEvent
-import com.skoumal.teanity.viewmodel.TeanityViewModel
+import com.skoumal.teanity.view.manager.TeanityViewManager
 
-abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
-    AppCompatActivity(), TeanityView<Binding>, TeanityViewAccessor<ViewModel> {
-
-    protected val binding: Binding get() = delegate.binding
-
-    protected abstract val layoutRes: Int
-    protected abstract val viewModel: ViewModel
-
-    open val snackbarView get() = binding.root
-    protected open val navHostId: Int = 0
+abstract class TeanityActivity<Binding : ViewDataBinding> :
+    AppCompatActivity(),
+    TeanityViewManager.Props,
+    TeanityViewManager.InsetConsumer,
+    TeanityViewManager<TeanityActivity<Binding>, Binding>
+    by TeanityViewManager.activity<TeanityActivity<Binding>, Binding>() {
 
     protected val navController: NavController
-        get() {
-            check(navHostId != 0) {
-                "You must override \"navHostId\" if you want to use navController"
-            }
-            return findNavController(navHostId)
-        }
+        get() = NavHostRetriever.findNavController(this)
 
-    private val delegate by lazy { TeanityDelegate(this) }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        delegate.onCreate(this)
+    init {
+        @Suppress("LeakingThis")
+        attach(this)
     }
-
-    override fun onResume() {
-        super.onResume()
-        delegate.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        delegate.onDestroy()
-    }
-
-    //region TeanityView
-
-    override fun onEventDispatched(event: ViewEvent) {}
-
-    //endregion
-    //region TeanityViewAccessor
-
-    override fun obtainViewModel() = viewModel
-    override fun obtainLayoutRes() = layoutRes
-    override fun obtainContext() = this
-
-    //endregion
-    //region Helpers
-
-    protected fun detachEvents() = delegate.detachEvents()
-    protected fun ViewEvent.onSelf() = viewModel.run { publish() }
-
-    //endregion
-    //region Navigation
 
     open fun NavDirections.navigate() {
         navController.navigate(this)
     }
 
-    //endregion
 }

@@ -6,68 +6,47 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.findNavController
-import com.skoumal.teanity.viewevent.base.ViewEvent
-import com.skoumal.teanity.viewmodel.TeanityViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import com.skoumal.teanity.view.manager.TeanityViewManager
 
-abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
-    DialogFragment(), TeanityView<Binding>, TeanityViewAccessor<ViewModel> {
+abstract class TeanityDialogFragment<Binding : ViewDataBinding> :
+    DialogFragment(),
+    TeanityViewManager.ViewCreator
+    by TeanityViewManager.ViewCreator.delegate,
+    TeanityViewManager.Props,
+    TeanityViewManager.InsetConsumer,
+    TeanityViewManager<TeanityDialogFragment<Binding>, Binding>
+    by TeanityViewManager.fragment<TeanityDialogFragment<Binding>, Binding>() {
 
-    protected val binding: Binding get() = delegate.binding
+    protected val navController: NavController
+        get() = NavHostRetriever.findNavController(this)
 
-    protected abstract val layoutRes: Int
-    protected abstract val viewModel: ViewModel
-
-    protected val navController get() = binding.root.findNavController()
-    protected val teanityActivity get() = activity as? TeanityActivity<*, *>
-
-    private val delegate by lazy { TeanityDelegate(this) }
+    protected val teanityActivity: TeanityActivity<*>
+        get() = requireActivity() as TeanityActivity<*>
 
     protected open val dialogStyle = STYLE_NORMAL
     protected open val dialogTheme = 0
+
+    init {
+        @Suppress("LeakingThis")
+        attach(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setStyle(dialogStyle, dialogTheme)
-
-        delegate.onCreate(this)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = delegate.onCreateView(inflater, container)
+    ): View? = createView(inflater, container!!)
 
-    override fun onResume() {
-        super.onResume()
-        delegate.onResume()
+    open fun NavDirections.navigate() {
+        navController.navigate(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        delegate.onDestroy()
-    }
-
-    //region TeanityView
-
-    override fun onEventDispatched(event: ViewEvent) {}
-
-    //endregion
-    //region TeanityViewAccessor
-
-    override fun obtainViewModel() = viewModel
-    override fun obtainLayoutRes() = layoutRes
-    override fun obtainContext() = requireContext()
-
-    //endregion
-    //region Helpers
-
-    protected fun detachEvents() = delegate.detachEvents()
-    protected fun ViewEvent.onSelf() {
-        viewModel.apply { publish() }
-    }
-
-    //endregion
 }

@@ -24,7 +24,7 @@ class SnackbarEvent private constructor(
     }
 
     private fun consume(activity: TeanityActivity<*, *>) {
-        consume(activity.snackbarView, activity)
+        consume(activity.findViewById(builder.viewId), activity)
     }
 
     private fun consume(view: View, context: Context) {
@@ -60,6 +60,8 @@ class SnackbarEvent private constructor(
         @IntDef(value = [Snackbar.LENGTH_SHORT, Snackbar.LENGTH_LONG, Snackbar.LENGTH_INDEFINITE])
         @Retention(AnnotationRetention.SOURCE)
         annotation class Length
+
+        var viewId = android.R.id.content
 
         @Length
         var length: Int = Snackbar.LENGTH_SHORT
