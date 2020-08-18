@@ -8,33 +8,32 @@ object Lib {
 
         object AndroidX {
             const val appcompat = "1.3.0-alpha01"
-            const val activity = "1.2.0-alpha06"
-            const val fragment = "1.3.0-alpha06"
+            const val activity = "1.2.0-alpha07"
+            const val fragment = "1.3.0-alpha07"
             const val core = "1.5.0-alpha01"
-            const val paging = "3.0.0-alpha02"
-            const val room = "2.3.0-alpha01"
+            const val paging = "3.0.0-alpha04"
+            const val room = "2.3.0-alpha02"
             const val animation = "1.0.0-alpha03"
-            const val constraint = "2.0.0-beta7"
-            const val material = "1.3.0-alpha01"
+            const val constraint = "2.0.0-rc01"
+            const val material = "1.3.0-alpha02"
             const val lifecycle = "2.2.0"
             const val navigation = "2.3.0"
-            const val test = "1.3.0-rc01"
-            const val junit = "1.1.2-rc01"
-            const val services = "1.3.0-rc01"
+            const val test = "1.3.0-rc03"
+            const val junit = "1.1.2-rc03"
+            const val services = "1.3.0-rc03"
             const val automator = "2.2.0"
-            const val espresso = "3.3.0-rc01"
+            const val espresso = "3.3.0-rc03"
         }
 
         const val lorem = "2.1"
         const val binding = "4.0.0"
-        const val koin = "2.1.5"
+        const val koin = "2.1.6"
         const val moshi = "1.9.3"
         const val retrofit = "2.9.0"
         const val sanitizer = "0.6"
         const val coil = "0.11.0"
-        const val dexter = "6.1.0"
         const val timber = "4.7.1"
-        const val plugin = "1.0.8"
+        const val plugin = "2.0.0-alpha01"
     }
 
     //region Access definitions
@@ -90,7 +89,7 @@ object Lib {
 
     object Koin {
         val core = koin("android", V.koin)
-        val viewModel = koin("android-viewmodel", V.koin)
+        val viewModel = koin("androidx-viewmodel", V.koin)
     }
 
     object Square {
@@ -124,7 +123,6 @@ object Lib {
     const val coil = "io.coil-kt:coil:${V.coil}"
     const val sanitizer = "wiki.depasquale:response-sanitizer:${V.sanitizer}"
 
-    const val dexter = "com.karumi:dexter:${V.dexter}"
     const val timber = "com.jakewharton.timber:timber:${V.timber}"
     const val teanity = "com.skoumal:teanity-plugin:${V.plugin}"
 
