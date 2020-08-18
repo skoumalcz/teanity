@@ -31,7 +31,6 @@ dependencies {
     api(Lib.navigation.ui)
 
     /* === EASING === */
-    implementation(Lib.dexter)
     api(Lib.timber)
     api(Lib.bindingCollection.collections)
     api(Lib.bindingCollection.recycler)
