@@ -49,6 +49,7 @@ object Lib {
 
     object Kotlin {
         val lib = kotlin("stdlib-jdk7", V.kotlin)
+        val reflect = kotlin("reflect", V.kotlin)
         val gradle = kotlin("gradle-plugin", V.kotlin)
         val coroutines = kotlinx("coroutines-android", V.kotlinCoroutines)
     }
