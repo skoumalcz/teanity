@@ -11,7 +11,6 @@ import com.skoumal.teanity.BR
 import com.skoumal.teanity.lifecycle.launchWhenDestroyed
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 import kotlinx.coroutines.channels.ReceiveChannel
-import timber.log.Timber
 
 internal class TeanityFragmentManager<F, B> : TeanityViewManager<F, B>
         where F : Fragment, F : TeanityViewManager.Props,
@@ -25,7 +24,6 @@ internal class TeanityFragmentManager<F, B> : TeanityViewManager<F, B>
     override lateinit var binding: B
 
     override fun attach(view: F) {
-        Timber.e("Attached fragment")
         if (view is TeanityViewManager.ViewCreator) {
             view.addViewCreator(object : TeanityViewManager.ViewCreator.Callback {
                 override fun createView(
