@@ -76,4 +76,12 @@ abstract class AbstractShapeFrameLayout @JvmOverloads constructor(
         postInvalidate()
     }
 
+    @Suppress("ConstantConditionIf")
+    override fun invalidate() {
+        if (isInitialized) {
+            clipPath.reset()
+        }
+        super.invalidate()
+    }
+
 }
