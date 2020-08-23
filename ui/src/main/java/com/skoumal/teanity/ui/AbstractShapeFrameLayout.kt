@@ -11,6 +11,7 @@ import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import com.skoumal.teanity.ui.shape.ShapeBuilder
+import timber.log.Timber
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 abstract class AbstractShapeFrameLayout @JvmOverloads constructor(
@@ -23,7 +24,9 @@ abstract class AbstractShapeFrameLayout @JvmOverloads constructor(
         get() {
             if (field.isEmpty) {
                 onCreatePath().build(field)
-                require(!field.isEmpty)
+                if (field.isEmpty) {
+                    Timber.e("${this::class.java.name} has fetched empty view path")
+                }
             }
             return field
         }
