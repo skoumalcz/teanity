@@ -21,14 +21,12 @@ internal class TeanityActivityManager<A, B> : TeanityViewManager<A, B>
     override lateinit var binding: B
 
     override fun attach(view: A) {
+        binding = DataBindingUtil.setContentView<B>(view, view.layoutRes).apply {
+            setVariable(BR.viewModel, view.viewModel)
+            lifecycleOwner = view
+            root.applyInsets(view, view.viewModel)
+        }
         with(view.lifecycleScope) {
-            launchWhenCreated {
-                binding = DataBindingUtil.setContentView<B>(view, view.layoutRes).apply {
-                    setVariable(BR.viewModel, view.viewModel)
-                    lifecycleOwner = view
-                    root.applyInsets(view, view.viewModel)
-                }
-            }
             launchWhenResumed {
                 when (val vm = view.viewModel) {
                     is TeanityViewModel -> vm.requestRefresh()

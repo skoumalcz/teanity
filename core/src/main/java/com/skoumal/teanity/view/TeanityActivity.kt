@@ -1,5 +1,6 @@
 package com.skoumal.teanity.view
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
@@ -16,8 +17,8 @@ abstract class TeanityActivity<Binding : ViewDataBinding> :
     protected val navController: NavController
         get() = NavHostRetriever.findNavController(this)
 
-    init {
-        @Suppress("LeakingThis")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         attach(this)
     }
 
