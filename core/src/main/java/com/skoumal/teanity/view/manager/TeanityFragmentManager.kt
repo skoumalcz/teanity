@@ -42,18 +42,20 @@ internal class TeanityFragmentManager<F, B> : TeanityViewManager<F, B>
                 }.root
             })
         }
+
         with(view.lifecycleScope) {
-            launchWhenResumed {
-                when (val vm = view.viewModel) {
-                    is TeanityViewModel -> vm.requestRefresh()
-                }
-            }
             launchWhenStarted {
                 subscription = view.viewModel.subscribe(view)
             }
             launchWhenDestroyed(view.lifecycle) {
                 detach()
             }
+        }
+    }
+
+    override fun resume(view: F) {
+        when (val vm = view.viewModel) {
+            is TeanityViewModel -> vm.requestRefresh()
         }
     }
 

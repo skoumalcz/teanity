@@ -14,6 +14,7 @@ interface TeanityViewManager<View, Binding : ViewDataBinding> {
     val binding: Binding
 
     fun attach(view: View)
+    fun resume(view: View)
     fun detach()
 
     interface Props {

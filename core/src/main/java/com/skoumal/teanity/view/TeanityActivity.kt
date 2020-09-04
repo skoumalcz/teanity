@@ -22,6 +22,11 @@ abstract class TeanityActivity<Binding : ViewDataBinding> :
         attach(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        resume(this)
+    }
+
     open fun NavDirections.navigate() {
         navController.navigate(this)
     }

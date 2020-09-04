@@ -27,17 +27,18 @@ internal class TeanityActivityManager<A, B> : TeanityViewManager<A, B>
             root.applyInsets(view, view.viewModel)
         }
         with(view.lifecycleScope) {
-            launchWhenResumed {
-                when (val vm = view.viewModel) {
-                    is TeanityViewModel -> vm.requestRefresh()
-                }
-            }
             launchWhenStarted {
                 subscription = view.viewModel.subscribe(view)
             }
             launchWhenDestroyed(view.lifecycle) {
                 detach()
             }
+        }
+    }
+
+    override fun resume(view: A) {
+        when (val vm = view.viewModel) {
+            is TeanityViewModel -> vm.requestRefresh()
         }
     }
 

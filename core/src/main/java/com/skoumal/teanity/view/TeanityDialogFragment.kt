@@ -45,6 +45,11 @@ abstract class TeanityDialogFragment<Binding : ViewDataBinding> :
         savedInstanceState: Bundle?
     ): View? = createView(inflater, container!!)
 
+    override fun onResume() {
+        super.onResume()
+        resume(this)
+    }
+
     open fun NavDirections.navigate() {
         navController.navigate(this)
     }
