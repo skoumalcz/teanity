@@ -12,6 +12,7 @@ import com.skoumal.teanity.lifecycle.LiveDataObserverHost
 import com.skoumal.teanity.observable.Broadcastable
 import com.skoumal.teanity.observable.Notifyable
 import com.skoumal.teanity.observable.observable
+import com.skoumal.teanity.tools.log.info
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.view.TeanityActivity
 import com.skoumal.teanity.view.TeanityFragment
@@ -20,7 +21,6 @@ import com.skoumal.teanity.viewevent.NavigationEventHelper
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -86,12 +86,12 @@ abstract class TeanityViewModel : ViewModel(),
     @Synchronized
     fun requestRefresh(): Boolean {
         if (currentJob?.isActive == true) {
-            Timber.i("Data cannot be refreshed concurrently. Request to refresh is denied.")
+            info("Data cannot be refreshed concurrently. Request to refresh is denied.")
             return false
         }
 
         if (SystemClock.uptimeMillis() - lastRefresh < minRefreshDelay) {
-            Timber.i("Data cannot be refreshed at this time, minimal refresh delay haven't expired yet. Request to refresh is denied.")
+            info("Data cannot be refreshed at this time, minimal refresh delay haven't expired yet. Request to refresh is denied.")
             return false
         }
 

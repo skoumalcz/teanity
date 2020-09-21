@@ -1,10 +1,10 @@
 package com.skoumal.teanity.observable
 
+import com.skoumal.teanity.tools.log.info
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
-import timber.log.Timber
 
 @OptIn(ExperimentalCoroutinesApi::class)
 interface Broadcastable<E> {
@@ -41,11 +41,11 @@ private class BroadcastableImpl<E> : Broadcastable<E> {
 
     override fun E.publish() {
         if (viewEvents.isClosedForSend) {
-            Timber.i("Channel has been disposed, no further events will be sent")
+            info("Channel has been disposed, no further events will be sent")
             return
         }
         if (!offer(this)) {
-            Timber.i("Event $this has been rejected by broadcast queue")
+            info("Event $this has been rejected by broadcast queue")
         }
     }
 

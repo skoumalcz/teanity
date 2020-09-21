@@ -1,16 +1,16 @@
 package com.skoumal.teanity.network
 
 import com.skoumal.teanity.network.exception.NetworkException
+import com.skoumal.teanity.tools.log.error
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
-import timber.log.Timber
 
 fun <T : Any> Response<T>.toResult(): Result<T?> {
     if (isSuccessful) {
         return Result.success(body())
     }
 
-    Timber.e("Remote Error [code=${code()},message=${message()}]")
+    error("Remote Error [code=${code()},message=${message()}]")
     return Result.failure(NetworkException(errorBody()))
 }
 

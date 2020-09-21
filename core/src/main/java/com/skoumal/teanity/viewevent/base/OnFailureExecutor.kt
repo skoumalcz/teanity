@@ -1,6 +1,6 @@
 package com.skoumal.teanity.viewevent.base
 
-import timber.log.Timber
+import com.skoumal.teanity.tools.log.error
 
 interface OnFailureExecutor {
 
@@ -11,7 +11,7 @@ interface OnFailureExecutor {
      * unsupported platform doesn't induce crashes.
      *
      * ## Notes
-     * The default implementation reports crashes through [Timber] error messages.*/
-    fun onFailure(throwable: Throwable) = Timber.e(throwable)
+     * The default implementation reports crashes through [error] messages.*/
+    fun onFailure(throwable: Throwable) = error(throwable)
 
 }

@@ -10,11 +10,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.skoumal.teanity.component.extensions.distinctUntilChanged
 import com.skoumal.teanity.tools.annotation.SubjectsToFutureChange
+import com.skoumal.teanity.tools.log.error
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 /**
  * Allows for a testable, isolated business logic to be executed according with a given [dispatcher].
@@ -131,7 +131,7 @@ abstract class UseCase<in In, Out> {
         val result = catching { withContext(dispatcher) { execute(params) } }
             .also { data.postValue(it) }
         result.asPlatform()
-            .onFailure { Timber.e(it) }
+            .onFailure { error(it) }
             .also { state.postValue(it.fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })) }
         return result
     }
