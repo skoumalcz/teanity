@@ -43,8 +43,8 @@ abstract class CompoundUseCase<in In, Out> {
      * It can be overridden and it's functionality might replaced with fetching data from Room or
      * other observable source.
      * */
-    open fun observe(params: In): LiveData<Out?> {
-        GlobalScope.launch(Dispatchers.Unconfined) { invoke(params) }
+    open fun observe(input: In): LiveData<Out?> {
+        GlobalScope.launch(Dispatchers.Unconfined) { invoke(input) }
         return data.map { it.getOrNull() }
     }
 
@@ -53,7 +53,7 @@ abstract class CompoundUseCase<in In, Out> {
      * Returns internal immutable [LiveData] to which result is supplied after calling [invoke]
      * without explicit [data] parameter.
      * */
-    fun observeData(): LiveData<Result<Out>> = data
+    fun observeData(): LiveData<ComponentResult<Out>> = data
 
     /**
      * ## Definition
@@ -82,13 +82,13 @@ abstract class CompoundUseCase<in In, Out> {
      * val resultLiveData = exampleUseCase(..., exampleUseCase.provide())
      * ```
      * */
-    fun provide() = MutableLiveData<Result<Out>>()
+    fun provide() = MutableLiveData<ComponentResult<Out>>()
 
     /**
      * ## Definition
      * Provides immediate result if cached and starts execution logic defined in [execute].
      * */
-    suspend operator fun invoke(params: In): Result<Out> = invoke(params, data)
+    suspend operator fun invoke(params: In): ComponentResult<Out> = invoke(params, data)
 
     /**
      * ## Definition
@@ -96,12 +96,17 @@ abstract class CompoundUseCase<in In, Out> {
      * which it returns with weakened access for convenience.
      * */
     @Synchronized
-    suspend operator fun invoke(params: In, data: MutableLiveData<Result<Out>>): Result<Out> {
+    suspend operator fun invoke(
+        params: In,
+        data: MutableLiveData<ComponentResult<Out>>
+    ): ComponentResult<Out> {
         state.postValue(UseCaseState.LOADING)
-        return runCatching { withContext(dispatcher) { execute(params) } }
+        val result = catching { withContext(dispatcher) { execute(params) } }
             .also { data.postValue(it) }
+        result.asPlatform()
             .onFailure { Timber.e(it) }
             .also { state.postValue(it.fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })) }
+        return result
     }
 
     /**
@@ -113,6 +118,6 @@ abstract class CompoundUseCase<in In, Out> {
 
 }
 
-suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(): Result<R> = this(Unit)
-suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(result: MutableLiveData<Result<R>>) =
+suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(): ComponentResult<R> = this(Unit)
+suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(result: MutableLiveData<ComponentResult<R>>) =
     this(Unit, result)

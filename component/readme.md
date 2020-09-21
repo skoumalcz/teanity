@@ -54,7 +54,7 @@ class GetUserUseCase internal constructor(
 
     override suspend fun execute(input: UserId): User {
         // this might throw an exception at some point, but no worries.
-        // the UseCase catches all errors and returns Result<User> that can be processed in
+        // the UseCase catches all errors and returns ComponentResult<User> that can be processed in
         // whichever way you want
         return api.getUserById(input)
     }
