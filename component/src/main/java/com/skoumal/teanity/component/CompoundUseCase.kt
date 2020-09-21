@@ -98,12 +98,10 @@ abstract class CompoundUseCase<in In, Out> {
     @Synchronized
     suspend operator fun invoke(params: In, data: MutableLiveData<Result<Out>>): Result<Out> {
         state.postValue(UseCaseState.LOADING)
-        return withContext(dispatcher) {
-            runCatching { execute(params) }
-                .also { data.postValue(it) }
-                .onFailure { Timber.e(it) }
-                .also { state.postValue(it.fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })) }
-        }
+        return runCatching { withContext(dispatcher) { execute(params) } }
+            .also { data.postValue(it) }
+            .onFailure { Timber.e(it) }
+            .also { state.postValue(it.fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })) }
     }
 
     /**
