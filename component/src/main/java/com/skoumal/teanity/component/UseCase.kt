@@ -6,7 +6,6 @@
 
 package com.skoumal.teanity.component
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.skoumal.teanity.component.extensions.distinctUntilChanged
@@ -127,24 +126,10 @@ abstract class UseCase<in In, Out> {
     ): Result<Out> {
         state.postValue(UseCaseState.LOADING)
         return withContext(dispatcher) {
-            try {
-                Result.success(execute(params))
-            } catch (e: Throwable) {
-                Result.failure(e)
-            }.apply {
-                val newState = onFailure {
-                    val tag = this::class.java.simpleName
-                    if (Log.isLoggable(tag, Log.VERBOSE)) {
-                        Timber.tag(tag).v(it, "Error while executing usecase")
-                    }
-                }.fold(
-                    onSuccess = { UseCaseState.IDLE },
-                    onFailure = { UseCaseState.FAILED }
-                )
-
-                data.postValue(this)
-                state.postValue(newState)
-            }
+            runCatching { execute(params) }
+                .also { data.postValue(it) }
+                .onFailure { Timber.e(it) }
+                .also { state.postValue(it.fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })) }
         }
     }
 
