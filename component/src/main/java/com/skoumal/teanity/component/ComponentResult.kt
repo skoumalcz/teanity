@@ -35,8 +35,8 @@ sealed class ComponentResult<out T> {
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun <T> ComponentResult<T>.asPlatform() = when {
-    isFailure -> Result.failure<T>(exceptionOrNull()!!)
-    else -> Result.success(getOrNull()!!)
+    isFailure -> Result.failure(exceptionOrNull()!!)
+    else -> Result.success(getOrNull() as T)
 }
 
 inline fun <I, O> I.catching(body: I.() -> O) = try {
