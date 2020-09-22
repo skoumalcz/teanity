@@ -69,9 +69,9 @@ inline fun <T, R> ComponentResult<T>.mapCatching(mapper: Mapper<T, R>) =
 inline fun <T, R> ComponentResult<T>.flatMap(mapper: Mapper<T, ComponentResult<R>>) =
     mapCatching { mapper(it).getOrThrow() }
 
-inline fun <T> ComponentResult<T>.fold(
-    onSuccess: (T) -> Unit,
-    onFailure: (Throwable) -> Unit,
+inline fun <T, R> ComponentResult<T>.fold(
+    onSuccess: (T) -> R,
+    onFailure: (Throwable) -> R,
 ) = asPlatform().fold(onSuccess, onFailure)
 
 inline fun <T> ComponentResult<T>.recover(mapper: Mapper<Throwable, T>) =
