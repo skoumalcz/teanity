@@ -55,7 +55,7 @@ class UseCaseTest {
     fun testInvoke_extensionResult() {
         val desiredResult = nextInt()
         val useCase = createTypedUseCase<Int> { desiredResult }
-        val result = MutableLiveData<ComponentResult<Int>>()
+        val result = MutableLiveData<Result<Int>>()
 
         useCase(result)
 

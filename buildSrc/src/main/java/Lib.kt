@@ -2,7 +2,7 @@
 object Lib {
 
     private object V {
-        const val kotlin = "1.4.10"
+        const val kotlin = "1.4.20-M1-63"
         const val kotlinCoroutines = "1.3.9"
         const val gradle = "4.1.0-rc03"
 
@@ -48,7 +48,7 @@ object Lib {
     //endregion
 
     object Kotlin {
-        val lib = kotlin("stdlib-jdk7", V.kotlin)
+        val lib = kotlin("stdlib", V.kotlin)
         val reflect = kotlin("reflect", V.kotlin)
         val gradle = kotlin("gradle-plugin", V.kotlin)
         val coroutines = kotlinx("coroutines-android", V.kotlinCoroutines)

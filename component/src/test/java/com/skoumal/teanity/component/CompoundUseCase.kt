@@ -21,7 +21,7 @@ class CompoundUseCaseTest {
         val useCase = createTypedUseCase<String> { input }
 
         runBlocking {
-            assertThat(useCase.invoke().getOrNull()).isEqualTo(input)
+            assertThat(useCase.invoke(Unit).getOrNull()).isEqualTo(input)
         }
     }
 
@@ -40,7 +40,7 @@ class CompoundUseCaseTest {
         assertThat(hasRun).isFalse()
 
         runBlocking {
-            assertThat(useCase.invoke().getOrNull()).isEqualTo(input)
+            assertThat(useCase.invoke(Unit).getOrNull()).isEqualTo(input)
             assertThat(hasRun).isTrue()
         }
     }
@@ -70,7 +70,7 @@ class CompoundUseCaseTest {
         }
 
         runBlocking {
-            useCase()
+            useCase.invoke(Unit)
         }
 
         assertThat(hasRun).isTrue()
@@ -85,7 +85,7 @@ class CompoundUseCaseTest {
         }
 
         runBlocking {
-            assertThat(useCase().isFailure).isTrue()
+            assertThat(useCase.invoke(Unit).isFailure).isTrue()
         }
 
         assertThat(hasRun).isTrue()
@@ -107,7 +107,7 @@ class CompoundUseCaseTest {
         }
 
         runBlocking {
-            useCase(data)
+            useCase.invoke(Unit, data)
         }
 
         assertThat(hasRun).isTrue()

@@ -4,6 +4,13 @@ plugins {
     id("maven-publish")
 }
 
+android {
+    packagingOptions {
+        pickFirst 'META-INF/metadata.kotlin_module'
+        pickFirst 'META-INF/metadata.jvm.kotlin_module'
+    }
+}
+
 dependencies {
 
     api(Lib.square.moshiCodegen)

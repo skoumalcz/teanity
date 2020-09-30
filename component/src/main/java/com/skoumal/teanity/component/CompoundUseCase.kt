@@ -53,7 +53,7 @@ abstract class CompoundUseCase<in In, Out> {
      * Returns internal immutable [LiveData] to which result is supplied after calling [invoke]
      * without explicit [data] parameter.
      * */
-    fun observeData(): LiveData<ComponentResult<Out>> = data
+    fun observeData(): LiveData<Result<Out>> = data
 
     /**
      * ## Definition
@@ -82,13 +82,13 @@ abstract class CompoundUseCase<in In, Out> {
      * val resultLiveData = exampleUseCase(..., exampleUseCase.provide())
      * ```
      * */
-    fun provide() = MutableLiveData<ComponentResult<Out>>()
+    fun provide() = MutableLiveData<Result<Out>>()
 
     /**
      * ## Definition
      * Provides immediate result if cached and starts execution logic defined in [execute].
      * */
-    suspend operator fun invoke(params: In): ComponentResult<Out> = invoke(params, data)
+    suspend operator fun invoke(params: In): Result<Out> = invoke(params, data)
 
     /**
      * ## Definition
@@ -98,15 +98,13 @@ abstract class CompoundUseCase<in In, Out> {
     @Synchronized
     suspend operator fun invoke(
         params: In,
-        data: MutableLiveData<ComponentResult<Out>>
-    ): ComponentResult<Out> {
+        data: MutableLiveData<Result<Out>>
+    ): Result<Out> {
         state.postValue(UseCaseState.LOADING)
-        val result = catching { withContext(dispatcher) { execute(params) } }
+        return kotlin.runCatching { withContext(dispatcher) { execute(params) } }
             .also { data.postValue(it) }
-        result.asPlatform()
             .onFailure { error(it) }
             .also { state.postValue(it.fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })) }
-        return result
     }
 
     /**
@@ -118,6 +116,6 @@ abstract class CompoundUseCase<in In, Out> {
 
 }
 
-suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(): ComponentResult<R> = this(Unit)
-suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(result: MutableLiveData<ComponentResult<R>>) =
+suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(): Result<R> = this(Unit)
+suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(result: MutableLiveData<Result<R>>) =
     this(Unit, result)

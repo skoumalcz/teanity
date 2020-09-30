@@ -57,7 +57,7 @@ abstract class UseCase<in In, Out> {
      * Returns internal immutable [LiveData] to which result is supplied after calling [invoke]
      * without explicit [data] parameter.
      * */
-    fun observe(): LiveData<ComponentResult<Out>> = data
+    fun observe(): LiveData<Result<Out>> = data
 
     /**
      * ## Definition
@@ -86,13 +86,13 @@ abstract class UseCase<in In, Out> {
      * val resultLiveData = exampleUseCase(..., exampleUseCase.provide())
      * ```
      * */
-    fun provide() = MutableLiveData<ComponentResult<Out>>()
+    fun provide() = MutableLiveData<Result<Out>>()
 
     /**
      * ## Definition
      * Provides immediate result if cached and starts execution logic defined in [execute].
      * */
-    operator fun invoke(params: In): LiveData<ComponentResult<Out>> = invoke(params, data)
+    operator fun invoke(params: In): LiveData<Result<Out>> = invoke(params, data)
 
     /**
      * ## Definition
@@ -101,8 +101,8 @@ abstract class UseCase<in In, Out> {
      * */
     operator fun invoke(
         params: In,
-        data: MutableLiveData<ComponentResult<Out>>
-    ): LiveData<ComponentResult<Out>> =
+        data: MutableLiveData<Result<Out>>
+    ): LiveData<Result<Out>> =
         data.also { GlobalScope.launch(dispatcher) { now(params, it) } }
 
     /**
@@ -125,15 +125,13 @@ abstract class UseCase<in In, Out> {
     @Synchronized
     suspend fun now(
         params: In,
-        data: MutableLiveData<ComponentResult<Out>> = this.data
-    ): ComponentResult<Out> {
+        data: MutableLiveData<Result<Out>> = this.data
+    ): Result<Out> {
         state.postValue(UseCaseState.LOADING)
-        val result = catching { withContext(dispatcher) { execute(params) } }
+        return kotlin.runCatching { withContext(dispatcher) { execute(params) } }
             .also { data.postValue(it) }
-        result.asPlatform()
             .onFailure { error(it) }
             .also { state.postValue(it.fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })) }
-        return result
     }
 
     /**
@@ -145,9 +143,9 @@ abstract class UseCase<in In, Out> {
 }
 
 @OptIn(SubjectsToFutureChange::class)
-operator fun <R> UseCase<Unit, R>.invoke(): LiveData<ComponentResult<R>> =
+operator fun <R> UseCase<Unit, R>.invoke(): LiveData<Result<R>> =
     this(Unit)
 
 @OptIn(SubjectsToFutureChange::class)
-operator fun <R> UseCase<Unit, R>.invoke(result: MutableLiveData<ComponentResult<R>>) =
+operator fun <R> UseCase<Unit, R>.invoke(result: MutableLiveData<Result<R>>) =
     this(Unit, result)
