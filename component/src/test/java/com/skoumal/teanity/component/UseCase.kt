@@ -2,7 +2,6 @@ package com.skoumal.teanity.component
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
 import com.skoumal.teanity.tools.annotation.SubjectsToFutureChange
 import kotlinx.coroutines.Dispatchers
@@ -55,7 +54,7 @@ class UseCaseTest {
     fun testInvoke_extensionResult() {
         val desiredResult = nextInt()
         val useCase = createTypedUseCase<Int> { desiredResult }
-        val result = MutableLiveData<Result<Int>>()
+        val result = useCase.provide()
 
         useCase(result)
 

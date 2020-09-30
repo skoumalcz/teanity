@@ -8,6 +8,7 @@ package com.skoumal.teanity.component
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.skoumal.teanity.component.UseCaseState.*
 import com.skoumal.teanity.component.extensions.distinctUntilChanged
 import com.skoumal.teanity.component.extensions.map
 import com.skoumal.teanity.tools.log.error
@@ -20,7 +21,7 @@ import kotlinx.coroutines.withContext
  * Allows for a testable, isolated business logic to be executed according with a given [dispatcher].
  *
  * In order to save time and resources when using UseCases in different screens, it gained internal
- * data designed to hold the last result. The result is however ignored whenever called with _own_
+ * data designed to hold the last ComponentResult. The ComponentResult is however ignored whenever called with _own_
  * [MutableLiveData].
  * */
 @Suppress("MemberVisibilityCanBePrivate")
@@ -34,7 +35,7 @@ abstract class CompoundUseCase<in In, Out> {
 
     private val data = provide()
 
-    private val state = MutableLiveData<UseCaseState>(UseCaseState.IDLE)
+    private val state = MutableLiveData<UseCaseState>(IDLE)
 
     /**
      * ## Definition
@@ -53,7 +54,7 @@ abstract class CompoundUseCase<in In, Out> {
      * Returns internal immutable [LiveData] to which result is supplied after calling [invoke]
      * without explicit [data] parameter.
      * */
-    fun observeData(): LiveData<Result<Out>> = data
+    fun observeData(): LiveData<ComponentResult<Out>> = data
 
     /**
      * ## Definition
@@ -82,13 +83,13 @@ abstract class CompoundUseCase<in In, Out> {
      * val resultLiveData = exampleUseCase(..., exampleUseCase.provide())
      * ```
      * */
-    fun provide() = MutableLiveData<Result<Out>>()
+    fun provide() = MutableLiveData<ComponentResult<Out>>()
 
     /**
      * ## Definition
      * Provides immediate result if cached and starts execution logic defined in [execute].
      * */
-    suspend operator fun invoke(params: In): Result<Out> = invoke(params, data)
+    suspend operator fun invoke(params: In): ComponentResult<Out> = invoke(params, data)
 
     /**
      * ## Definition
@@ -98,13 +99,15 @@ abstract class CompoundUseCase<in In, Out> {
     @Synchronized
     suspend operator fun invoke(
         params: In,
-        data: MutableLiveData<Result<Out>>
-    ): Result<Out> {
-        state.postValue(UseCaseState.LOADING)
-        return kotlin.runCatching { withContext(dispatcher) { execute(params) } }
-            .also { data.postValue(it) }
-            .onFailure { error(it) }
-            .also { state.postValue(it.fold({ UseCaseState.IDLE }, { UseCaseState.FAILED })) }
+        data: MutableLiveData<ComponentResult<Out>>
+    ): ComponentResult<Out> {
+        state.postValue(LOADING)
+        return catching { withContext(dispatcher) { execute(params) } }
+            .also {
+                data.postValue(it)
+                it.asPlatform().onFailure { err -> error(err) }
+                state.postValue(it.fold({ IDLE }, { FAILED }))
+            }
     }
 
     /**
@@ -116,6 +119,6 @@ abstract class CompoundUseCase<in In, Out> {
 
 }
 
-suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(): Result<R> = this(Unit)
-suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(result: MutableLiveData<Result<R>>) =
-    this(Unit, result)
+suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(): ComponentResult<R> = this(Unit)
+suspend operator fun <R> CompoundUseCase<Unit, R>.invoke(ComponentResult: MutableLiveData<ComponentResult<R>>) =
+    this(Unit, ComponentResult)
