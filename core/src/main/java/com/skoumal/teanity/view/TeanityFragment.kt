@@ -49,7 +49,7 @@ abstract class TeanityFragment<Binding : ViewDataBinding> :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = createView(inflater, container!!)
+    ): View? = createView(inflater, container)
 
     override fun onResume() {
         super.onResume()

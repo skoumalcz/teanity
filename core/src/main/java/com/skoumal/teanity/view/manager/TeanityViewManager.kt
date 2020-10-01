@@ -36,11 +36,11 @@ interface TeanityViewManager<View, Binding : ViewDataBinding> {
         fun addViewCreator(creator: Callback)
         fun removeViewCreator(creator: Callback?)
 
-        fun createView(inflater: LayoutInflater, parent: ViewGroup): View?
+        fun createView(inflater: LayoutInflater, parent: ViewGroup?): View?
 
         interface Callback {
 
-            fun createView(inflater: LayoutInflater, parent: ViewGroup): View
+            fun createView(inflater: LayoutInflater, parent: ViewGroup?): View
 
         }
 
@@ -85,7 +85,7 @@ private class ViewCreatorImpl : TeanityViewManager.ViewCreator {
         registry.remove(creator)
     }
 
-    override fun createView(inflater: LayoutInflater, parent: ViewGroup): View? {
+    override fun createView(inflater: LayoutInflater, parent: ViewGroup?): View? {
         return registry.firstOrNull()?.createView(inflater, parent)
     }
 

@@ -28,7 +28,7 @@ internal class TeanityFragmentManager<F, B> : TeanityViewManager<F, B>
             view.addViewCreator(object : TeanityViewManager.ViewCreator.Callback {
                 override fun createView(
                     inflater: LayoutInflater,
-                    parent: ViewGroup
+                    parent: ViewGroup?
                 ): View = DataBindingUtil.inflate<B>(
                     inflater,
                     view.layoutRes,
