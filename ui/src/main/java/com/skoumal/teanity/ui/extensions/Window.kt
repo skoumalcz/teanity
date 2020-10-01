@@ -52,6 +52,7 @@ val Activity.isDarkMode
 @DslMarker
 annotation class EdgeToEdgeDSL
 
+@Suppress("DEPRECATION") // todo remove the suppression and fix the api so it conforms with "R"
 @RequiresApi(Build.VERSION_CODES.Q)
 @EdgeToEdgeDSL
 open class EdgeToEdgeBuilder(
@@ -137,6 +138,7 @@ open class EdgeToEdgeBuilder(
 
 }
 
+@Suppress("DEPRECATION") // deprecations are final and these APIs will not be invoked nor are ported to the newer android versions
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @EdgeToEdgeDSL
 open class EdgeToEdgeBuilderAPI21(

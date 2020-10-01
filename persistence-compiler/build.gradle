@@ -6,9 +6,7 @@ plugins {
 
 dependencies {
 
-    api(Lib.androidx.roomCompiler) {
-        transitive = false
-    }
+    api(Lib.androidx.roomCompiler)
 
 }
 

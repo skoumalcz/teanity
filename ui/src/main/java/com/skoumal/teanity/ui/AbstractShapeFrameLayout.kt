@@ -46,7 +46,12 @@ abstract class AbstractShapeFrameLayout @JvmOverloads constructor(
     init {
         outlineProvider = object : ViewOutlineProvider() {
             override fun getOutline(view: View?, outline: Outline?) {
-                outline?.setConvexPath(clipPath)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    outline?.setPath(clipPath)
+                } else {
+                    @Suppress("DEPRECATION")
+                    outline?.setConvexPath(clipPath)
+                }
             }
         }
         clipToOutline = true

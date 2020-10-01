@@ -33,7 +33,7 @@ sealed class ComponentResult<out T> {
 
 }
 
-@Suppress("NOTHING_TO_INLINE")
+@Suppress("NOTHING_TO_INLINE", "UNCHECKED_CAST")
 inline fun <T> ComponentResult<T>.asPlatform() = when {
     isFailure -> Result.failure(exceptionOrNull()!!)
     else -> Result.success(getOrNull() as T)
@@ -48,6 +48,7 @@ inline fun <I, O> I.catching(body: I.() -> O) = try {
 inline fun <T> ComponentResult<T>.getOrElse(body: Mapper<Throwable, T>) =
     asPlatform().getOrElse(body)
 
+@Suppress("NOTHING_TO_INLINE")
 inline fun <T> ComponentResult<T>.getOrDefault(value: T) =
     getOrElse { value }
 
@@ -57,6 +58,7 @@ inline fun <T> ComponentResult<T>.onSuccess(body: Mapper<T, Unit>) =
 inline fun <T> ComponentResult<T>.onFailure(body: Mapper<Throwable, Unit>) =
     asPlatform().onFailure(body)
 
+@Suppress("NOTHING_TO_INLINE")
 inline fun <T> ComponentResult<T>.getOrThrow() =
     asPlatform().getOrThrow()
 

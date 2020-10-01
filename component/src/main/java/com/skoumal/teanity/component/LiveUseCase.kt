@@ -19,7 +19,7 @@ import com.skoumal.teanity.tools.annotation.RemoveOnDeprecation
  * Everything in [execute] is called in a synchronous fashion and the result of [execute] is passed
  * to [invoke] immediately.
  * */
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "DEPRECATION")
 @RemoveOnDeprecation("2.0")
 @Deprecated("Use CompoundUseCase with overridden >observe< method.")
 abstract class LiveUseCase<in In, Out> {
@@ -34,5 +34,6 @@ abstract class LiveUseCase<in In, Out> {
 
 }
 
+@Suppress("DEPRECATION")
 @Deprecated("Use CompoundUseCase with overridden >observe< method.")
 operator fun <R> LiveUseCase<Unit, R>.invoke(): LiveData<R> = this(Unit)
