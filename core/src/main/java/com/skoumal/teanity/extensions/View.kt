@@ -112,7 +112,7 @@ internal fun AppCompatActivity.hideKeyboardAPI30(focusedView: View? = null) {
 
 @RequiresApi(Build.VERSION_CODES.R)
 internal fun LifecycleCoroutineScope.hide(type: Int, view: View) = launchWhenCreated {
-    view.awaitWindowInsetsController().show(type)
+    view.awaitWindowInsetsController().hide(type)
 }
 
 @RequiresApi(Build.VERSION_CODES.R)
