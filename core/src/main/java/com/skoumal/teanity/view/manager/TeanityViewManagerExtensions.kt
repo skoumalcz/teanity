@@ -7,10 +7,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import com.skoumal.teanity.extensions.toInternal
 import com.skoumal.teanity.observable.Broadcastable
 import com.skoumal.teanity.util.Insets
 import com.skoumal.teanity.util.InsetsResources
+import com.skoumal.teanity.util.toPlatform
 import com.skoumal.teanity.viewevent.base.*
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +45,7 @@ internal fun View.applyInsets(
     }
 
     ViewCompat.setOnApplyWindowInsetsListener(this) { _, _insets ->
-        val insets = _insets.toInternal()
+        val insets = _insets.toPlatform()
 
         view.peekSystemWindowInsets(insets)
         val consumed = view.consumeSystemWindowInsets(insets)?.also {

@@ -38,7 +38,10 @@ subprojects {
             }
 
             kotlinOptions {
-                freeCompilerArgs = ["-module-name", "teanity-${project.name}"]
+                freeCompilerArgs = [
+                        "-module-name", "teanity-${project.name}",
+                        "-Xinline-classes"
+                ]
             }
         }
 
