@@ -11,6 +11,7 @@ import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import com.skoumal.teanity.tools.log.error
+import com.skoumal.teanity.tools.log.info
 import com.skoumal.teanity.ui.shape.ShapeBuilder
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -50,7 +51,8 @@ abstract class AbstractShapeFrameLayout @JvmOverloads constructor(
                     outline?.setPath(clipPath)
                 } else {
                     @Suppress("DEPRECATION")
-                    outline?.setConvexPath(clipPath)
+                    runCatching { outline?.setConvexPath(clipPath) }
+                        .onFailure { info("Cannot set non-convex path to outline") }
                 }
             }
         }
