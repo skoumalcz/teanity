@@ -33,7 +33,14 @@ subprojects {
             }
 
             packagingOptions {
-                exclude "META-INF/*"
+                //exclude "META-INF/*"
+            }
+
+            kotlinOptions {
+                freeCompilerArgs = [
+                        "-module-name", "teanity-${project.name}",
+                        "-Xinline-classes"
+                ]
             }
         }
 
