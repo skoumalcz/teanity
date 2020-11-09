@@ -7,34 +7,35 @@ object Lib {
         const val gradle = "4.1.0"
 
         object AndroidX {
-            const val appcompat = "1.2.0-beta01"
-            const val activity = "1.2.0-alpha04"
-            const val core = "1.3.0-rc01"
+            const val appcompat = "1.2.0"
+            const val activity = "1.2.0-beta01"
+            const val core = "1.3.2"
             const val paging = "2.1.2"
             const val room = "2.2.5"
-            const val animation = "1.0.0-alpha03"
-            const val constraint = "2.0.0-beta4"
-            const val material = "1.2.0-alpha06"
+            const val animation = "1.0.0"
+            const val animationKtx = "1.0.0-alpha03"
+            const val constraint = "2.0.4"
+            const val material = "1.2.1"
             const val lifecycle = "2.2.0"
-            const val navigation = "2.3.0-alpha06"
-            const val test = "1.3.0-beta01"
-            const val junit = "1.1.2-beta01"
-            const val services = "1.3.0-rc01"
+            const val navigation = "2.3.1"
+            const val test = "1.3.0"
+            const val junit = "1.1.2"
+            const val services = "1.3.0"
             const val automator = "2.2.0"
-            const val espresso = "3.3.0-beta01"
+            const val espresso = "3.3.0"
             const val multidex = "2.0.1"
         }
 
         const val lorem = "2.1"
         const val binding = "4.0.0"
-        const val koin = "2.1.5"
-        const val moshi = "1.9.2"
-        const val retrofit = "2.8.1"
+        const val koin = "2.1.6"
+        const val moshi = "1.11.0"
+        const val retrofit = "2.9.0"
         const val sanitizer = "0.6"
         const val glide = "4.11.0"
-        const val dexter = "6.1.0"
+        const val dexter = "6.2.1"
         const val timber = "4.7.1"
-        const val plugin = "1.0.7"
+        const val plugin = "2.0.0-alpha01"
 
         // this is kinda deprecated
         const val maven = "2.1"
@@ -66,7 +67,9 @@ object Lib {
         val room = androidx("room", "room-ktx", V.AndroidX.room)
         val roomCompiler = androidx("room", "room-compiler", V.AndroidX.room)
         val animation =
-            androidx("dynamicanimation", "dynamicanimation-ktx", V.AndroidX.animation)
+            androidx("dynamicanimation", "dynamicanimation", V.AndroidX.animation)
+        val animationKtx =
+            androidx("dynamicanimation", "dynamicanimation-ktx", V.AndroidX.animationKtx)
         val constraint =
             androidx("constraintlayout", "constraintlayout", V.AndroidX.constraint)
         val material = "com.google.android.material:material:${V.AndroidX.material}"
