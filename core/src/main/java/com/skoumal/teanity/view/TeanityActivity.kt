@@ -1,11 +1,13 @@
 package com.skoumal.teanity.view
 
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import com.skoumal.teanity.viewevent.SuspendingActivityResultContract
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
@@ -61,6 +63,16 @@ abstract class TeanityActivity<ViewModel : TeanityViewModel, Binding : ViewDataB
 
     protected fun detachEvents() = delegate.detachEvents()
     protected fun ViewEvent.onSelf() = viewModel.run { publish() }
+
+    /**
+     * Registers a suspending result contract. Provided
+     * [SuspendingActivityResultContract.SuspendingResult] can be called after lifecycle's been
+     * CREATED.
+     *
+     * @see SuspendingActivityResultContract.registerIn
+     * */
+    protected fun <In, Out> ActivityResultContract<In, Out>.asSuspending() =
+        SuspendingActivityResultContract(this).registerIn(this@TeanityActivity)
 
     //endregion
     //region Navigation

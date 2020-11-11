@@ -122,6 +122,10 @@ abstract class TeanityViewModel : ViewModel(),
      * This allows you to request permissions >in place< bypassing the usual flows of requesting
      * and then catching the result in the activity itself.
      * */
+    @Deprecated(
+        "Suspending method cannot be used as contracts need to be registered before lifecycle starts. Consider using ActivityContractRegistrar",
+        level = DeprecationLevel.ERROR
+    )
     suspend fun <In, Out> ActivityResultContract<In, Out>.await(
         input: In
     ) = suspendCoroutine<Out> { cont ->

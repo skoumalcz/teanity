@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.transition.TransitionInflater
+import com.skoumal.teanity.viewevent.SuspendingActivityResultContract
 import com.skoumal.teanity.viewevent.base.ViewEvent
 import com.skoumal.teanity.viewmodel.TeanityViewModel
 
@@ -75,6 +77,16 @@ abstract class TeanityFragment<ViewModel : TeanityViewModel, Binding : ViewDataB
     protected fun ViewEvent.onSelf() {
         viewModel.apply { publish() }
     }
+
+    /**
+     * Registers a suspending result contract. Provided
+     * [SuspendingActivityResultContract.SuspendingResult] can be called after lifecycle's been
+     * CREATED.
+     *
+     * @see SuspendingActivityResultContract.registerIn
+     * */
+    protected fun <In, Out> ActivityResultContract<In, Out>.asSuspending() =
+        SuspendingActivityResultContract(this).registerIn(this@TeanityFragment)
 
     //endregion
 }
