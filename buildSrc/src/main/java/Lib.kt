@@ -96,7 +96,7 @@ object Lib {
 
     object Koin {
         val core = koin("android", V.koin)
-        val viewModel = koin("android-viewmodel", V.koin)
+        val viewModel = koin("androidx-viewmodel", V.koin)
     }
 
     object Square {
