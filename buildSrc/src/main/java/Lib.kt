@@ -2,9 +2,9 @@
 object Lib {
 
     private object V {
-        const val kotlin = "1.4.10"
-        const val kotlinCoroutines = "1.4.0"
-        const val gradle = "4.1.0"
+        const val kotlin = "1.4.20"
+        const val kotlinCoroutines = "1.4.1"
+        const val gradle = "4.1.1"
 
         object AndroidX {
             const val appcompat = "1.2.0"
@@ -28,7 +28,7 @@ object Lib {
 
         const val lorem = "2.1"
         const val binding = "4.0.0"
-        const val koin = "2.1.6"
+        const val koin = "2.2.1"
         const val moshi = "1.11.0"
         const val retrofit = "2.9.0"
         const val sanitizer = "0.6"
