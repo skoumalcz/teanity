@@ -2,22 +2,23 @@
 object Lib {
 
     private object V {
-        const val kotlin = "1.4.20"
-        const val kotlinCoroutines = "1.4.1"
+        const val kotlin = "1.4.31"
+        const val kotlinCoroutines = "1.4.3"
         const val gradle = "4.1.1"
 
         object AndroidX {
-            const val appcompat = "1.2.0"
-            const val activity = "1.2.0-beta01"
-            const val core = "1.3.2"
+            const val appcompat = "1.3.0-rc01"
+            const val activity = "1.2.2"
+            const val fragment = "1.3.2"
+            const val core = "1.5.0-rc01"
             const val paging = "2.1.2"
-            const val room = "2.2.5"
+            const val room = "2.3.0-rc01"
             const val animation = "1.0.0"
             const val animationKtx = "1.0.0-alpha03"
-            const val constraint = "2.0.4"
-            const val material = "1.2.1"
+            const val constraint = "2.1.0-beta01"
+            const val material = "1.3.0"
             const val lifecycle = "2.2.0"
-            const val navigation = "2.3.1"
+            const val navigation = "2.3.4"
             const val test = "1.3.0"
             const val junit = "1.1.2"
             const val services = "1.3.0"
@@ -28,12 +29,12 @@ object Lib {
 
         const val lorem = "2.1"
         const val binding = "4.0.0"
-        const val koin = "2.2.1"
-        const val moshi = "1.11.0"
+        const val koin = "2.2.2"
+        const val moshi = "1.12.0"
         const val retrofit = "2.9.0"
         const val sanitizer = "0.6"
         const val glide = "4.11.0"
-        const val dexter = "6.2.1"
+        const val dexter = "6.2.2"
         const val timber = "4.7.1"
         const val plugin = "2.0.0-alpha01"
 
@@ -61,7 +62,8 @@ object Lib {
     object AndroidX {
         val build = "com.android.tools.build:gradle:${V.gradle}"
         val appcompat = androidx("appcompat", "appcompat", V.AndroidX.appcompat)
-        val activity = androidx("activity", "activity", V.AndroidX.activity)
+        val activity = androidx("activity", "activity-ktx", V.AndroidX.activity)
+        val fragment = androidx("fragment", "fragment-ktx", V.AndroidX.fragment)
         val core = androidx("core", "core-ktx", V.AndroidX.core)
         val paging = androidx("paging", "paging-runtime-ktx", V.AndroidX.paging)
         val room = androidx("room", "room-ktx", V.AndroidX.room)
