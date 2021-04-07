@@ -26,7 +26,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     private val view: V
 ) where V : TeanityView<B>, V : TeanityViewAccessor<VM>, V : LifecycleOwner {
 
-    lateinit var binding: B
+    var binding: B? = null
         private set
 
     private var events: ReceiveChannel<ViewEvent>? = null
@@ -116,7 +116,7 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
         }
 
         subscribe(view.obtainViewModel().openSubscription())
-        ensureInsets(binding.root)
+        ensureInsets(binding!!.root)
     }
 
     fun onResume() {
@@ -124,10 +124,13 @@ internal class TeanityDelegate<V, B : ViewDataBinding, VM : TeanityViewModel>(
     }
 
     fun onDestroy() {
-        if (::binding.isInitialized) {
+        val binding = binding
+        if (binding != null) {
             view.apply {
                 binding.unbindViews()
+                binding.unbind()
             }
+            this.binding = null
         }
 
         detachEvents()

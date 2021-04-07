@@ -13,7 +13,7 @@ import com.skoumal.teanity.viewmodel.TeanityViewModel
 abstract class TeanityDialogFragment<ViewModel : TeanityViewModel, Binding : ViewDataBinding> :
     DialogFragment(), TeanityView<Binding>, TeanityViewAccessor<ViewModel> {
 
-    protected val binding: Binding get() = delegate.binding
+    protected val binding: Binding get() = requireNotNull(delegate.binding)
 
     protected abstract val layoutRes: Int
     protected abstract val viewModel: ViewModel
