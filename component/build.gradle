@@ -1,6 +1,8 @@
 plugins {
     id("com.android.library")
-    id("teanity")
+    id("kotlin-android")
+    id("kotlin-parcelize")
+    id("kotlin-kapt")
     id("maven-publish")
 }
 

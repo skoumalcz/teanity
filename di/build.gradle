@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
-    id("teanity")
+    id("kotlin-android")
+    id("kotlin-parcelize")
     id("maven-publish")
 }
 
@@ -11,7 +12,6 @@ dependencies {
     implementation(Lib.androidx.core)
 
     api(Lib.koin.core)
-    api(Lib.koin.viewModel)
 
 }
 

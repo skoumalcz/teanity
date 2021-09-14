@@ -2,37 +2,37 @@
 object Lib {
 
     private object V {
-        const val kotlin = "1.4.20-M1-63"
-        const val kotlinCoroutines = "1.3.9"
-        const val gradle = "4.1.0-rc03"
+        const val kotlin = "1.5.30"
+        const val kotlinCoroutines = "1.5.2"
+        const val gradle = "7.0.+"
 
         object AndroidX {
-            const val appcompat = "1.3.0-alpha01"
-            const val activity = "1.2.0-alpha07"
-            const val fragment = "1.3.0-alpha07"
-            const val core = "1.5.0-alpha01"
-            const val paging = "3.0.0-alpha04"
-            const val room = "2.3.0-alpha02"
+            const val appcompat = "1.3.1"
+            const val activity = "1.3.1"
+            const val fragment = "1.3.6"
+            const val core = "1.6.0"
+            const val paging = "3.0.1"
+            const val room = "2.3.0"
             const val animation = "1.0.0-alpha03"
-            const val constraint = "2.0.0-rc01"
-            const val material = "1.3.0-alpha02"
-            const val lifecycle = "2.2.0"
-            const val navigation = "2.3.0"
-            const val test = "1.3.0-rc03"
-            const val junit = "1.1.2-rc03"
-            const val services = "1.3.0-rc03"
+            const val constraint = "2.1.0"
+            const val material = "1.4.0"
+            const val lifecycle = "2.3.1"
+            const val navigation = "2.3.5"
+            const val test = "1.3.0"
+            const val junit = "1.1.2"
+            const val services = "1.4.0"
             const val automator = "2.2.0"
-            const val espresso = "3.3.0-rc03"
+            const val espresso = "3.4.0"
         }
 
         const val lorem = "2.1"
         const val binding = "4.0.0"
-        const val koin = "2.1.6"
-        const val moshi = "1.9.3"
+        const val koin = "3.1.2"
+        const val moshi = "1.12.0"
         const val retrofit = "2.9.0"
         const val sanitizer = "0.6"
-        const val coil = "0.11.0"
-        const val timber = "4.7.1"
+        const val coil = "1.3.2"
+        const val timber = "5.0.0"
         const val plugin = "2.0.0-alpha01"
     }
 
@@ -71,7 +71,7 @@ object Lib {
     }
 
     object Lifecycle {
-        val extensions = androidx("lifecycle", "lifecycle-extensions", V.AndroidX.lifecycle)
+        val extensions = androidx("lifecycle", "lifecycle-runtime-ktx", V.AndroidX.lifecycle)
         val compiler = androidx("lifecycle", "lifecycle-compiler", V.AndroidX.lifecycle)
         val viewModel = androidx("lifecycle", "lifecycle-viewmodel-ktx", V.AndroidX.lifecycle)
     }
@@ -90,7 +90,6 @@ object Lib {
 
     object Koin {
         val core = koin("android", V.koin)
-        val viewModel = koin("androidx-viewmodel", V.koin)
     }
 
     object Square {
@@ -123,9 +122,7 @@ object Lib {
 
     const val coil = "io.coil-kt:coil:${V.coil}"
     const val sanitizer = "wiki.depasquale:response-sanitizer:${V.sanitizer}"
-
     const val timber = "com.jakewharton.timber:timber:${V.timber}"
-    const val teanity = "com.skoumal:teanity-plugin:${V.plugin}"
 
     // ---
 
@@ -154,6 +151,6 @@ object Lib {
         "com.squareup.$group:$module:$version"
 
     private fun koin(module: String, version: String) =
-        "org.koin:koin-$module:$version"
+        "io.insert-koin:koin-$module:$version"
 }
 

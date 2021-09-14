@@ -3,7 +3,7 @@ package com.skoumal.teanity.ui.binding
 import android.os.Build
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import coil.api.loadAny
+import coil.loadAny
 import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation

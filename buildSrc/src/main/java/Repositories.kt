@@ -6,7 +6,6 @@ object Repositories {
     fun with(handler: RepositoryHandler) = with(handler) {
         google()
         jcenter()
-        maven(url = "https://maven.fabric.io/public")
         maven(url = "https://jitpack.io")
     }
 

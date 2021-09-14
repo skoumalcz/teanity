@@ -1,12 +1,14 @@
 plugins {
     id("com.android.library")
-    id("teanity")
+    id("kotlin-android")
+    id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("maven-publish")
 }
 
 android {
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 }
 
