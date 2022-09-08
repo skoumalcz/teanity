@@ -2,7 +2,7 @@
 object Lib {
 
     private object V {
-        const val kotlin = "1.5.30"
+        const val kotlin = "1.7.10"
         const val kotlinCoroutines = "1.5.2"
         const val gradle = "7.0.+"
 
